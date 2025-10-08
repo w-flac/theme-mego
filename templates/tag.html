@@ -1,0 +1,175 @@
+<!doctype html>
+
+<html th:replace="~{modules/layout :: html( title = |标签：${tag.spec.displayName} - ${site.title}|, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+  <th:block th:fragment="content">
+    <th:block th:replace="~{modules/header}" />
+    <section class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5" th:attr="id=|items-${tag.metadata.name}|">
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-4 flex flex-col items-center justify-center sm:mb-6">
+          <div
+            class="mb-3 flex h-12 w-12 flex-col items-center justify-center rounded-xl p-4 shadow-lg sm:mb-4 sm:h-16 sm:w-16 sm:rounded-2xl"
+            th:style="${tag.spec.color} ? 'background-color:' + ${tag.spec.color} + 'B3' : 'background-color: #9CA3AFB3'"
+          >
+            <i class="fas fa-tags shrink-0 text-3xl text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="${tag.spec.displayName}"></h3>
+        </div>
+        <div class="flex items-center justify-center space-x-4 text-xs text-gray-500 sm:flex-row sm:text-sm lg:space-x-8 dark:text-gray-400">
+          <div class="flex items-center">
+            <i class="fas fa-file-alt mr-2"></i>
+            <span th:text="|${tag.postCount != null ? tag.postCount : 0} 篇文章|"></span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-eye mr-2"></i>
+            <span id="tag-visit"></span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-calendar mr-2"></i>
+            <span class="inline" th:text="|${#dates.format(tag.metadata.creationTimestamp,'yyyy-MM-dd')}|"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="mx-auto max-w-7xl px-2 py-8 md:px-4">
+      <div class="relative grid grid-cols-1 gap-8" th:classappend="${posts.total == 0 ? '' : 'lg:grid-cols-4'}">
+        <ul class="tag-post col-span-full space-y-8" th:classappend="${posts.total == 0 ? '' : 'lg:col-span-3'}">
+          <li th:each="post : ${posts.items}">
+            <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
+              <div class="relative h-72 sm:h-80">
+                <img
+                  alt="images"
+                  class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                  loading="lazy"
+                  sizes="(max-width: 1600px) 100vw, 1600px"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                  th:attr=" data-src=${'/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m'},
+                              data-srcset=${
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=s 400w, ' +
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m 800w, ' +
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=l 1200w'}"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
+                <div class="absolute top-4 left-4 flex justify-center space-x-2">
+                  <a
+                    class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
+                    th:href="@{${tag.status.permalink}}"
+                    th:text="${tag.spec.displayName}"
+                    th:title="${tag.spec.displayName}"
+                  ></a>
+                </div>
+                <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:if="${post.spec.pinned}">
+                  <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
+                </div>
+                <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
+                  <div class="mb-3 flex items-center space-x-5">
+                    <div class="flex items-center space-x-2">
+                      <img alt="" class="h-6 w-6 rounded-full object-cover" th:src="${post.owner.avatar}" />
+                      <span class="text-xs text-white md:text-sm" th:text="${post.owner.displayName}"></span>
+                    </div>
+                    <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
+                      <i class="fas fa-calendar-day text-white/60"></i>
+                      <span class="text-xs text-white/80 md:text-sm" th:text="|${#dates.format(post.spec.publishTime,'MM月dd日')}"></span>
+                    </div>
+                  </div>
+                  <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
+                    <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+                  </h2>
+                  <a aria-label="read" class="overflow-hidden transition-all duration-500 ease-in-out" th:href="@{${post.status.permalink}}">
+                    <p
+                      class="mb-3 line-clamp-3 text-sm leading-relaxed text-white md:mb-4 md:text-base"
+                      th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-1' : '')}"
+                      th:text="${post.status.excerpt}"
+                    ></p>
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-3 text-xs text-white/80 md:space-x-4 md:text-sm">
+                        <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                          <i class="fas fa-eye"></i>
+                          <span th:text="|${post.stats?.visit ?:0}|"></span>
+                        </div>
+                        <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                          <i class="fas fa-comment"></i>
+                          <span th:text="|${post.stats?.comment ?:0}|"></span>
+                        </div>
+                        <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                          <i class="fas fa-heart"></i>
+                          <span th:text="|${post.stats?.upvote ?:0}|"></span>
+                        </div>
+                      </div>
+                      <button class="cursor-pointer p-2 text-xs font-medium text-white transition-colors hover:text-blue-300 md:text-sm">
+                        <a
+                          aria-label="read"
+                          class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
+                          th:href="@{${post.status.permalink}}"
+                        >
+                          <span>阅读更多</span>
+                          <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
+                        </a>
+                      </button>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="flex flex-col items-center justify-center py-12 text-center text-gray-500 lg:mt-10 lg:min-h-96" th:if="${posts.total == 0}">
+            <svg class="mb-3 h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M9 13h6m-6 4h6m-7 4h8a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.5l-1-2h-3l-1 2H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              />
+            </svg>
+            <p class="text-lg font-medium">当前标签下没有文章</p>
+            <button
+              class="mt-4 inline-flex items-center rounded-lg border border-gray-200/80 bg-gray-50/80 px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:shadow-lg dark:border-transparent dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
+              onclick="history.back()"
+            >
+              <i class="fa-solid fa-rotate-left mr-2"></i>
+              返回上一页
+            </button>
+          </li>
+          <th:block th:if="${posts.hasNext()}">
+            <li class="mt-8 text-center" id="load-more-container"></li>
+          </th:block>
+        </ul>
+        <div class="hidden lg:col-span-1 lg:block" th:if="${posts.total > 0}">
+          <div class="sticky top-24 space-y-6 self-start">
+            <ul class="overflow-hidden rounded-2xl border border-gray-200/70 bg-gray-400/5 p-6 backdrop-blur-sm dark:border-white/20 dark:bg-white/5">
+              <th:block th:with="tags = ${tagFinder.listAll()}">
+                <li class="space-y-3">
+                  <a
+                    class="group relative flex items-center space-x-4 overflow-hidden rounded-xl border border-gray-200/80 bg-gray-50/80 p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-transparent dark:bg-white/5"
+                    th:each="tag : ${tags}"
+                    th:href="@{${tag.status.permalink}}"
+                  >
+                    <div
+                      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg shadow-md"
+                      th:style="${tag.spec.color} ? 'background-color:' + ${tag.spec.color} + 'B3' : 'background-color: #9CA3AFB3'"
+                    >
+                      <i class="fas fa-hashtag text-sm text-white"></i>
+                    </div>
+                    <div class="flex-1 shrink-0">
+                      <div class="font-semibold text-gray-900 dark:text-white" th:text="${tag.spec.displayName}"></div>
+                      <div class="text-sm text-gray-500 dark:text-gray-400" th:text="|${tag.postCount != null ? tag.postCount : 0} 篇文章|"></div>
+                    </div>
+                    <div class="hidden opacity-0 transition-opacity group-hover:opacity-100 xl:block">
+                      <i class="fa-solid fa-person-walking-arrow-right"></i>
+                    </div>
+                  </a>
+                </li>
+              </th:block>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        initTagLoadMore();
+        tagViewCount.init();
+      });
+    </script>
+  </th:block>
+</html>

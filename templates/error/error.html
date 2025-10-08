@@ -1,0 +1,27 @@
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = ${error.status} + ' | ' + ${#strings.defaultString(error.title, 'Internal server error')} + ' - ' +${site.title}, hero = null, header = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = '')}"
+>
+  <th:block th:fragment="content">
+    <div class="bg-white/70 dark:bg-gray-900">
+      <main class="mx-auto flex h-screen w-screen max-w-7xl flex-col items-center justify-center px-6 pt-10 pb-16 sm:pb-24 lg:px-8">
+        <div class="mx-auto mt-20 max-w-2xl text-center sm:mt-24">
+          <p class="text-6xl font-semibold text-indigo-600 dark:text-indigo-400" th:if="${not #strings.isEmpty(error.status)}" th:text="${error.status}"></p>
+          <h1
+            class="mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-6xl dark:text-white"
+            th:text="${#strings.defaultString(error.title, 'Internal server error')}"
+          ></h1>
+          <p class="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8 dark:text-gray-400">我们暂时找不到您要找的页面</p>
+        </div>
+        <div class="mx-auto mt-10 flow-root max-w-lg">
+          <div class="flex justify-center space-x-6">
+            <a th:href="${site.url}" class="text-base font-semibold text-indigo-600 dark:text-indigo-400">
+              <span aria-hidden="true">&larr;</span>
+              返回首页
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </th:block>
+</html>

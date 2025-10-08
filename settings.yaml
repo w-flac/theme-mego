@@ -1,0 +1,448 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-mego-setting
+spec:
+  forms:
+    - group: index_hero
+      label: Hero模块
+      formSchema:
+        - $formkit: select
+          name: hero_enabled
+          label: 是否启用Hero模块
+          placeholder: 请确认选择
+          value: true
+          options:
+            - label: 是
+              value: true
+            - label: 否
+              value: false
+        - $formkit: group
+          name: hero_title
+          label: Hero标题
+          children:
+            - $formkit: text
+              name: label
+              label: 标签
+            - $formkit: text
+              name: title
+              label: 标题
+            - $formkit: text
+              name: description
+              label: 描述
+              height: 200px
+            - $formkit: select
+              name: enabled
+              id: enabled
+              label: 是否启用副标题
+              placeholder: 请确认选择
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: text
+              if: "$value.enabled === true"
+              name: subtitle
+              label: 副标题
+        - $formkit: group
+          name: hero_image
+          label: Hero背景
+          children:
+            - $formkit: attachment
+              name: image
+        - $formkit: group
+          name: hero_urls
+          label: Hero链接
+          children:
+            - $formkit: select
+              name: hero_urls_enabled
+              id: hero_urls_enabled
+              label: 是否启用链接模块
+              placeholder: 请确认选择
+              options:
+                - label: 关闭
+                  value: "off"
+                - label: 开启
+                  value: "open"
+            - $formkit: group
+              name: hero_urls_items
+              if: "$value.hero_urls_enabled === 'open'"
+              children:
+                - $formkit: text
+                  name: title1
+                  label: 标题1
+                - $formkit: text
+                  name: url1
+                  label: 链接1
+                - $formkit: text
+                  name: title2
+                  label: 标题2
+                - $formkit: text
+                  name: url2
+                  label: 链接2
+
+        - $formkit: group
+          name: hero_signs
+          label: Hero标志
+          children:
+            - $formkit: select
+              name: hero_signs_enabled
+              id: hero_signs_enabled
+              label: 是否启用标识模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              name: hero_signs_items
+              if: "$value.hero_signs_enabled === true"
+              children:
+                - $formkit: repeater
+                  name: hero_signs_items
+                  label: Hero标识列表
+                  value: []
+                  max: 3
+                  min: 1
+                  itemLabel: "标识"
+                  children:
+                    - $formkit: text
+                      name: text
+                      key: text
+                      label: 标识内容
+
+    - group: index_intro
+      label: 站点模块
+      formSchema:
+        - $formkit: group
+          name: intro
+          label: 站点简介
+          children:
+            - $formkit: select
+              name: intro_enabled
+              id: intro_enabled
+              label: 是否启用简介模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              if: "$value.intro_enabled === true"
+              name: content_items
+              children:
+                - $formkit: text
+                  name: title
+                  label: 标题
+                - $formkit: text
+                  name: subtitle
+                  label: 简介
+        - $formkit: group
+          name: website
+          label: 站点统计
+          children:
+            - $formkit: select
+              name: website_enabled
+              id: website_enabled
+              label: 是否启用站点统计
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: repeater
+              if: "$value.website_enabled === true"
+              name: type
+              label: 数据定义
+              value: []
+              max: 4
+              children:
+                - $formkit: select
+                  label: 类型
+                  name: type_items
+                  id: type_items
+                  placeholder: 请确认选择
+                  options:
+                    - label: 访问数量
+                      value: "visit"
+                    - label: 点赞数量
+                      value: "upvote"
+                    - label: 评论数量
+                      value: "comment"
+                    - label: 文章数量
+                      value: "post"
+                    - label: 分类数量
+                      value: "category"
+                    - label: 数字
+                      value: "commas"
+                    - label: 百分比
+                      value: "percentage"
+                - $formkit: text
+                  if: "$value.type_items === 'commas'"
+                  name: num
+                  label: 数值
+                - $formkit: text
+                  if: "$value.type_items === 'commas'"
+                  name: subtitle
+                  label: 文字
+                - $formkit: text
+                  if: "$value.type_items === 'percentage'"
+                  name: num
+                  label: 数值
+                - $formkit: text
+                  if: "$value.type_items === 'percentage'"
+                  name: subtitle
+                  label: 文字
+
+    - group: index_blog
+      label: 博客模块
+      formSchema:
+        - $formkit: group
+          name: blog
+          label: 博客模块
+          children:
+            - $formkit: text
+              name: blog_title
+              label: 标题
+              value: 最新博客
+            - $formkit: text
+              name: blog_subtitle
+              label: 副标题
+              value: 探索精彩内容，发现无限可能
+            - $formkit: select
+              name: blog_enabled
+              id: blog_enabled
+              label: 博客布局样式
+              placeholder: 请确认选择
+              options:
+                - label: 单栏布局
+                  value: "one"
+                - label: 双栏布局
+                  value: "two"
+
+    - group: index_other
+      label: 其它模块
+      formSchema:
+        - $formkit: group
+          name: category
+          label: 分类模块
+          children:
+            - $formkit: select
+              name: category_enabled
+              id: category_enabled
+              label: 是否启用分类模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              name: category_items
+              if: "$value.category_enabled === true"
+              label: 分类模块设置
+              children:
+                - $formkit: text
+                  name: category_title
+                  label: 标题
+                  value: 分类库
+                - $formkit: text
+                  name: category_subtitle
+                  label: 副标题
+                  value: 资源分类集合，快速定位所需内容
+                - $formkit: categorySelect
+                  multiple: true
+                  sortable: true
+                  name: category_list
+                  label: 分类
+                  value: ""
+        - $formkit: group
+          name: tags
+          label: 标签模块
+          children:
+            - $formkit: select
+              name: tags_enabled
+              id: tags_enabled
+              label: 是否启用标签模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              name: tags_items
+              if: "$value.tags_enabled === true"
+              label: 标签模块设置
+              children:
+                - $formkit: text
+                  name: tags_title
+                  label: 标题
+                  value: 标签库
+                - $formkit: text
+                  name: tags_subtitle
+                  label: 副标题
+                  value: 可视化标签展示，一键直达相关内容
+                - $formkit: tagSelect
+                  multiple: true
+                  sortable: true
+                  name: tags_list
+                  label: 标签
+                  value: ""
+        - $formkit: group
+          name: subscribe
+          label: 订阅模块
+          children:
+            - $formkit: select
+              name: subscribe_enabled
+              id: subscribe_enabled
+              label: 是否启用订阅模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              name: subscribe_items
+              if: "$value.subscribe_enabled === true"
+              label: 订阅模块设置
+              children:
+                - $formkit: text
+                  name: subscribe_title
+                  label: 标题
+                  value: 订阅获取最新资讯
+                - $formkit: text
+                  name: subscribe_subtitle
+                  label: 副标题
+                  value: 加入我们的订阅社区，获取独家内容与深度分析。与志同道合的专业人士交流见解，共同探索行业未来发展方向。
+                - $formkit: repeater
+                  name: subscribe_slogan
+                  label: 口号
+                  value: []
+                  max: 2
+                  min: 1
+                  help: 图标链接：https://fontawesome.com/search?s=solid&ic=free&o=r
+                  children:
+                    - $formkit: text
+                      name: icon
+                      label: 图标
+                      value: ""
+                    - $formkit: text
+                      name: title
+                      label: 标题
+                      value: ""
+                    - $formkit: text
+                      name: subtitle
+                      label: 简介
+                      value: ""
+
+    - group: index_footer
+      label: 页脚模块
+      formSchema:
+        - $formkit: group
+          name: footer_social
+          label: 社交模块
+          children:
+            - $formkit: select
+              name: social_enabled
+              id: social_enabled
+              label: 是否启用社交模块
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: repeater
+              name: footer_social_items
+              if: "$value.social_enabled === true"
+              label: 社交链接
+              value: []
+              children:
+                - $formkit: select
+                  name: icon
+                  label: 图标
+                  placeholder: 请选择图标
+                  options:
+                    - label: Mail
+                      value: s-i-mail
+                    - label: Facebook
+                      value: s-i-facebook
+                    - label: X
+                      value: s-i-X
+                    - label: Instagram
+                      value: s-i-instagram
+                    - label: YouTube
+                      value: s-i-youtube
+                    - label: GitHub
+                      value: s-i-github
+                    - label: Steam
+                      value: s-i-steam
+                    - label: LinkedIn
+                      value: s-i-linkedin
+                    - label: Pinterest
+                      value: s-i-pinterest
+                    - label: Reddit
+                      value: s-i-reddit
+                    - label: TikTok
+                      value: s-i-tiktok
+                    - label: CSDN
+                      value: s-i-csdn
+                    - label: Telegram
+                      value: s-i-telegram
+                    - label: 微博
+                      value: s-i-weibo
+                    - label: B站
+                      value: s-i-bilibili
+                    - label: 豆瓣
+                      value: s-i-douban
+                    - label: RSS
+                      value: s-i-rss
+                - $formkit: text
+                  name: name
+                  label: 名称
+                - $formkit: text
+                  name: url
+                  label: 链接
+                  validation: "required"
+        - $formkit: group
+          name: footer_other
+          label: 其它类别
+          children:
+            - $formkit: select
+              name: other_enabled
+              id: other_enabled
+              label: 是否开启建站与主题信息？
+              placeholder: 请确认选择
+              value: 开启
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: select
+              name: beian_enabled
+              id: beian_enabled
+              label: 是否开启备案信息？
+              placeholder: 请确认选择
+              options:
+                - label: 开启
+                  value: true
+                - label: 关闭
+                  value: false
+            - $formkit: group
+              name: beian_items
+              if: "$value.beian_enabled === true"
+              label: 备案信息设置
+              children:
+                - $formkit: text
+                  name: icp
+                  label: ICP备案
+                - $formkit: text
+                  name: gongan
+                  label: 公安备案

@@ -1,0 +1,47 @@
+<!doctype html>
+<html th:replace="~{modules/layout :: html(title = '友链' + ' - ' + ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+  <th:block th:fragment="content">
+    <th:block th:replace="~{modules/header}" />
+    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
+      <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
+        <div class="flex flex-col items-center justify-center space-y-4">
+          <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
+            <i class="fas fa-link text-2xl text-white sm:text-3xl"></i>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70">友情链接</h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300">因链接相识，愿美好同行</p>
+        </div>
+      </div>
+    </div>
+    <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <th:block th:each="group,iterStat : ${groups}">
+        <div class="mb-6">
+          <div class="mb-4 flex items-center space-x-2">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white" th:text="${group.spec.displayName}"></h2>
+            <div class="flex items-center space-x-0.5 text-sm text-gray-500 dark:text-gray-400">
+              <i class="fas fa-people-arrows text-gray-400 dark:text-gray-500"></i>
+              <span th:text="|${#lists.size(group.links)}个站点|"></span>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <a
+              class="flex items-center justify-between rounded-lg border border-gray-200 bg-gray-400/5 p-4 transition-all duration-300 hover:bg-gray-400/10 active:bg-gray-400/15 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700/50 dark:active:bg-gray-600/50"
+              th:each="link : ${group.links}"
+              th:href="${link.spec.url}"
+            >
+              <div class="flex min-w-0 flex-1 items-center space-x-3">
+                <img alt="Avatar" class="h-10 w-10 flex-shrink-0 rounded-full object-cover" th:src="${link.spec.logo}" />
+                <div class="min-w-0 flex-1">
+                  <h3 class="truncate text-sm font-medium text-gray-900 dark:text-white" th:text="${link.spec.displayName}"></h3>
+                  <p class="line-clamp-2 text-xs text-gray-600 dark:text-gray-400" th:text="${link.spec.description}"></p>
+                </div>
+              </div>
+              <i class="fas fa-external-link-alt ml-2 flex-shrink-0 text-xs text-gray-400"></i>
+            </a>
+          </div>
+        </div>
+      </th:block>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+  </th:block>
+</html>

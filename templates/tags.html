@@ -1,0 +1,81 @@
+<!doctype html>
+<html th:replace="~{modules/layout :: html(title = '标签归档' + ' - ' + ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+  <th:block th:fragment="content">
+    <th:block th:replace="~{modules/header}" />
+    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
+      <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
+        <div class="flex flex-col items-center justify-center space-y-4">
+          <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
+            <i class="fas fa-tags sm:text-3x l text-2xl text-white"></i>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70">标签归档</h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300">资源分类集合，快速定位所需内容</p>
+        </div>
+      </div>
+    </div>
+    <section class="mx-auto max-w-7xl px-2 py-8 md:px-4">
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <li
+          class="group space-y-3 overflow-hidden rounded-2xl bg-gray-400/5 p-4 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 dark:bg-white/5"
+          th:each="tag : ${tags}"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <i class="fas fa-tag"></i>
+              <span class="ml-1 text-sm font-medium" th:text="${tag.spec.displayName}"></span>
+            </div>
+            <div class="flex items-center space-x-0.5 text-xs text-gray-500 dark:text-gray-400">
+              <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
+              <span th:text="|${tag.postCount != null ? tag.postCount : 0} 篇文章|"></span>
+            </div>
+          </div>
+          <div class="rounded-md bg-gray-50/80 p-2 dark:bg-white/5" th:with="posts = ${postFinder.listByTag(1,1,'__${tag.metadata.name}__')}">
+            <dl class="text-gray-500 dark:text-gray-400" th:each="post : ${posts.items}" th:if="${postStat.index == 0}">
+              <dt class="flex items-center space-x-0.5 text-xs">
+                <i class="fas fa-clock"></i>
+                <span class="text-xs" th:text="|${#dates.format(post.spec.publishTime,'YYYY-MM-dd')}"></span>
+              </dt>
+              <dd class="text-xs">
+                <a
+                  class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
+                  th:href="@{/tags/{name}(name=${tag.spec.slug})}"
+                >
+                  <span class="text-sm font-medium" th:text="${post.spec.title}"></span>
+                  <div>
+                    <span>查看</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </a>
+              </dd>
+            </dl>
+            <div class="text-xs text-gray-500 dark:text-gray-400" th:if="${#lists.isEmpty(posts.items)}">
+              <dt class="flex items-center space-x-0.5 text-xs">
+                <i class="fas fa-clock"></i>
+                <span class="text-xs">暂无</span>
+              </dt>
+              <dd class="text-xs">
+                <a
+                  class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
+                  th:href="@{/tags/{name}(name=${tag.spec.slug})}"
+                >
+                  <span class="text-sm font-medium">暂未获取到当前文章</span>
+                  <div>
+                    <span>查看</span>
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+                </a>
+              </dd>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        initCategoryLoadMore();
+        categoryViewCount.init();
+      });
+    </script>
+  </th:block>
+</html>
