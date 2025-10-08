@@ -1,0 +1,115 @@
+<header class="fixed top-0 z-50 w-full border-b border-black/10 bg-gray-100 backdrop-blur-[20px] transition-colors duration-200 dark:border-b dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl p-4">
+    <div class="flex items-center justify-between">
+      <a class="flex flex-shrink-0 items-center space-x-2" th:href="${site.url}">
+        <img alt="logo" class="size-8 rounded-2xl bg-cover lg:h-10 lg:w-10" th:if="not ${#strings.isEmpty(site.logo)}" th:src="${site.logo}" />
+        <div>
+          <span class="font-display text-base font-bold sm:text-xl" th:text="${site.title}"></span>
+          <div class="text-xs text-gray-900 dark:text-white/40" th:if="not ${#strings.isEmpty(site.subtitle)}" th:text="${site.subtitle}"></div>
+        </div>
+      </a>
+      <ul class="hidden items-center justify-center whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
+        <th:block th:each="menuItem,iter : ${menu.menuItems}">
+          <li class="mx-2" th:if="${#lists.isEmpty(menuItem.children)}">
+            <a class="px-4 py-2 font-medium" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></a>
+          </li>
+          <li class="mx-2" th:unless="${#lists.isEmpty(menuItem.children)}">
+            <div class="relative flex cursor-pointer items-center justify-between px-4 py-2 font-medium" th:attr="id=|${menuItem.metadata.name}|" th:onclick="toggleMenu(this)">
+              <span class="h-full w-full" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></span>
+              <svg class="ml-2" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  clip-rule="evenodd"
+                  d="M4.293 7.793a1 1 0 0 1 1.414 0L12 14.086l6.293-6.293a1 1 0 1 1 1.414 1.414L13.414 15.5a2 2 0 0 1-2.828 0L4.293 9.207a1 1 0 0 1 0-1.414"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+              <ul
+                class="pointer-events-none absolute top-full left-1/2 z-10 mt-2 w-40 max-w-md -translate-x-1/2 translate-y-1 overflow-hidden rounded-2xl bg-white p-2 opacity-0 shadow-lg outline-1 -outline-offset-1 outline-white/10 backdrop-blur transition duration-200 ease-out dark:bg-gray-800"
+                th:attr="id=|children-${menuItem.metadata.name}|"
+              >
+                <li class="group relative flex items-center gap-x-6 rounded-lg text-sm leading-6" th:each="childMenuItem : ${menuItem.children}">
+                  <a
+                    class="flex-auto rounded-lg p-2 text-center hover:bg-gray-100 dark:hover:bg-white/5"
+                    th:href="@{${childMenuItem.status.href}}"
+                    th:target="${childMenuItem.spec.target?.value}"
+                  >
+                    <span class="block font-semibold text-gray-900 dark:text-white/70" th:text="${childMenuItem.status.displayName}"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </th:block>
+      </ul>
+      <div class="flex items-center">
+        <div
+          class="relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition-colors duration-150 ease-out will-change-[background-color] select-none dark:bg-gray-600"
+          id="theme-toggle"
+        >
+          <div
+            class="absolute top-0.5 left-0.5 flex h-4 w-4 transform-gpu items-center justify-center rounded-full bg-white text-xs shadow-md transition-transform duration-150 ease-out will-change-transform dark:bg-orange-400"
+            id="theme-toggle-slider"
+          ></div>
+        </div>
+        <button class="p-2 lg:hidden" id="mobile-btn">
+          <svg class="h-6 w-6 text-gray-500 dark:text-white" id="menu-icon" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16" id="icon-bar" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            <path class="hidden" d="M6 6l12 12M6 18L18 6" id="icon-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </button>
+        <a class="mx-2 hidden px-2 md:block" href="javascript:SearchWidget.open()" th:if="${pluginFinder.available('PluginSearchWidget')}" title="搜索">
+          <i class="fas fa-search"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="pointer-events-none fixed inset-0 z-40 overflow-hidden opacity-0 lg:hidden" id="mobile-menu">
+  <div class="absolute inset-0 bg-black/50 opacity-0 backdrop-blur-md transition-opacity will-change-[opacity]" id="mobile-backdrop"></div>
+  <div
+    class="border-white-dark fixed top-0 right-0 h-full w-64 max-w-full translate-x-full transform border-l border-solid bg-gray-100 backdrop-blur-xl transition-transform duration-300 ease-in-out md:w-96 dark:bg-gray-900"
+    id="mobile-panel"
+  >
+    <div class="flex h-full w-full flex-col justify-center px-10">
+      <ul class="space-y-2" th:with="menu = ${menuFinder.getPrimary()}">
+        <li class="flex items-center justify-between py-2 text-lg font-medium" th:if="${pluginFinder.available('PluginSearchWidget')}">
+          <a href="javascript:SearchWidget.open()" th:text="搜索" title="搜索"></a>
+          <i class="fas fa-search text-sm"></i>
+        </li>
+        <th:block th:each=" menuItem,iter : ${menu.menuItems}">
+          <li class="block py-2 text-lg font-medium" th:if="${#lists.isEmpty(menuItem.children)}">
+            <a target="_self" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></a>
+          </li>
+          <li class="menu-item block py-2 text-lg font-medium" th:unless="${#lists.isEmpty(menuItem.children)}">
+            <div class="flex cursor-pointer items-center justify-between">
+              <div
+                class="h-full w-full"
+                th:attr="id=|more-toggle-${menuItem.metadata.name}|"
+                th:target="${menuItem.spec.target?.value}"
+                th:text="${menuItem.status.displayName}"
+              ></div>
+              <svg
+                class="transform transition-transform duration-300"
+                height="16"
+                th:attr="id=|more-arrow-${menuItem.metadata.name}|"
+                viewBox="0 0 12 12"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M4.7 10c-.2 0-.4-.1-.5-.2c-.3-.3-.3-.8 0-1.1L6.9 6L4.2 3.3c-.3-.3-.3-.8 0-1.1s.8-.3 1.1 0l3.3 3.2c.3.3.3.8 0 1.1L5.3 9.7q-.3.3-.6.3" fill="currentColor" />
+              </svg>
+            </div>
+            <ul
+              class="border-apple-gray-300 pointer-events-none max-h-0 overflow-hidden border-l border-dashed pl-3 text-base font-medium opacity-0 transition-all duration-300 ease-in-out"
+            >
+              <li class="py-2 first:pt-3" th:each="childMenuItem : ${menuItem.children}">
+                <a target="_self" th:href="@{${childMenuItem.status.href}}" th:target="${childMenuItem.spec.target?.value}" th:text="${childMenuItem.status.displayName}"></a>
+              </li>
+            </ul>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+  </div>
+</div>

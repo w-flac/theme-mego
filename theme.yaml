@@ -1,0 +1,23 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-mego
+  annotations:
+    "store.halo.run/app-id": "app-meJsF"
+spec:
+  displayName: Mego
+  author:
+    name: 無.Flac
+    website: https://w-flac.org.cn
+  description: 一款现代化简约风格的原创主题，让你专注于图文创作或内容分享
+  logo: /themes/theme-mego/assets/images/mego_logo.png
+  homepage: https://w-flac.org.cn
+  repo:
+  issues:
+  settingName: "theme-mego-setting"
+  configMapName: "theme-mego-configMap"
+  version: 2.0.0
+  requires: ">=2.20.0"
+  license:
+    - name: "GPL-3.0"
+      url: ""

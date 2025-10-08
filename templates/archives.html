@@ -1,0 +1,148 @@
+<!doctype html>
+<html
+  th:replace="~{modules/layout :: html(title = '归档 - ' + ${site.title}, hero = null, content = ~{::content}, head = null, footer = null, sidebar = ~{::sidebar}, contentClass = '')}"
+  xmlns:th="https://www.thymeleaf.org"
+>
+  <th:block th:fragment="content">
+    <th:block th:replace="~{modules/header}" />
+    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
+      <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
+        <div class="mb-4 flex flex-col items-center justify-center space-y-4">
+          <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
+            <i class="fas fa-archive text-2xl text-white sm:text-3xl"></i>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="文章归档"></h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="按时间顺序浏览所有文章，探索知识的时间线"></p>
+        </div>
+        <div class="flex items-center justify-center space-x-4 text-xs text-gray-500 sm:flex-row sm:text-sm lg:space-x-8 dark:text-gray-400">
+          <div class="flex items-center">
+            <i class="fas fa-file-alt mr-2"></i>
+            <span th:text="|${stats.post} 篇文章|"></span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-eye mr-2"></i>
+            <span id="StatsVisit" th:text="${stats.visit}"></span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-heart mr-2"></i>
+            <span id="StatsUpvote" th:text="|${stats.upvote} 次点赞|"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="mx-auto max-w-7xl px-2 py-8 md:px-4" id="archive-post-wrapper">
+      <th:block th:each="archive : ${archives.items}">
+        <div class="archive-post mb-8" th:each="month : ${archive.months}">
+          <div class="mx-2 mb-4 md:mb-8 md:px-8">
+            <div class="flex items-center space-x-6">
+              <div class="flex items-center space-x-3">
+                <i class="fas fa-calendar text-gray-400 dark:text-gray-500"></i>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|">2025年1月</h2>
+              </div>
+              <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
+                <span th:text="|${#lists.size(month.posts)}篇文章|"></span>
+              </div>
+            </div>
+          </div>
+          <ul class="grid grid-cols-1 gap-6 md:px-8 lg:grid-cols-2">
+            <li th:each="post : ${month.posts}">
+              <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
+                <div class="relative h-72 sm:h-80">
+                  <img
+                    alt="images"
+                    class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                    loading="lazy"
+                    sizes="(max-width: 1600px) 100vw, 1600px"
+                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                    th:attr=" data-src=${'/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m'},
+                              data-srcset=${
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=s 400w, ' +
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m 800w, ' +
+                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=l 1200w'}"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
+                  <div class="absolute top-4 left-4 flex justify-center space-x-2">
+                    <a
+                      class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
+                      href=""
+                      th:each="categories : ${post.categories}"
+                      th:href="@{${categories.status.permalink}}"
+                      th:text="|${categories.spec.displayName}|"
+                      th:title="|分类：${categories.spec.displayName}|"
+                    ></a>
+                  </div>
+                  <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:if="${post.spec.pinned}">
+                    <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
+                  </div>
+                  <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
+                    <div class="mb-3 flex items-center space-x-5">
+                      <div class="flex items-center space-x-2">
+                        <img alt="" class="h-6 w-6 rounded-full object-cover ring-2 ring-white/20" th:src="${post.owner.avatar}" />
+                        <span class="text-xs text-white md:text-sm" th:text="${post.owner.displayName}"></span>
+                      </div>
+                      <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
+                        <i class="fas fa-calendar-day text-white/60"></i>
+                        <span th:text="|${#dates.format(post.spec.publishTime,'MM月dd日')}|"></span>
+                      </div>
+                    </div>
+                    <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
+                      <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+                    </h2>
+                    <a aria-label="read" class="overflow-hidden transition-all duration-500 ease-in-out" th:href="@{${post.status.permalink}}">
+                      <p
+                        class="mb-3 line-clamp-3 text-sm leading-relaxed text-white md:mb-4 md:text-base"
+                        th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-1' : '')}"
+                        th:text="${post.status.excerpt}"
+                      ></p>
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3 text-xs text-white/80 md:space-x-4 md:text-sm">
+                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                            <i class="fas fa-eye"></i>
+                            <span th:text="|${post.stats?.visit ?:0}|"></span>
+                          </div>
+                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                            <i class="fas fa-comment"></i>
+                            <span th:text="|${post.stats?.comment ?:0}|"></span>
+                          </div>
+                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                            <i class="fas fa-heart"></i>
+                            <span th:text="|${post.stats?.upvote ?:0}|"></span>
+                          </div>
+                        </div>
+                        <button class="cursor-pointer p-2 text-xs font-medium text-white transition-colors hover:text-blue-300 md:text-sm">
+                          <a
+                            aria-label="read"
+                            class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
+                            th:href="@{${post.status.permalink}}"
+                          >
+                            <span th:text="阅读更多"></span>
+                            <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
+                          </a>
+                        </button>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </th:block>
+      <th:block th:if="${archives.hasNext()}">
+        <div class="mt-8 text-center" id="load-more-container"></div>
+      </th:block>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+    <script>
+      const StatsVisit = document.getElementById("StatsVisit");
+      if (StatsVisit) {
+        const rawValue = parseInt(StatsVisit.textContent.replace(/\D/g, ""), 10) || 0;
+        StatsVisit.textContent = categoryViewCount.formatViews(rawValue) + " 访问";
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        initArchiveLoadMore();
+      });
+    </script>
+  </th:block>
+</html>

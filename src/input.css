@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/aspect-ratio";
+@import "./all.min.css";
+@import "./main.css";
+@custom-variant dark (&:where([data-color-scheme=dark], [data-color-scheme=dark] *));
+
+.prose :where(img) {
+    @apply my-0 aspect-auto object-contain;
+}
+
+.prose :where(blockquote, h1, h2, h3, h4, h5, h6) {
+    @apply text-gray-900 dark:text-white/70;
+}
+
+.prose :where(table, tr, td, a) {
+    @apply !text-gray-900 dark:!text-white/70;
+}
+
+.prose :where(td) {
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.prose :where(table) {
+    @apply !w-full;
+}
+
+.prose :where(pre) {
+    @apply pt-0 pr-0 pb-0 pl-0;
+}
+
+:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+    content: "";
+}
+
+.prose :where(p code) {
+    @apply rounded-sm bg-gray-400/20 p-1 text-gray-900/80 dark:bg-white/25 dark:text-white/80;
+}
+
+@utility scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

@@ -1,0 +1,44 @@
+<footer class="mx-auto my-8 max-w-7xl space-y-2 overflow-hidden">
+  <ul class="flex justify-center gap-x-6" th:if="${theme.config.index_footer.footer_social.social_enabled}">
+    <th:block th:with="social = ${theme.config.index_footer.footer_social.footer_social_items}">
+      <li th:each="social_item : ${social}">
+        <a
+          class="inline-block size-5 lg:size-6 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-50"
+          target="_blank"
+          th:classappend="${social_item.icon}"
+          th:href="${social_item.url}"
+          th:title="${social_item.name}"
+        ></a>
+      </li>
+    </th:block>
+  </ul>
+  <div class="text-center text-xs sm:text-sm text-gray-600 lg:px-8 dark:text-gray-400">
+    <th:block th:if="${theme.config.index_footer.footer_other.other_enabled ?: true}">
+      <p th:with="theme = ${themeFinder.activation()}">
+        Powered by
+        <a href="https://halo.run" target="_blank">Halo.</a>
+        Theme by
+        <a href="https://ink.halotheme.cn" target="_blank" th:text="${theme.spec.displayName}"></a>
+      </p>
+    </th:block>
+    <p>
+      &copy;
+      <span th:text=" ${#dates.format(new java.util.Date().getTime(), 'yyyy' )}"></span>
+      <a href="/" th:text="${theme.config.index.site.title ?: site.title}"></a>
+      . All Rights Reserved
+      <br />
+    </p>
+    <th:block th:if="${theme.config.index_footer.footer_other.beian_enabled}">
+      <div class="flex items-center justify-center" th:with="beian = ${theme.config.index_footer.footer_other.beian_items}">
+        <a href="https://beian.miit.gov.cn/" th:if="${beian.icp}" th:text="|${beian.icp} &nbsp;|"></a>
+        <th:block th:if="${beian.gongan != null and beian.gongan != ''}">
+          <img alt="beian" class="size-3 sm:size-4" th:src="@{/assets/images/gongan.png}">
+          <a class="ml-1" href="https://beian.mps.gov.cn/#/query/webSearch" th:text="${beian.gongan}"></a>
+        </th:block>
+      </div>
+    </th:block>
+  </div>
+  <div class="mt-2 flex flex-col items-center justify-center text-sm text-gray-600 lg:px-8 dark:text-gray-400">
+    <halo:footer />
+  </div>
+</footer>

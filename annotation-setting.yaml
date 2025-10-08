@@ -1,0 +1,53 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  generateName: annotation-setting-
+spec:
+  targetRef:
+    group: "content.halo.run"
+    kind: Category
+  formSchema:
+    - $formkit: "select"
+      name: "color"
+      label: "背景颜色"
+      help: "自定义分类背景颜色"
+      clearable: true
+      options:
+        - label: 静谧星空
+          value: gradient-bg-1
+        - label: 玫红暮光
+          value: gradient-bg-2
+        - label: 蓝海微风
+          value: gradient-bg-3
+        - label: 翠绿清泉
+          value: gradient-bg-4
+        - label: 花漾晨曦
+          value: gradient-bg-5
+        - label: 梦境薄雾
+          value: gradient-bg-6
+        - label: 樱花晨曦
+          value: gradient-bg-7
+        - label: 梦幻紫霞
+          value: gradient-bg-8
+        - label: 奶油草莓
+          value: gradient-bg-9
+        - label: 薄荷清泉
+          value: gradient-bg-10
+        - label: 暖橙日落
+          value: gradient-bg-11
+        - label: 烈焰余晖
+          value: gradient-bg-12
+        - label: 深海极光
+          value: gradient-bg-13
+        - label: 云雾轻纱
+          value: gradient-bg-14
+        - label: 蜜桃气泡
+          value: gradient-bg-15
+    - $formkit: "text"
+      name: "font"
+      label: "分类图标"
+      clearable: true
+      help: "字体链接:https://fontawesome.com/search?f=classic&s=solid&ic=free&o=r"
+
+---
+
