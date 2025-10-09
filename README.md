@@ -1,4 +1,4 @@
- <div style="text-align: center;">
+ <div align="center">
   <h1>MEGO主题</h1>
   <p style="font-weight:500;">
     一款基于Halo建站工具的现代化简约风格的原创主题，让你专注于图文创作或内容分享
@@ -7,7 +7,7 @@
 
 ![](/images/hero.webp)
 
-<p style="text-align: center;">
+<p align="center">
   <a href="https://halo.run" target="_blank">
     <img
       src="https://img.shields.io/badge/dynamic/yaml?label=Halo&query=%24.spec.requires&url=https://raw.githubusercontent.com/w-flac/theme-mego/master/theme.yaml&color=113,195,71"
@@ -30,7 +30,7 @@
   </a>
 </p>
 
-<p style="text-align: center; font-size:18px">
+<p align="center">
   <a href="https://www.itheme.net/docs/theme-mego" target="_blank">
  <  使用文档  >
   </a>
