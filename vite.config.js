@@ -1,11 +1,15 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 import fs from "fs";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // ==============================
 // 🔧 基础路径常量
 // ==============================
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const SRC_DIR = resolve(__dirname, "src/js");
 const OUT_DIR = resolve(__dirname, "templates/assets/js");
 const LIB_DIR = resolve(SRC_DIR, "lib");

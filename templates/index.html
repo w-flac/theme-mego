@@ -2,6 +2,7 @@
 <html th:replace="~{modules/layout :: html(title = ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
+    <!-- Hero Module -->
     <section class="relative top-0 left-0 z-0 h-screen" th:if="${theme.config.index_hero.hero_enabled == true}">
       <div
         class="fixed h-screen min-h-screen w-full scale-100 transform bg-cover bg-center bg-no-repeat will-change-transform"
@@ -112,7 +113,8 @@
       </div>
       <div class="pointer-events-none fixed z-10 h-screen min-h-screen w-full bg-black/80 opacity-0 will-change-[opacity]" id="shade"></div>
     </section>
-    <div class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
+    <!-- Index Module -->
+    <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <div
         class="mx-auto max-w-7xl p-2 md:py-24 lg:px-8"
         th:classappend="${theme.config.index_hero.hero_enabled == false} ? 'pt-18' : ''"
@@ -165,18 +167,30 @@
             <li th:each="post : ${posts.items}">
               <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
                 <div class="relative h-72 sm:h-80">
-                  <img
-                    alt="images"
-                    class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                    loading="lazy"
-                    sizes="(max-width: 1600px) 100vw, 1600px"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                    th:attr=" data-src=${'/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m'},
-                              data-srcset=${
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=s 400w, ' +
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m 800w, ' +
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=l 1200w'}"
-                  />
+                  <th:block th:if="${not #strings.isEmpty(post.spec.cover)}">
+                    <img
+                      alt="images"
+                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                      loading="lazy"
+                      sizes="(max-width: 1600px) 100vw, 1600px"
+                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                      th:src="${post.spec.cover}"
+                      th:alt="${post.spec.title}"
+                      th:attr="data-src=${post.spec.cover},
+                               srcset=|${thumbnail.gen(post.spec.cover, 's')} 400w, ${thumbnail.gen(post.spec.cover, 'm')} 800w, ${thumbnail.gen(post.spec.cover, 'l')} 1200w|"
+                    />
+                  </th:block>
+                  <th:block th:if="${#strings.isEmpty(post.spec.cover)}">
+                    <img
+                      alt="images"
+                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                      loading="lazy"
+                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                      th:src="${#theme.assets('/images/blog.avif')}"
+                      th:attr="data-src=${#theme.assets('/images/blog.avif')}"
+                      th:alt="${post.spec.title}"
+                    />
+                  </th:block>
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
                   <div class="absolute top-4 left-4 flex justify-center space-x-2">
                     <a
@@ -248,8 +262,9 @@
           </th:block>
         </div>
       </section>
-    </div>
-    <div class="absolute z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
+    </section>
+    <!-- other Module -->
+    <section class="absolute z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <div class="mx-auto max-w-7xl px-4 sm:py-24 md:px-8" th:if="${theme.config.index_other.category.category_enabled == true}">
         <div class="mb-12 text-center">
           <h2
@@ -326,7 +341,7 @@
         </div>
       </div>
       <th:block th:replace="~{modules/footer}" />
-    </div>
+    </section>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         initLoadMore();

@@ -5,6 +5,7 @@
 >
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
+    <!--  Archives Title  -->
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
       <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
         <div class="mb-4 flex flex-col items-center justify-center space-y-4">
@@ -30,6 +31,7 @@
         </div>
       </div>
     </div>
+    <!--  Archives Card -->
     <section class="mx-auto max-w-7xl px-2 py-8 md:px-4" id="archive-post-wrapper">
       <th:block th:each="archive : ${archives.items}">
         <div class="archive-post mb-8" th:each="month : ${archive.months}">
@@ -37,7 +39,7 @@
             <div class="flex items-center space-x-6">
               <div class="flex items-center space-x-3">
                 <i class="fas fa-calendar text-gray-400 dark:text-gray-500"></i>
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|">2025年1月</h2>
+                <h2 class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|"></h2>
               </div>
               <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                 <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
@@ -49,18 +51,30 @@
             <li th:each="post : ${month.posts}">
               <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
                 <div class="relative h-72 sm:h-80">
-                  <img
-                    alt="images"
-                    class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                    loading="lazy"
-                    sizes="(max-width: 1600px) 100vw, 1600px"
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                    th:attr=" data-src=${'/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m'},
-                              data-srcset=${
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=s 400w, ' +
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=m 800w, ' +
-                              '/apis/api.storage.halo.run/v1alpha1/thumbnails/-/via-uri?uri=' + (post.spec.cover ?: #theme.assets('/images/blog.avif')) + '&size=l 1200w'}"
-                  />
+                  <th:block th:if="${not #strings.isEmpty(post.spec.cover)}">
+                    <img
+                      alt="images"
+                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                      loading="lazy"
+                      sizes="(max-width: 1600px) 100vw, 1600px"
+                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                      th:src="${post.spec.cover}"
+                      th:alt="${post.spec.title}"
+                      th:attr="data-src=${post.spec.cover},
+                               srcset=|${thumbnail.gen(post.spec.cover, 's')} 400w, ${thumbnail.gen(post.spec.cover, 'm')} 800w, ${thumbnail.gen(post.spec.cover, 'l')} 1200w|"
+                    />
+                  </th:block>
+                  <th:block th:if="${#strings.isEmpty(post.spec.cover)}">
+                    <img
+                      alt="images"
+                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+                      loading="lazy"
+                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                      th:src="${#theme.assets('/images/blog.avif')}"
+                      th:attr="data-src=${#theme.assets('/images/blog.avif')}"
+                      th:alt="${post.spec.title}"
+                    />
+                  </th:block>
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
                   <div class="absolute top-4 left-4 flex justify-center space-x-2">
                     <a

@@ -532,9 +532,12 @@ function lazyLoadImages(targets, attr = "data-src", rootMargin = "100px") {
           const el = entry.target;
           const url = el.getAttribute(attr);
           if (url) {
-            el.src = url;
             el.onload = () => el.classList.add("opacity-100");
+            if (el.src && !el.src.startsWith("data:image")) {
+              el.classList.add("opacity-100");
+            }
           }
+          obs.unobserve(el);
           obs.unobserve(el);
         }
       });

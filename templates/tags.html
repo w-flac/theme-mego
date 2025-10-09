@@ -2,6 +2,7 @@
 <html th:replace="~{modules/layout :: html(title = '标签归档' + ' - ' + ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
+    <!--  Tags Title  -->
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
       <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
         <div class="flex flex-col items-center justify-center space-y-4">
@@ -14,6 +15,7 @@
       </div>
     </div>
     <section class="mx-auto max-w-7xl px-2 py-8 md:px-4">
+      <!--  Tags  -->
       <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <li
           class="group space-y-3 overflow-hidden rounded-2xl bg-gray-400/5 p-4 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 dark:bg-white/5"
