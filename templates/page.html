@@ -2,8 +2,7 @@
 <html th:replace="~{modules/layout :: html(title = |${singlePage.spec.title} - ${site.title}|, head = ~{::head},content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
-    <img alt="封面" class="mt-18 h-48 lg:h-80 w-full object-cover aspect-square"
-         th:src="${singlePage.spec.cover ?: #theme.assets('/images/hello_mego.webp')}">
+    <img alt="封面" class="mt-18 aspect-square h-48 w-full object-cover lg:h-80" th:src="${singlePage.spec.cover ?: #theme.assets('/images/hello_mego.webp')}" />
     <div class="mx-auto mt-6 max-w-7xl px-4 pb-8 sm:px-6 lg:mt-12 lg:px-8">
       <div class="grid grid-cols-1 gap-8 xl:grid-cols-4">
         <div class="space-y-8 lg:col-span-3 lg:mr-4">
@@ -18,17 +17,17 @@
             <div class="mb-4">
               <div class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">
                 <i class="fas fa-circle-info mr-2 text-blue-600 dark:text-white"></i>
-                <span th:text="概览"></span>
+                <span>概览</span>
               </div>
             </div>
             <ul class="grid grid-cols-3 gap-2 text-center">
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${singlePage.stats?.visit ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="阅读"></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">阅读</p>
               </li>
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${singlePage.stats?.comment ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="评论"></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">评论</p>
               </li>
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span
@@ -36,11 +35,11 @@
                   th:attr="data-upvote-sidebar-name=${singlePage.metadata.name}"
                   th:text="${singlePage.stats?.upvote ?:0}"
                 ></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="点赞"></p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">点赞</p>
               </li>
             </ul>
           </div>
-          <div  class="rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5" id="tocbot">
+          <div class="rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5" id="tocbot">
             <div class="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
               <i class="fas fa-list-ul mr-2 text-blue-600 dark:text-white"></i>
               <span>目录</span>
@@ -62,7 +61,7 @@
                   <p class="text-sm font-medium text-gray-900 dark:text-white">
                     <span th:attr="data-upvote-post-name=${singlePage.metadata.name}" th:text="|${singlePage.stats?.upvote ?:0} 人已点赞|"></span>
                   </p>
-                  <p class="upvote-message text-xs text-gray-500 dark:text-gray-400" th:text="点个赞支持一下呗~"></p>
+                  <p class="upvote-message text-xs text-gray-500 dark:text-gray-400">点个赞支持一下呗~</p>
                 </div>
               </div>
             </div>
