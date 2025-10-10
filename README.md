@@ -53,7 +53,20 @@
 
 
 ---
-c## 👉🏻 安装与配置
+
+## 📦 主题适配
+- [x] [评论组件](https://halo.run/store/plugins/comment) - 为用户前台提供完整的评论解决方案。
+- [x] [灯箱插件](https://www.halo.run/store/apps/app-OoggD) - 提供对 lightgallery.js 的集成，支持在内容页放大显示图片。
+- [x] [搜索组件](https://www.halo.run/store/apps/app-DlacW) - Halo 2.0 的通用搜索组件插件。
+- [x] [图库管理](https://www.halo.run/store/apps/app-BmQJW) - Halo 2.0 的图库管理模块。
+- [x] [链接管理](https://www.halo.run/store/apps/app-hfbQg) - 链接管理模块，可用于管理网站友情链接。
+- [x] [文章订阅](https://www.halo.run/store/apps/app-yldNX) - 允许用户轻松订阅您的网站或博客，及时获取最新文章通知。
+- [x] 文章目录 - 支持自动生成文章目录，方便阅读。
+- [x] 明暗切换 - 提供夜间模式和日间模式切换功能。
+- [x] 字数统计 - 自动统计文章字数，估算阅读时间。
+
+
+## 👉🏻 安装与配置
 
 1. 直接通过后台应用市场安装.
 2. 下载Releases，通过Halo后台主题安装处上传即可。
