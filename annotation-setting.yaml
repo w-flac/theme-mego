@@ -9,6 +9,8 @@ spec:
   formSchema:
     - $formkit: "select"
       name: "color"
+      id: "color"
+      key: "color"
       label: "背景颜色"
       help: "自定义分类背景颜色"
       clearable: true
@@ -45,6 +47,8 @@ spec:
           value: gradient-bg-15
     - $formkit: "text"
       name: "font"
+      id: "font"
+      key: "font"
       label: "分类图标"
       clearable: true
       help: "字体链接:https://fontawesome.com/search?f=classic&s=solid&ic=free&o=r"
