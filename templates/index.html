@@ -25,27 +25,53 @@
                 <div class="space-y-6 lg:space-y-10">
                   <div class="space-y-2">
                     <div
-                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md duration-300 hover:scale-105 hover:shadow-xl dark:from-blue-500/20 dark:to-purple-500/20"
+                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md dark:from-blue-500/20 dark:to-purple-500/20"
                       th:if="${theme.config.index_hero.hero_title.label}"
                     >
                       <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
-                      <span class="text-sm font-semibold text-gray-100" th:text="${theme.config.index_hero.hero_title.label ?: '基于强大易用的开源的建站工具'}"></span>
+                      <!--                      <span class="text-sm font-semibold text-gray-100" th:text="${theme.config.index_hero.hero_title.label ?: '基于强大易用的开源的建站工具'}"></span>-->
+                      <span
+                        class="text-sm font-semibold text-gray-100"
+                        th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}"
+                        th:text="${theme.config.index_hero.hero_title.label}"
+                      ></span>
+                      <span
+                        class="text-sm font-semibold text-gray-100"
+                        th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}"
+                        th:text="#{common.hero.label}"
+                      ></span>
                     </div>
                     <h1
                       class="title_text leading-tight font-bold text-white drop-shadow-lg transition-colors duration-300 dark:text-white/90"
                       th:classappend="${heroTitle_subtitle == 'long' ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl' : 'text-3xl sm:text-5xl xl:text-6xl'}"
                     >
-                      <span th:text="${theme.config.index_hero.hero_title.title ?: '欢迎使用MEGO主题'}"></span>
-                      <span
-                        class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
-                        th:if="${theme.config.index_hero.hero_title.enabled == true}"
-                        th:text="${theme.config.index_hero.hero_title.subtitle}"
-                      ></span>
+                      <span th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.title)}" th:text="${theme.config.index_hero.hero_title.title}"></span>
+                      <span th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.title)}" th:text="#{common.hero.title}"></span>
+
+                      <th:block th:if="${theme.config.index_hero.hero_title.enabled == true}">
+                        <span
+                          class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                          th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}"
+                          th:text="${theme.config.index_hero.hero_title.subtitle}"
+                        ></span>
+                        <span
+                          class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                          th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}"
+                          th:text="#{common.hero.subtitle}"
+                        ></span>
+                      </th:block>
                     </h1>
                     <p
                       th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
                       class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
-                      th:text="${theme.config.index_hero.hero_title.description ?: 'MEGO主题是一款基于TailwindCSS框架开发、具有简洁、优雅、响应式等的特点，可以帮助您快速搭建一个属于自己的博客网站。'}"
+                      th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}"
+                      th:text="${theme.config.index_hero.hero_title.description}"
+                    ></p>
+                    <p
+                      th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
+                      class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
+                      th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}"
+                      th:text="#{common.hero.description}"
                     ></p>
                   </div>
                   <div class="space-y-6">
@@ -138,12 +164,13 @@
           >
             <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8 dark:bg-white/5" th:each="stat_item : ${theme.config.index_intro.website.type}">
               <div class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300" th:switch="${stat_item.type_items}">
-                <span th:case="'visit'" th:text="访问数量"></span>
-                <span th:case="'upvote'" th:text="点赞数量"></span>
-                <span th:case="'comment'" th:text="评论数量"></span>
-                <span th:case="'post'" th:text="文章数量"></span>
-                <span th:case="'category'" th:text="分类数量"></span>
-                <span th:case="*" th:text="${stat_item.subtitle ?: '未命名'}"></span>
+                <span th:case="'visit'" th:text="#{widget.profile.postCount.label}"></span>
+                <span th:case="'upvote'" th:text="#{widget.profile.upvote.label}"></span>
+                <span th:case="'comment'" th:text="#{widget.profile.commentCount.label}"></span>
+                <span th:case="'post'" th:text="#{widget.profile.postCount.label}"></span>
+                <span th:case="'category'" th:text="#{widget.profile.categoryCount.label}"></span>
+                <span th:if="${!#strings.isEmpty(stat_item.subtitle)}" th:text="${stat_item.subtitle}"></span>
+                <span th:if="${#strings.isEmpty(stat_item.subtitle)}" th:text="#{widget.profile.otherCount.label}"></span>
               </div>
               <p class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white" th:switch="${stat_item.type_items}">
                 <span th:attr="data-target=${stats.visit}, data-use-commas=true" th:case="'visit'"></span>
@@ -164,11 +191,25 @@
           <div class="mb-12 text-center">
             <h2
               class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-              th:text="${theme.config.index_blog.blog.blog_title ?: '最新博客'}"
+              th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}"
+              th:text="${theme.config.index_blog.blog.blog_title}"
             ></h2>
-            <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="${theme.config.index_blog.blog.blog_subtitle ?: '探索精彩内容，发现无限可能'}"></p>
+            <h2
+              class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
+              th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}"
+              th:text="#{widget.index.module.newPosts.title}"
+            ></h2>
+            <p
+              class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+              th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}"
+              th:text="${theme.config.index_blog.blog.blog_subtitle}"
+            ></p>
+            <p
+              class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+              th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}"
+              th:text="#{widget.index.module.newPosts.subtitle}"
+            ></p>
           </div>
-
           <ul class="grid grid-cols-1 gap-4 sm:gap-8 md:px-8" th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'lg:grid-cols-1' : 'lg:grid-cols-2'}">
             <li th:each="post : ${posts.items}" th:attr="id=|post-${post.metadata.name}|">
               <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
@@ -219,7 +260,16 @@
                       </div>
                       <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
                         <i class="fas fa-calendar-day text-white/60"></i>
-                        <span class="text-xs text-white/80 md:text-sm" th:text="|${#dates.format(post.spec.publishTime,'MM月dd日')}"></span>
+                        <span
+                          class="text-xs text-white/80 md:text-sm"
+                          th:if="${#locale.language == 'zh'}"
+                          th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+                        ></span>
+                        <span
+                          class="text-xs text-white/80 md:text-sm"
+                          th:if="${#locale.language != 'zh'}"
+                          th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+                        ></span>
                       </div>
                     </div>
                     <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
@@ -252,7 +302,7 @@
                             class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
                             th:href="@{${post.status.permalink}}"
                           >
-                            <span>阅读更多</span>
+                            <span th:text="#{widget.index.module.readMore}"></span>
                             <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
                           </a>
                         </button>
@@ -274,10 +324,25 @@
       <div class="mx-auto max-w-7xl px-4 sm:py-24 md:px-8" th:if="${theme.config.index_other.category.category_enabled == true}">
         <div class="mb-12 text-center">
           <h2
-            class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-            th:text="${theme.config.index_other.category_items.category_title ?: '分类库'}"
+            th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}"
+            th:text="${theme.config.index_other.category.category_items.category_title}"
+            class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
           ></h2>
-          <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="${theme.config.index_other.category_items.category_subtitle ?: '资源分类集合，快速定位所需内容'}"></p>
+          <h2
+            th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}"
+            th:text="#{widget.index.module.category.title}"
+            class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
+          ></h2>
+          <p
+            th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}"
+            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+            th:text="${theme.config.index_other.category.category_items.category_subtitle}"
+          ></p>
+          <p
+            th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}"
+            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+            th:text="#{widget.index.module.category.subtitle}"
+          ></p>
         </div>
         <ul class="grid grid-cols-3 gap-4 pb-12 xl:flex xl:flex-wrap xl:justify-center">
           <li
@@ -299,9 +364,24 @@
         <div class="mb-12 text-center">
           <h2
             class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-            th:text="${theme.config.index_tag.tags.tags_items.tags_title ?: '标签云'}"
+            th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}"
+            th:text="${theme.config.index_other.tags.tags_items.tags_title}"
           ></h2>
-          <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="${theme.config.index_tag.tags.tags_items.tags_subtitle ?: '可视化标签展示，一键直达相关内容'}"></p>
+          <h2
+            class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
+            th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}"
+            th:text="#{widget.index.module.tag.title}"
+          ></h2>
+          <p
+            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+            th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}"
+            th:text="${theme.config.index_other.tags.tags_items.tags_subtitle}"
+          ></p>
+          <p
+            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
+            th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}"
+            th:text="#{widget.index.module.tag.subtitle}"
+          ></p>
         </div>
 
         <div class="mb-8 rounded-2xl bg-gray-400/5 p-4 sm:px-10 sm:py-12 dark:bg-white/5">
@@ -322,11 +402,23 @@
             <div class="mx-auto max-w-xl space-y-2 text-left lg:max-w-lg">
               <h2
                 class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"
-                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_title ?: '订阅获取最新资讯'}"
+                th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}"
+                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_title}"
+              ></h2>
+              <h2
+                class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"
+                th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}"
+                th:text="#{widget.index.module.subscribe.title}"
               ></h2>
               <p
-                class="text-lg text-gray-600 dark:text-gray-300"
-                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle ?: '加入我们的订阅社区，获取独家内容与深度分析。与志同道合的专业人士交流见解，共同探索行业未来发展方向。'}"
+                class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300"
+                th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
+                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle}"
+              ></p>
+              <p
+                class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300"
+                th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
+                th:text="#{widget.index.module.subscribe.subtitle}"
               ></p>
               <follow-card show-title="false"></follow-card>
             </div>
@@ -340,7 +432,11 @@
                   <i class="text-gray-600 dark:text-white" th:classappend="${subscribe_slogan.icon}"></i>
                 </div>
                 <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
-                <p class="mt-2 text-base/7 text-gray-600 dark:text-gray-400" th:text="${subscribe_slogan.subtitle}"></p>
+                <p
+                  class="mt-2 line-clamp-3 text-base/7 leading-relaxed break-words text-gray-600 dark:text-gray-400"
+                  th:text="${subscribe_slogan.subtitle}"
+                  style="hyphens: auto"
+                ></p>
               </li>
             </ul>
           </div>
@@ -350,7 +446,6 @@
     </section>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        initLoadMore();
         styleFollowCard();
       });
     </script>
