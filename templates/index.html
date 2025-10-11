@@ -20,94 +20,100 @@
             id="text"
             style="transform: translateY(var(--parallax-y, 0))"
           >
-            <div class="mx-auto max-w-4xl text-center sm:px-6 lg:px-8">
-              <div class="space-y-6 lg:space-y-10">
-                <div class="space-y-2">
-                  <div
-                    class="animate-float title_label inline-flex items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md duration-300 hover:scale-105 hover:shadow-xl dark:from-blue-500/20 dark:to-purple-500/20"
-                    th:if="${theme.config.index_hero.hero_title.label}"
-                  >
-                    <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
-                    <span class="text-sm font-semibold text-gray-100" th:text="${theme.config.index_hero.hero_title.label ?: '基于强大易用的开源的建站工具'}"></span>
+            <th:block th:with="heroTitle_subtitle = ${theme.config.index_hero.hero_title.subtitle_enabled}">
+              <div class="mx-auto text-center sm:px-6 lg:px-8" th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-7xl' : 'max-w-4xl'}">
+                <div class="space-y-6 lg:space-y-10">
+                  <div class="space-y-2">
+                    <div
+                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md duration-300 hover:scale-105 hover:shadow-xl dark:from-blue-500/20 dark:to-purple-500/20"
+                      th:if="${theme.config.index_hero.hero_title.label}"
+                    >
+                      <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
+                      <span class="text-sm font-semibold text-gray-100" th:text="${theme.config.index_hero.hero_title.label ?: '基于强大易用的开源的建站工具'}"></span>
+                    </div>
+                    <h1
+                      class="title_text leading-tight font-bold text-white drop-shadow-lg transition-colors duration-300 dark:text-white/90"
+                      th:classappend="${heroTitle_subtitle == 'long' ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl' : 'text-3xl sm:text-5xl xl:text-6xl'}"
+                    >
+                      <span th:text="${theme.config.index_hero.hero_title.title ?: '欢迎使用MEGO主题'}"></span>
+                      <span
+                        class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                        th:if="${theme.config.index_hero.hero_title.enabled == true}"
+                        th:text="${theme.config.index_hero.hero_title.subtitle}"
+                      ></span>
+                    </h1>
+                    <p
+                      th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
+                      class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
+                      th:text="${theme.config.index_hero.hero_title.description ?: 'MEGO主题是一款基于TailwindCSS框架开发、具有简洁、优雅、响应式等的特点，可以帮助您快速搭建一个属于自己的博客网站。'}"
+                    ></p>
                   </div>
-                  <h1 class="title_text text-4xl leading-tight font-bold text-white drop-shadow-lg transition-colors duration-300 sm:text-6xl xl:text-7xl dark:text-white/90">
-                    <span th:text="${theme.config.index_hero.hero_title.title ?: '欢迎使用MEGO主题'}"></span>
-                    <span
-                      class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
-                      th:if="${theme.config.index_hero.hero_title.enabled == true}"
-                      th:text="${theme.config.index_hero.hero_title.subtitle}"
-                    ></span>
-                  </h1>
-                  <p
-                    class="title_description max-w-2xl px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
-                    th:text="${theme.config.index_hero.hero_title.description ?: 'MEGO主题是一款基于TailwindCSS框架开发、具有简洁、优雅、响应式等的特点，可以帮助您快速搭建一个属于自己的博客网站。'}"
-                  ></p>
-                </div>
-                <div class="space-y-6">
-                  <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8">
-                    <a
-                      class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
-                      th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
-                      th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
-                    >
-                      <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
-                        <svg class="mr-1 h-4 w-4 transition-transform group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
-                          <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                        </svg>
-                        <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title1}"></span>
-                      </div>
-                      <div
-                        class="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      ></div>
-                      <div
-                        class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                      ></div>
-                      <div
-                        class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 blur transition-opacity duration-500 group-hover:opacity-75"
-                      ></div>
-                    </a>
-                    <a
-                      class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-white/20 hover:shadow-white/5 sm:rounded-2xl sm:text-base sm:shadow-xl sm:hover:-translate-y-2 md:text-lg"
-                      th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url2}"
-                      th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
-                    >
-                      <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
-                        <svg class="mr-1 h-4 w-4 transition-transform duration-300 group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
+                  <div class="space-y-6">
+                    <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8">
+                      <a
+                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
+                        th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
+                        th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
+                      >
+                        <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
+                          <svg class="mr-1 h-4 w-4 transition-transform group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                          </svg>
+                          <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title1}"></span>
+                        </div>
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                        ></div>
+                        <div
+                          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                        ></div>
+                        <div
+                          class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 blur transition-opacity duration-500 group-hover:opacity-75"
+                        ></div>
+                      </a>
+                      <a
+                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-white/20 hover:shadow-white/5 sm:rounded-2xl sm:text-base sm:shadow-xl sm:hover:-translate-y-2 md:text-lg"
+                        th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url2}"
+                        th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
+                      >
+                        <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
+                          <svg class="mr-1 h-4 w-4 transition-transform duration-300 group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            ></path>
+                          </svg>
+                          <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title2}"></span>
+                        </div>
+                        <div
+                          class="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                        ></div>
+                        <div
+                          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                        ></div>
+                        <div
+                          class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-white/20 to-white/10 opacity-0 blur transition-opacity duration-500 group-hover:opacity-50"
+                        ></div>
+                      </a>
+                    </div>
+                    <div class="flex items-center justify-center space-x-8 text-sm text-white/70" th:if="${theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
+                      <div class="title_signs flex items-center" th:each="hero_signs_item : ${theme.config.index_hero.hero_signs.hero_signs_items.hero_signs_items}">
+                        <svg class="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                           <path
-                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            clip-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            fill-rule="evenodd"
                           ></path>
                         </svg>
-                        <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title2}"></span>
+                        <span th:text="${hero_signs_item.text}"></span>
                       </div>
-                      <div
-                        class="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      ></div>
-                      <div
-                        class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                      ></div>
-                      <div
-                        class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-white/20 to-white/10 opacity-0 blur transition-opacity duration-500 group-hover:opacity-50"
-                      ></div>
-                    </a>
-                  </div>
-                  <div class="flex items-center justify-center space-x-8 text-sm text-white/70" th:if="${theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
-                    <div class="title_signs flex items-center" th:each="hero_signs_item : ${theme.config.index_hero.hero_signs.hero_signs_items.hero_signs_items}">
-                      <svg class="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          clip-rule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          fill-rule="evenodd"
-                        ></path>
-                      </svg>
-                      <span th:text="${hero_signs_item.text}"></span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </th:block>
           </div>
         </div>
       </div>

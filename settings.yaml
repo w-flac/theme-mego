@@ -52,6 +52,21 @@ spec:
                   value: true
                 - label: 否
                   value: false
+            - $formkit: select
+              name: subtitle_enabled
+              id: subtitle_enabled
+              key: subtitle_enabled
+              if: "$value.enabled === true"
+              label: 副标题类型
+              value: "short"
+              options:
+                  - label: 长文本
+                    value: "long"
+                    if: "$value.subtitle_enabled === 'long'"
+                  - label: 短文本
+                    value: "short"
+                    if: "$value.subtitle_enabled === true"
+              placeholder: 请确认选择
             - $formkit: text
               name: subtitle
               id: subtitle
