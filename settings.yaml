@@ -285,13 +285,11 @@ spec:
               id: blog_title
               key: blog_title
               label: 标题
-              value: 最新博客
             - $formkit: text
               name: blog_subtitle
               id: blog_subtitle
               key: blog_subtitle
               label: 副标题
-              value: 探索精彩内容，发现无限可能
             - $formkit: select
               name: blog_enabled
               id: blog_enabled
@@ -333,8 +331,6 @@ spec:
               children:
                 - $formkit: text
                   name: category_title
-                  id: category_title
-                  key: category_title
                   label: 标题
                   value: 分类库
                 - $formkit: text
@@ -342,7 +338,6 @@ spec:
                   id: category_subtitle
                   key: category_subtitle
                   label: 副标题
-                  value: 资源分类集合，快速定位所需内容
                 - $formkit: categorySelect
                   name: category_list
                   id: category_list
@@ -351,6 +346,7 @@ spec:
                   sortable: true
                   label: 分类
                   value: ""
+
         - $formkit: group
           name: tags
           id: tags
@@ -373,20 +369,18 @@ spec:
               id: tags_items
               key: tags_items
               if: "$value.tags_enabled === true"
-              label: 标签模块设置
+              label: 标签模块设置 /
               children:
                 - $formkit: text
                   name: tags_title
                   id: tags_title
                   key: tags_title
                   label: 标题
-                  value: 标签库
                 - $formkit: text
                   name: tags_subtitle
                   id: tags_subtitle
                   key: tags_subtitle
                   label: 副标题
-                  value: 可视化标签展示，一键直达相关内容
                 - $formkit: tagSelect
                   name: tags_list
                   id: tags_list
@@ -424,13 +418,11 @@ spec:
                   id: subscribe_title
                   key: subscribe_title
                   label: 标题
-                  value: 订阅获取最新资讯
                 - $formkit: text
                   name: subscribe_subtitle
                   id: subscribe_subtitle
                   key: subscribe_subtitle
                   label: 副标题
-                  value: 加入我们的订阅社区，获取独家内容与深度分析。与志同道合的专业人士交流见解，共同探索行业未来发展方向。
                 - $formkit: repeater
                   name: subscribe_slogan
                   id: subscribe_slogan

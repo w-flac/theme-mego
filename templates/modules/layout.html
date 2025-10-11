@@ -41,4 +41,55 @@
     <th:block th:replace="${content}" />
   </body>
   <script defer th:src="@{/assets/js/axios.min.js?v={version}(version=${theme.spec.version})}"></script>
+  <script th:inline="javascript">
+    const i18n = {
+      text: /*[[#{widget.loadMore.text}]]*/,
+      loading: /*[[#{widget.loadMore.loading}]]*/,
+      complete: /*[[#{widget.loadMore.complete}]]*/,
+      error: /*[[#{widget.loadMore.error}]]*/
+    };
+    initLoadMoreForPage({
+      postsContainerSelector: 'ul[class*="grid"]',
+      getNextPageUrl: (page) => `/page/${page}`,
+      postSelector: "li",
+      insertPosition: "append",
+      i18n
+    });
+    initLoadMoreForPage({
+      postsContainerSelector: "ul.category-post",
+      getNextPageUrl: (page) => {
+        const path = window.location.pathname.replace(/\/p\d+$/, "");
+        return `${path}/page/${page}`;
+      },
+      postSelector: "li",
+      insertPosition: "before",
+      i18n
+    });
+    initLoadMoreForPage({
+      postsContainerSelector: "#archive-post-wrapper",
+      getNextPageUrl: (page) => {
+        const path = window.location.pathname.replace(/\/page\/\d+$/, "");
+        return `${path}/page/${page}`;
+      },
+      postSelector: ".archive-post",
+      insertPosition: "before",
+      minPostsThreshold: 1,
+      onInsert: (newNodes) => {
+        newNodes.forEach((monthNode) => {
+          monthNode.querySelectorAll("li").forEach((li) => loadPostImages(li));
+        });
+      },
+      i18n
+    });
+    initLoadMoreForPage({
+      postsContainerSelector: "ul.tag-post",
+      getNextPageUrl: (page) => {
+        const path = window.location.pathname.replace(/\/page\/\d+$/, "");
+        return `${path}/page/${page}`;
+      },
+      postSelector: "li",
+      insertPosition: "before",
+      i18n
+    });
+  </script>
 </html>

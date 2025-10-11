@@ -34,32 +34,34 @@
       <ul class="columns-1 gap-4 transition-opacity duration-500 sm:columns-2 sm:gap-6 lg:columns-3 [&>*]:mb-4 [&>*]:sm:mb-6">
         <!-- 图片卡片-->
         <li
-          class="group relative cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          class="photo-item group relative translate-y-4 cursor-pointer overflow-hidden rounded-xl opacity-0 shadow-lg transition-all duration-700 hover:-translate-y-1 hover:shadow-2xl"
           th:each="photo : ${photos.items}"
         >
           <img
-            alt="壮丽山景"
-            class="h-auto w-full break-inside-avoid transition-transform duration-500 group-hover:scale-105 group-active:scale-105"
-            loading="lazy"
+            class="h-auto w-full break-inside-avoid group-hover:scale-105 group-active:scale-105"
             sizes="(max-width: 1200px) 100vw, 1200px"
             th:alt="${photo.spec.displayName}"
             th:src="${photo.spec.url}"
-            th:srcset="|${thumbnail.gen(photo.spec.url, 's')} 400w,
-                        ${thumbnail.gen(photo.spec.url, 'm')} 800w,
-                        ${thumbnail.gen(photo.spec.url, 'l')} 1200w|"
+            th:srcset="|${thumbnail.gen(photo.spec.url, 's')} 400w, ${thumbnail.gen(photo.spec.url, 'm')} 800w, ${thumbnail.gen(photo.spec.url, 'l')} 1200w|"
           />
           <div
             class="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 transition-transform duration-300 group-hover:translate-y-0"
           >
             <div class="mb-2 flex items-center text-xs text-white/80">
               <i class="fas fa-clock mr-1.5"></i>
-              <span th:text="|${#dates.format(photo.metadata.creationTimestamp,'YYYY年MM月dd日')}">2024年3月15日</span>
+              <span th:text="|${#dates.format(photo.metadata.creationTimestamp,'YYYY年MM月dd日')}"></span>
             </div>
             <p class="text-sm font-medium text-white" th:text="${photo.spec.description}"></p>
           </div>
         </li>
       </ul>
     </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        initPhotoLazyLoad();
+      });
+    </script>
     <th:block th:replace="~{modules/footer}" />
   </th:block>
 </html>

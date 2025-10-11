@@ -154,9 +154,7 @@
         const rawValue = parseInt(StatsVisit.textContent.replace(/\D/g, ""), 10) || 0;
         StatsVisit.textContent = categoryViewCount.formatViews(rawValue) + " 访问";
       }
-      document.addEventListener("DOMContentLoaded", () => {
-        initArchiveLoadMore();
-      });
+      document.addEventListener("DOMContentLoaded", () => {});
     </script>
   </th:block>
 </html>
