@@ -21,3 +21,9 @@ spec:
   license:
     - name: "GPL-3.0"
       url: "https://github.com/w-flac/theme-mego/blob/master/LICENSE"
+  customTemplates:
+    page:
+      - name: 个人名片
+        description: 展示个人信息
+        screenshot:
+        file: resume.html
