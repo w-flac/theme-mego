@@ -164,13 +164,15 @@
           >
             <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8 dark:bg-white/5" th:each="stat_item : ${theme.config.index_intro.website.type}">
               <div class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300" th:switch="${stat_item.type_items}">
-                <span th:case="'visit'" th:text="#{widget.profile.postCount.label}"></span>
+                <span th:case="'visit'" th:text="#{widget.profile.visitCount.label}"></span>
                 <span th:case="'upvote'" th:text="#{widget.profile.upvote.label}"></span>
                 <span th:case="'comment'" th:text="#{widget.profile.commentCount.label}"></span>
                 <span th:case="'post'" th:text="#{widget.profile.postCount.label}"></span>
                 <span th:case="'category'" th:text="#{widget.profile.categoryCount.label}"></span>
-                <span th:if="${!#strings.isEmpty(stat_item.subtitle)}" th:text="${stat_item.subtitle}"></span>
-                <span th:if="${#strings.isEmpty(stat_item.subtitle)}" th:text="#{widget.profile.otherCount.label}"></span>
+                <th:block th:case="*">
+                  <span th:if="${!#strings.isEmpty(stat_item.subtitle)}" th:text="${stat_item.subtitle}"></span>
+                  <span th:if="${#strings.isEmpty(stat_item.subtitle)}" th:text="#{widget.profile.otherCount.label}"></span>
+                </th:block>
               </div>
               <p class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white" th:switch="${stat_item.type_items}">
                 <span th:attr="data-target=${stats.visit}, data-use-commas=true" th:case="'visit'"></span>
