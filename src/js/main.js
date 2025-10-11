@@ -617,6 +617,9 @@ function initPhotoLazyLoad() {
 // ┌─────────────────────────────────────────┐
 // │ 8.1 加载更多按钮组件                     │
 // └─────────────────────────────────────────┘
+// ┌─────────────────────────────────────────┐
+// │ 8.1 通用加载更多按钮组件                 │
+// └─────────────────────────────────────────┘
 class LoadMoreButton {
   constructor(options) {
     this.container = options.container;
@@ -626,11 +629,18 @@ class LoadMoreButton {
     this.minPostsThreshold = options.minPostsThreshold || 10;
     this.postSelector = options.postSelector;
     this.onInsert = options.onInsert || null;
+    this.i18n = options.i18n || {
+      text: "加载更多",
+      loading: "加载中...",
+      complete: "已加载全部内容",
+      error: "出错啦！请重试~",
+    };
+
     this.currentPage = 1;
     this.emptyPageCount = 0;
     this.isLoading = false;
 
-    if (!this.container) return;
+    if (!this.container || !this.postsContainer) return;
 
     this.render();
   }
@@ -638,7 +648,7 @@ class LoadMoreButton {
   render() {
     this.container.innerHTML = `
       <button id="load-more-btn" class="relative group inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl inset-ring inset-ring-gray-200 dark:inset-ring-white/10 bg-white dark:bg-white/10 px-6 py-3 text-center text-xs backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:scale-105 hover:bg-white/20 hover:shadow-white/5 sm:rounded-2xl sm:px-8 sm:py-2 sm:text-sm sm:hover:-translate-y-2">
-        <span id="load-more-text" class="flex items-center text-gray-900 dark:text-white/70">加载更多</span>
+        <span id="load-more-text" class="flex items-center text-gray-900 dark:text-white/70">${this.i18n.text}</span>
       </button>
     `;
     this.btn = this.container.querySelector("#load-more-btn");
@@ -648,7 +658,7 @@ class LoadMoreButton {
   setLoading(loading) {
     this.isLoading = loading;
     this.btn.disabled = loading;
-    this.btn.querySelector("#load-more-text").innerHTML = loading ? `<i class="fas fa-spinner fa-spin mr-2"></i>加载中...` : `加载更多`;
+    this.btn.querySelector("#load-more-text").innerHTML = loading ? `<i class="fas fa-spinner fa-spin mr-2"></i>${this.i18n.loading}` : this.i18n.text;
   }
 
   handleClick() {
@@ -660,7 +670,7 @@ class LoadMoreButton {
   showComplete() {
     this.container.innerHTML = `
       <button class="relative group inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl inset-ring inset-ring-gray-200 dark:inset-ring-white/10 bg-white dark:bg-white/10 px-6 py-3 text-center text-xs backdrop-blur-md sm:rounded-2xl sm:px-8 sm:py-2 sm:text-sm" disabled>
-        <span class="flex items-center text-gray-900 dark:text-white/70"><i class="fas fa-check-circle mr-2"></i>已加载全部内容</span>
+        <span class="flex items-center text-gray-900 dark:text-white/70"><i class="fas fa-check-circle mr-2"></i>${this.i18n.complete}</span>
       </button>
     `;
   }
@@ -668,7 +678,7 @@ class LoadMoreButton {
   showError(retryCallback) {
     this.container.innerHTML = `
       <button class="relative group inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-red-100 px-6 py-3 text-center text-xs inset-ring inset-ring-gray-200 backdrop-blur-md sm:rounded-2xl sm:px-8 sm:py-2 sm:text-sm">
-        <span class="flex items-center text-red-600 dark:text-red-400"><i class="fas fa-redo mr-1"></i>出错啦！请重试~</span>
+        <span class="flex items-center text-red-600 dark:text-red-400"><i class="fas fa-redo mr-1"></i>${this.i18n.error}</span>
       </button>
     `;
     this.container.querySelector("button").addEventListener("click", retryCallback);
@@ -715,7 +725,6 @@ class LoadMoreButton {
 
     filteredPosts.forEach((post) => {
       const clonedPost = post.cloneNode(true);
-      // 获取内部的div元素（实际包含视觉效果的元素）
       const innerDiv = clonedPost.querySelector(".overflow-hidden.rounded-2xl");
       if (innerDiv) {
         innerDiv.classList.add("opacity-0", "translate-y-4", "transition-all", "duration-300", "ease-out");
@@ -730,10 +739,8 @@ class LoadMoreButton {
       this.postsContainer.appendChild(fragment);
     }
 
-    // 回调通知新增节点
     if (this.onInsert) this.onInsert(newNodes);
 
-    // 处理图片和动画
     this.loadImagesAndAnimate(newNodes);
   }
 
@@ -751,97 +758,23 @@ class LoadMoreButton {
 }
 
 // ┌─────────────────────────────────────────┐
-// │ 8.2 首页内容加载功能                     │
+// │ 8.2 单一通用初始化方法                   │
 // └─────────────────────────────────────────┘
-function initLoadMore() {
-  return new LoadMoreButton({
-    container: document.getElementById("load-more-container"),
-    postsContainer: document.querySelector('ul[class*="grid"]'),
-    getNextPageUrl: (page) => `/page/${page}`,
-    postSelector: "li",
-    insertPosition: "append",
-    onInsert: (newNodes) => {
-      newNodes.forEach((node) => loadPostImages(node));
-    },
-  });
-}
-
-// ┌─────────────────────────────────────────┐
-// │ 8.3 分类页面内容加载功能                 │
-// └─────────────────────────────────────────┘
-function initCategoryLoadMore() {
-  const container = document.getElementById("load-more-container");
-  const postsContainer = document.querySelector("ul.category-post");
-
-  // 检查必要的元素是否存在
-  if (!container || !postsContainer) {
-    return null;
-  }
-
-  return new LoadMoreButton({
-    container: container,
-    postsContainer: postsContainer,
-    getNextPageUrl: (page) => {
-      const currentPath = window.location.pathname;
-      const basePath = currentPath.replace(/\/page\/\d+$/, "");
-      return `${basePath}/page/${page}`;
-    },
-    postSelector: "li",
-    insertPosition: "before",
-  });
-}
-
-// ┌─────────────────────────────────────────┐
-// │ 8.4 归档页面内容加载功能                 │
-// └─────────────────────────────────────────┘
-
-function initArchiveLoadMore() {
-  const container = document.getElementById("load-more-container");
-  const postsContainer = document.querySelector("#archive-post-wrapper"); // 整个归档容器
+function initLoadMoreForPage(options) {
+  const container = options.container || document.getElementById("load-more-container");
+  const postsContainer = document.querySelector(options.postsContainerSelector);
 
   if (!container || !postsContainer) return null;
 
   return new LoadMoreButton({
     container: container,
     postsContainer: postsContainer,
-    getNextPageUrl: (page) => {
-      const currentPath = window.location.pathname;
-      const basePath = currentPath.replace(/\/page\/\d+$/, "");
-      return `${basePath}/page/${page}`;
-    },
-    postSelector: ".archive-post",
-    insertPosition: "before",
-    minPostsThreshold: 1,
-    onInsert: (newNodes) => {
-      newNodes.forEach((monthNode) => {
-        monthNode.querySelectorAll("li").forEach((li) => loadPostImages(li));
-      });
-    },
-  });
-}
-
-// ┌─────────────────────────────────────────┐
-// │ 8.5 标签页面内容加载功能                 │
-// └─────────────────────────────────────────┘
-function initTagLoadMore() {
-  const container = document.getElementById("load-more-container");
-  const postsContainer = document.querySelector("ul.tag-post");
-
-  // 检查必要的元素是否存在
-  if (!container || !postsContainer) {
-    return null;
-  }
-
-  return new LoadMoreButton({
-    container: container,
-    postsContainer: postsContainer,
-    getNextPageUrl: (page) => {
-      const currentPath = window.location.pathname;
-      const basePath = currentPath.replace(/\/page\/\d+$/, "");
-      return `${basePath}/page/${page}`;
-    },
-    postSelector: "li",
-    insertPosition: "before",
+    getNextPageUrl: options.getNextPageUrl,
+    postSelector: options.postSelector,
+    insertPosition: options.insertPosition,
+    minPostsThreshold: options.minPostsThreshold,
+    onInsert: options.onInsert,
+    i18n: options.i18n,
   });
 }
 
