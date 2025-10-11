@@ -61,12 +61,16 @@
           <div class="flex flex-col items-center justify-center space-y-4">
             <div class="flex items-end space-x-1.5">
               ${[0, 150, 300, 450, 600]
-                .map(
-                  (d, i) => `
-                <div class="h-${[6, 10, 5, 8, 6][i]} w-1.5 animate-pulse rounded-full bg-gray-800 dark:bg-gray-200"
-                     style="animation-delay:${d}ms;animation-duration:1s"></div>`,
-                )
-                .join("")}
+      .map(
+        (d, i) => {
+          // 确保 d 是有效数字并添加单位
+          const delay = isNaN(d) ? 0 : d;
+          const heightClass = [6, 10, 5, 8, 6][i] || 6;
+          return `<div class="h-${heightClass} w-1.5 animate-pulse rounded-full bg-gray-800 dark:bg-gray-200" 
+                   style="animation-delay: ${delay}ms; animation-duration: 1s"></div>`;
+        }
+      )
+      .join("")}
             </div>
           </div>
         </div>
@@ -532,12 +536,25 @@ function lazyLoadImages(targets, attr = "data-src", rootMargin = "100px") {
           const el = entry.target;
           const url = el.getAttribute(attr);
           if (url) {
-            el.onload = () => el.classList.add("opacity-100");
+            const liElement = el.closest('li');
+            if (liElement) {
+              liElement.classList.add("animate-pulse");
+            }
+            
+            el.onload = () => {
+              el.classList.add("opacity-100");
+              if (liElement) {
+                liElement.classList.remove("animate-pulse");
+              }
+            };
+            
             if (el.src && !el.src.startsWith("data:image")) {
               el.classList.add("opacity-100");
+              if (liElement) {
+                liElement.classList.remove("animate-pulse");
+              }
             }
           }
-          obs.unobserve(el);
           obs.unobserve(el);
         }
       });
@@ -669,7 +686,11 @@ class LoadMoreButton {
 
     filteredPosts.forEach((post) => {
       const clonedPost = post.cloneNode(true);
-      clonedPost.classList.add("opacity-0", "translate-y-4", "transition-all", "duration-300", "ease-out");
+      // 获取内部的div元素（实际包含视觉效果的元素）
+      const innerDiv = clonedPost.querySelector('.overflow-hidden.rounded-2xl');
+      if (innerDiv) {
+        innerDiv.classList.add("opacity-0", "translate-y-4", "transition-all", "duration-300", "ease-out");
+      }
       fragment.appendChild(clonedPost);
       newNodes.push(clonedPost);
     });
@@ -690,7 +711,12 @@ class LoadMoreButton {
   loadImagesAndAnimate(nodes) {
     nodes.forEach((node) => loadPostImages(node));
     setTimeout(() => {
-      nodes.forEach((node) => node.classList.remove("opacity-0", "translate-y-4"));
+      nodes.forEach((node) => {
+        const innerDiv = node.querySelector('.overflow-hidden.rounded-2xl');
+        if (innerDiv) {
+          innerDiv.classList.remove("opacity-0", "translate-y-4");
+        }
+      });
     }, 50);
   }
 }

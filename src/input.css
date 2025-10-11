@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 @import "./all.min.css";
