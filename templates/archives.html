@@ -12,21 +12,21 @@
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
             <i class="fas fa-archive text-2xl text-white sm:text-3xl"></i>
           </div>
-          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="文章归档"></h1>
-          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="按时间顺序浏览所有文章，探索知识的时间线"></p>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.archives.title}"></h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.archives.subtitle}"></p>
         </div>
         <div class="flex items-center justify-center space-x-4 text-xs text-gray-500 sm:flex-row sm:text-sm lg:space-x-8 dark:text-gray-400">
           <div class="flex items-center">
             <i class="fas fa-file-alt mr-2"></i>
-            <span th:text="|${stats.post} 篇文章|"></span>
+            <span th:text="|${stats.post} | + |#{page.archives.title.post}|"></span>
           </div>
           <div class="flex items-center">
             <i class="fas fa-eye mr-2"></i>
-            <span id="StatsVisit" th:text="${stats.visit}"></span>
+            <span id="StatsVisit" th:text="|${stats.visit} |+ |#{page.archives.title.visit}|"></span>
           </div>
           <div class="flex items-center">
             <i class="fas fa-heart mr-2"></i>
-            <span id="StatsUpvote" th:text="|${stats.upvote} 次点赞|"></span>
+            <span id="StatsUpvote" th:text="|${stats.upvote} | + |#{page.archives.title.upvote}|"></span>
           </div>
         </div>
       </div>
@@ -39,11 +39,16 @@
             <div class="flex items-center space-x-6">
               <div class="flex items-center space-x-3">
                 <i class="fas fa-calendar text-gray-400 dark:text-gray-500"></i>
-                <h2 class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|"></h2>
+                <h2 th:if="${#locale.language == 'zh'}" class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|"></h2>
+                <h2
+                  th:if="${#locale.language != 'zh'}"
+                  class="text-xl font-semibold text-gray-900 dark:text-white"
+                  th:text="${#temporals.format(#temporals.create(archive.year, month.month, 1), 'MMMM yyyy')}"
+                ></h2>
               </div>
               <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
                 <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
-                <span th:text="|${#lists.size(month.posts)}篇文章|"></span>
+                <span th:text="|${#lists.size(month.posts)} |+ |#{page.archives.title.post}|"></span>
               </div>
             </div>
           </div>
@@ -97,7 +102,16 @@
                       </div>
                       <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
                         <i class="fas fa-calendar-day text-white/60"></i>
-                        <span th:text="|${#dates.format(post.spec.publishTime,'MM月dd日')}|"></span>
+                        <span
+                          class="text-xs text-white/80 md:text-sm"
+                          th:if="${#locale.language == 'zh'}"
+                          th:text="#{page.archivers.postDate.zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')})}"
+                        ></span>
+                        <span
+                          class="text-xs text-white/80 md:text-sm"
+                          th:if="${#locale.language != 'zh'}"
+                          th:text="#{page.archivers.postDate.en(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')})}"
+                        ></span>
                       </div>
                     </div>
                     <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
@@ -130,7 +144,7 @@
                             class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
                             th:href="@{${post.status.permalink}}"
                           >
-                            <span th:text="阅读更多"></span>
+                            <span th:text="#{widget.index.module.readMore}"></span>
                             <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
                           </a>
                         </button>
@@ -148,13 +162,14 @@
       </th:block>
     </section>
     <th:block th:replace="~{modules/footer}" />
-    <script>
+    <script th:inline="javascript">
+      const readLabel = /*[[#{page.archives.title.visit}]]*/ "";
       const StatsVisit = document.getElementById("StatsVisit");
       if (StatsVisit) {
         const rawValue = parseInt(StatsVisit.textContent.replace(/\D/g, ""), 10) || 0;
-        StatsVisit.textContent = categoryViewCount.formatViews(rawValue) + " 访问";
+        const formatted = new CategoryViewCount({ readLabel }).formatViews(rawValue);
+        StatsVisit.textContent = formatted + " " + readLabel;
       }
-      document.addEventListener("DOMContentLoaded", () => {});
     </script>
   </th:block>
 </html>

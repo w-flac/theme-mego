@@ -18,7 +18,7 @@
         <div class="flex items-center justify-center space-x-4 text-xs text-gray-500 sm:flex-row sm:text-sm lg:space-x-8 dark:text-gray-400">
           <div class="flex items-center">
             <i class="fas fa-file-alt mr-2"></i>
-            <span th:text="|${tag.postCount != null ? tag.postCount : 0} 篇文章|"></span>
+            <span th:text="|${tag.postCount != null ? tag.postCount : 0} | + |#{page.archives.title.post}|"></span>
           </div>
           <div class="flex items-center">
             <i class="fas fa-eye mr-2"></i>
@@ -26,7 +26,16 @@
           </div>
           <div class="flex items-center">
             <i class="fas fa-calendar mr-2"></i>
-            <span class="inline" th:text="|${#dates.format(tag.metadata.creationTimestamp,'yyyy-MM-dd')}|"></span>
+            <span
+              class="inline"
+              th:if="${#locale.language == 'zh'}"
+              th:text="#{page.archives.date_zh2(${#dates.format(tag.metadata.creationTimestamp,'dd')},${#dates.format(tag.metadata.creationTimestamp,'MM')},${#dates.format(tag.metadata.creationTimestamp,'yyyy')})}"
+            ></span>
+            <span
+              class="inline"
+              th:if="${#locale.language != 'zh'}"
+              th:text="#{page.archives.date(${#dates.format(tag.metadata.creationTimestamp,'dd')},${#dates.format(tag.metadata.creationTimestamp,'MMM')},${#dates.format(tag.metadata.creationTimestamp,'yyyy')})}"
+            ></span>
           </div>
         </div>
       </div>
@@ -83,7 +92,16 @@
                     </div>
                     <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
                       <i class="fas fa-calendar-day text-white/60"></i>
-                      <span class="text-xs text-white/80 md:text-sm" th:text="|${#dates.format(post.spec.publishTime,'MM月dd日')}"></span>
+                      <span
+                        class="text-xs text-white/80 md:text-sm"
+                        th:if="${#locale.language == 'zh'}"
+                        th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+                      ></span>
+                      <span
+                        class="text-xs text-white/80 md:text-sm"
+                        th:if="${#locale.language != 'zh'}"
+                        th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+                      ></span>
                     </div>
                   </div>
                   <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
@@ -116,7 +134,7 @@
                           class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
                           th:href="@{${post.status.permalink}}"
                         >
-                          <span>阅读更多</span>
+                          <span th:text="#{widget.index.module.readMore}"></span>
                           <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
                         </a>
                       </button>
@@ -135,13 +153,13 @@
                 stroke-width="2"
               />
             </svg>
-            <p class="text-lg font-medium">当前标签下没有文章</p>
+            <p class="text-lg font-medium" th:text="#{page.tags.error}"></p>
             <button
               class="mt-4 inline-flex items-center rounded-lg border border-gray-200/80 bg-gray-50/80 px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:shadow-lg dark:border-transparent dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10"
               onclick="history.back()"
             >
               <i class="fa-solid fa-rotate-left mr-2"></i>
-              返回上一页
+              <span th:text="#{page.error.back}"></span>
             </button>
           </li>
           <th:block th:if="${posts.hasNext()}">
@@ -166,8 +184,8 @@
                       <i class="fas fa-hashtag text-sm text-white"></i>
                     </div>
                     <div class="flex-1 shrink-0">
-                      <div class="font-semibold text-gray-900 dark:text-white" th:text="${tag.spec.displayName}"></div>
-                      <div class="text-sm text-gray-500 dark:text-gray-400" th:text="|${tag.postCount != null ? tag.postCount : 0} 篇文章|"></div>
+                      <p class="font-semibold text-gray-900 dark:text-white" th:text="${tag.spec.displayName}"></p>
+                      <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${tag.status?.visiblePostCount ?: 0} + ' ' + #{page.archives.title.post}"></span>
                     </div>
                     <div class="hidden opacity-0 transition-opacity group-hover:opacity-100 xl:block">
                       <i class="fa-solid fa-person-walking-arrow-right"></i>
@@ -181,9 +199,13 @@
       </div>
     </section>
     <th:block th:replace="~{modules/footer}" />
+    <script th:inline="javascript">
+      const tagViewCount = new TagViewCount({
+        readLabel: /*[[#{page.tagView.readLabel}]]*/ "",
+      });
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        initTagLoadMore();
         tagViewCount.init();
       });
     </script>

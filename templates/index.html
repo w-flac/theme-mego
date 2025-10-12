@@ -29,7 +29,6 @@
                       th:if="${theme.config.index_hero.hero_title.label}"
                     >
                       <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
-                      <!--                      <span class="text-sm font-semibold text-gray-100" th:text="${theme.config.index_hero.hero_title.label ?: '基于强大易用的开源的建站工具'}"></span>-->
                       <span
                         class="text-sm font-semibold text-gray-100"
                         th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}"
@@ -251,7 +250,7 @@
                       th:title="|分类：${categories.spec.displayName}|"
                     ></a>
                   </div>
-                  <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:if="${post.spec.pinned}">
+                  <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:title="#{fragment.postCard.pinned}" th:if="${post.spec.pinned}">
                     <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
                   </div>
                   <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
@@ -424,7 +423,7 @@
               ></p>
               <follow-card show-title="false"></follow-card>
             </div>
-            <ul class="hidden grid-cols-1 items-center gap-x-8 gap-y-10 text-left sm:grid-cols-2 lg:grid">
+            <ul class="hidden grid-cols-1 items-center gap-x-4 gap-y-10 text-left sm:grid-cols-2 lg:grid">
               <li
                 class="flex flex-col items-start"
                 th:each="subscribe_slogan : ${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
@@ -446,10 +445,12 @@
       </div>
       <th:block th:replace="~{modules/footer}" />
     </section>
+    <script th:inline="javascript">
+      window.i18nPlaceholder = /*[[#{widget.index.module.subscribe.placeholder}]]*/ "";
+      window.i18nButtonText = /*[[#{widget.index.module.subscribe.button}]]*/ "";
+    </script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        styleFollowCard();
-      });
+      initFollowCard();
     </script>
   </th:block>
 </html>

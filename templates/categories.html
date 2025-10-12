@@ -12,8 +12,8 @@
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
             <i class="fas fa-folder-open text-2xl text-white sm:text-3xl"></i>
           </div>
-          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70">分类归档</h1>
-          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300">资源分类集合，快速定位所需内容</p>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.categories.title}">分类归档</h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.categories.subtitle}">资源分类集合，快速定位所需内容</p>
         </div>
       </div>
     </div>
@@ -32,15 +32,26 @@
 
             <div class="flex items-center space-x-0.5 text-xs text-gray-500 dark:text-gray-400">
               <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
-              <span th:text="|${category.status?.visiblePostCount != null ? category.status.visiblePostCount : 0} 篇文章|"></span>
+              <span th:text="${category.status?.visiblePostCount ?: 0} + ' ' + #{page.archives.title.post}"></span>
             </div>
           </div>
-          <p class="line-clamp-1 text-sm text-gray-500" th:text="${category.spec.description ?: '该分类暂无介绍'}"></p>
+          <p class="line-clamp-1 text-sm text-gray-500" th:if="${!#strings.isEmpty(category.spec.description)}" th:text="${category.spec.description}"></p>
+          <p class="line-clamp-1 text-sm text-gray-500" th:unless="${!#strings.isEmpty(category.spec.description)}" th:text="#{page.categories.other}"></p>
+
           <div class="rounded-md bg-gray-50/80 p-2 dark:bg-white/5" th:with="posts = ${postFinder.listByCategory(1,1,'__${category.metadata.name}__')}">
             <dl class="text-gray-500 dark:text-gray-400" th:each="post : ${posts.items}" th:if="${postStat.index == 0}">
               <dt class="flex items-center space-x-0.5 text-xs">
                 <i class="fas fa-clock"></i>
-                <span class="text-xs" th:text="|${#dates.format(post.spec.publishTime,'YYYY-MM-dd')}"></span>
+                <span
+                  class="text-xs"
+                  th:if="${#locale.language == 'zh'}"
+                  th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+                ></span>
+                <span
+                  class="text-xs"
+                  th:if="${#locale.language != 'zh'}"
+                  th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+                ></span>
               </dt>
               <dd class="text-xs">
                 <a
@@ -49,7 +60,7 @@
                 >
                   <span class="text-sm font-medium" th:text="${post.spec.title}"></span>
                   <div>
-                    <span>查看</span>
+                    <span th:text="#{page.categories.morePosts}"></span>
                     <i class="fas fa-arrow-right"></i>
                   </div>
                 </a>
@@ -58,16 +69,16 @@
             <div class="text-xs text-gray-500 dark:text-gray-400" th:if="${#lists.isEmpty(posts.items)}">
               <dt class="flex items-center space-x-0.5 text-xs">
                 <i class="fas fa-clock"></i>
-                <span class="text-xs">暂无</span>
+                <span class="text-xs" th:text="#{page.categories.empty}"></span>
               </dt>
               <dd class="text-xs">
                 <a
                   class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
                   th:href="@{/categories/{name}(name=${category.spec.slug})}"
                 >
-                  <span class="text-sm font-medium">暂未获取到当前文章</span>
+                  <span class="text-sm font-medium" th:text="#{page.categories.null}"></span>
                   <div>
-                    <span>查看</span>
+                    <span th:text="#{page.categories.morePosts}"></span>
                     <i class="fas fa-arrow-right"></i>
                   </div>
                 </a>
@@ -87,15 +98,25 @@
               </div>
               <div class="flex items-center space-x-0.5 text-xs text-gray-500 dark:text-gray-400">
                 <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
-                <span th:text="|${child.postCount != null ? child.postCount : 0} 篇文章|"></span>
+                <span th:text="|${child.postCount != null ? child.postCount : 0} | + |#{page.archives.title.post}|"></span>
               </div>
             </div>
-            <p class="line-clamp-1 text-sm text-gray-500" th:text="${child.spec.description ?: '该分类暂无介绍'}"></p>
+            <p class="line-clamp-1 text-sm text-gray-500" th:if="${!#strings.isEmpty(child.spec.description)}" th:text="${child.spec.description}"></p>
+            <p class="line-clamp-1 text-sm text-gray-500" th:unless="${!#strings.isEmpty(child.spec.description)}" th:text="#{page.categories.other}"></p>
             <div class="rounded-md bg-gray-50/80 p-2 dark:bg-white/5" th:with="posts = ${postFinder.listByCategory(1,1,'__${child.metadata.name}__')}">
               <dl class="text-gray-500 dark:text-gray-400" th:each="post : ${posts.items}" th:if="${postStat.index == 0}">
                 <dt class="flex items-center space-x-0.5 text-xs">
                   <i class="fas fa-clock"></i>
-                  <span class="text-xs" th:text="|${#dates.format(post.spec.publishTime,'YYYY-MM-dd')}"></span>
+                  <span
+                    class="text-xs"
+                    th:if="${#locale.language == 'zh'}"
+                    th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+                  ></span>
+                  <span
+                    class="text-xs"
+                    th:if="${#locale.language != 'zh'}"
+                    th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+                  ></span>
                 </dt>
                 <dd class="text-xs">
                   <a
@@ -104,7 +125,7 @@
                   >
                     <span class="text-sm font-medium" th:text="${post.spec.title}"></span>
                     <div>
-                      <span>查看</span>
+                      <span th:text="#{page.categories.morePosts}"></span>
                       <i class="fas fa-arrow-right"></i>
                     </div>
                   </a>
@@ -113,16 +134,16 @@
               <div class="text-xs text-gray-500 dark:text-gray-400" th:if="${#lists.isEmpty(posts.items)}">
                 <dt class="flex items-center space-x-0.5 text-xs">
                   <i class="fas fa-clock"></i>
-                  <span class="text-xs">暂无</span>
+                  <span class="text-xs" th:text="#{page.categories.empty}">暂无</span>
                 </dt>
                 <dd class="text-xs">
                   <a
                     class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
                     th:href="@{/categories/{name}(name=${category.spec.slug})}"
                   >
-                    <span class="text-sm font-medium">暂未获取到当前文章</span>
+                    <span class="text-sm font-medium" th:text="#{page.categories.null}"></span>
                     <div>
-                      <span>查看</span>
+                      <span th:text="#{page.categories.morePosts}"></span>
                       <i class="fas fa-arrow-right"></i>
                     </div>
                   </a>
@@ -134,11 +155,5 @@
       </ul>
     </section>
     <th:block th:replace="~{modules/footer}" />
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        initCategoryLoadMore();
-        categoryViewCount.init();
-      });
-    </script>
   </th:block>
 </html>
