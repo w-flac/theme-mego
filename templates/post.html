@@ -5,7 +5,7 @@
     <div class="mx-auto mt-20 max-w-7xl px-4 pb-8 transition-colors duration-300 sm:px-6 lg:mt-24 lg:px-8">
       <ul class="flex items-center space-x-4 pt-2 pb-6" th:if="${not #lists.isEmpty(post.categories)}">
         <li>
-          <a class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" href="/">首页</a>
+          <a class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" href="/" th:text="#{fragment.postHeader.home}"></a>
         </li>
         <th:block th:with="categoryItem=${post.categories[0]}">
           <li class="space-x-2 text-gray-500 last:font-medium dark:text-gray-400" th:each="category, stats : ${categoryFinder.getBreadcrumbs(categoryItem.metadata?.name)}">
@@ -77,17 +77,17 @@
             <div class="mb-4">
               <div class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">
                 <i class="fas fa-circle-info mr-2 text-blue-600 dark:text-white"></i>
-                <span>概览</span>
+                <span th:text="#{fragment.postWidget.overview}"></span>
               </div>
             </div>
             <ul class="grid grid-cols-3 gap-2 text-center">
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${post.stats?.visit ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400">阅读</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.read}"></p>
               </li>
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${post.stats?.comment ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400">评论</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.comment}"></p>
               </li>
               <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
                 <span
@@ -95,14 +95,14 @@
                   th:attr="data-upvote-sidebar-name=${post.metadata.name}"
                   th:text="${post.stats?.upvote ?:0}"
                 ></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400">点赞</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.upvote}"></p>
               </li>
             </ul>
           </div>
           <div class="rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5" id="tocbot">
             <div class="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
               <i class="fas fa-list-ul mr-2 text-blue-600 dark:text-white"></i>
-              <span>目录</span>
+              <span th:text="#{page.post.toc}"></span></span>
             </div>
             <div class="toc max-h-[30rem] overflow-x-hidden overflow-y-auto scroll-smooth text-sm"></div>
           </div>
@@ -119,9 +119,9 @@
                 </div>
                 <div class="flex-1">
                   <p class="text-sm font-medium text-gray-900 dark:text-white">
-                    <span th:attr="data-upvote-post-name=${post.metadata.name}" th:text="|${post.stats?.upvote ?:0} 人已点赞|"></span>
+                    <span th:attr="data-upvote-post-name=${post.metadata.name}" th:text="|${post.stats?.upvote ?:0}| + |#{fragment.postWidget.likes.title}|"></span>
                   </p>
-                  <p class="upvote-message text-xs text-gray-500 dark:text-gray-400">点个赞支持一下呗~</p>
+                  <p class="upvote-message text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.likes.subtitle1}"></p>
                 </div>
               </div>
             </button>
@@ -131,6 +131,17 @@
     </div>
     <th:block th:replace="~{modules/footer}" />
     <script th:src="@{/assets/js/tocbot.min.js}"></script>
+    <script th:inline="javascript">
+      readingTime.setI18n({
+        read: /*[[#{fragment.postReadTime}]]*/ "",
+        words: /*[[#{fragment.postWorlds}]]*/ "",
+      });
+      const postUpvote = new Upvote("halo.upvoted.post.names", "posts", undefined, {
+        likedTitle: /*[[#{fragment.postWidget.likes.title}]]*/ "",
+        subtitle1: /*[[#{fragment.postWidget.likes.subtitle1}]]*/ "",
+        subtitle2: /*[[#{fragment.postWidget.likes.subtitle2}]]*/ "",
+      });
+    </script>
     <script>
       Tocbot();
       readingTime.calculate();

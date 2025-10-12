@@ -5,22 +5,18 @@
 >
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
-
-    <!-- 页面头部 -->
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
       <div class="mx-auto max-w-3xl">
         <div class="flex flex-col items-center justify-center space-y-4">
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
             <i class="fas fa-camera-retro text-2xl text-white sm:text-3xl"></i>
           </div>
-          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70">图库</h1>
-          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300">精彩瞬间，美好回忆，用镜头记录生活的点点滴滴</p>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.photos.title}"></h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.photos.subtitle}"></p>
         </div>
       </div>
     </div>
-    <!-- 图库内容区域 -->
     <section class="mx-auto max-w-7xl px-2 py-8 md:px-4">
-      <!-- 分类筛选 -->
       <div class="scrollbar-hidden mb-6 flex items-center gap-2 overflow-x-auto rounded-2xl md:flex-wrap">
         <button
           class="shrink-0 rounded-xl border border-gray-200/80 bg-gray-50/80 p-2 px-6 py-2 text-sm dark:border-transparent dark:bg-white/5"
@@ -29,10 +25,7 @@
           <a th:href="@{|/photos?group=${group.metadata.name}|}" th:text="${group.spec.displayName}"></a>
         </button>
       </div>
-
-      <!-- 图片网格 -->
       <ul class="columns-1 gap-4 transition-opacity duration-500 sm:columns-2 sm:gap-6 lg:columns-3 [&>*]:mb-4 [&>*]:sm:mb-6">
-        <!-- 图片卡片-->
         <li
           class="photo-item group relative translate-y-4 cursor-pointer overflow-hidden rounded-xl opacity-0 shadow-lg transition-all duration-700 hover:-translate-y-1 hover:shadow-2xl"
           th:each="photo : ${photos.items}"
@@ -49,14 +42,20 @@
           >
             <div class="mb-2 flex items-center text-xs text-white/80">
               <i class="fas fa-clock mr-1.5"></i>
-              <span th:text="|${#dates.format(photo.metadata.creationTimestamp,'YYYY年MM月dd日')}"></span>
+              <span
+                th:if="${#locale.language == 'zh'}"
+                th:text="#{page.archives.date_zh(${#dates.format(photo.metadata.creationTimestamp,'dd')},${#dates.format(photo.metadata.creationTimestamp,'MM')},${#dates.format(photo.metadata.creationTimestamp,'yyyy')})}"
+              ></span>
+              <span
+                th:if="${#locale.language != 'zh'}"
+                th:text="#{page.archives.date(${#dates.format(photo.metadata.creationTimestamp,'dd')},${#dates.format(photo.metadata.creationTimestamp,'MMM')},${#dates.format(photo.metadata.creationTimestamp,'yyyy')})}"
+              ></span>
             </div>
             <p class="text-sm font-medium text-white" th:text="${photo.spec.description}"></p>
           </div>
         </li>
       </ul>
     </section>
-
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         initPhotoLazyLoad();

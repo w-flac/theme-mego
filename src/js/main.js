@@ -787,38 +787,33 @@ function initLoadMoreForPage(options) {
 // │ 9.1 阅读时间和字数统计                   │
 // └─────────────────────────────────────────┘
 const readingTime = {
-  // 计算文章字数和阅读时间
+  i18n: {
+    read: "分钟阅读",
+    words: "字",
+  },
+
+  setI18n(i18nObj) {
+    this.i18n = { ...this.i18n, ...i18nObj };
+  },
+
   calculate() {
     const contentEl = document.querySelector(".prose");
     if (!contentEl) return;
 
     const text = contentEl.textContent || contentEl.innerText || "";
 
-    // 统计中文字符数
     const chineseChars = (text.match(/[\u4e00-\u9fff]/g) || []).length;
-
-    // 统计英文单词数
-    const englishWords =
-      text
-        .replace(/[\u4e00-\u9fff]/g, "") // 移除中文字符
-        .match(/[a-zA-Z]+/g)?.length || 0;
-
-    // 总字数 = 中文字符数 + 英文单词数
+    const englishWords = text.replace(/[\u4e00-\u9fff]/g, "").match(/[a-zA-Z]+/g)?.length || 0;
     const totalWords = chineseChars + englishWords;
-
-    // 计算阅读时间（中文250字/分钟，英文200词/分钟的平均值）
-    const readingSpeed = 225; // 字/分钟
+    const readingSpeed = 225;
     const minutes = Math.ceil(totalWords / readingSpeed);
-
     this.updateDisplay(totalWords, minutes);
   },
 
-  // 更新显示
   updateDisplay(wordCount, minutes) {
     const readingTimeEl = document.getElementById("number");
-    if (readingTimeEl) {
-      readingTimeEl.textContent = `${minutes}分钟阅读 · ${wordCount.toLocaleString()}字`;
-    }
+    if (!readingTimeEl) return;
+    readingTimeEl.textContent = `${minutes} ${this.i18n.read} · ${wordCount.toLocaleString()} ${this.i18n.words}`;
   },
 };
 
@@ -826,10 +821,18 @@ const readingTime = {
 // │ 9.2 文章点赞功能                        │
 // └─────────────────────────────────────────┘
 class Upvote {
-  constructor(storageKey, plural, apiEndpoint = "/apis/api.halo.run/v1alpha1/trackers/upvote") {
+  constructor(storageKey, plural, apiEndpoint = "/apis/api.halo.run/v1alpha1/trackers/upvote", i18n = {}) {
     this.storageKey = storageKey;
     this.plural = plural;
     this.apiEndpoint = apiEndpoint;
+    this.i18n = Object.assign(
+      {
+        likedTitle: "人已点赞",
+        subtitle1: "点个赞支持一下呗~",
+        subtitle2: "感谢您的支持",
+      },
+      i18n,
+    );
 
     this.liked = [];
     this.processing = false;
@@ -870,6 +873,8 @@ class Upvote {
 
       const elements = this.getElements(articleName);
       const newCount = this.getCurrentCount(elements) + 1;
+
+      // 保留原有计数逻辑
       this.updateCounts(elements, newCount);
       this.updateButtons(elements, newCount);
     } catch (err) {
@@ -909,7 +914,6 @@ class Upvote {
     [elements.count, elements.header, elements.sidebar].forEach((el) => {
       if (el) el.textContent = newCount;
     });
-
     if (elements.sidebar) {
       elements.sidebar.style.transform = "scale(1.2)";
       elements.sidebar.style.color = "#ef4444";
@@ -918,6 +922,8 @@ class Upvote {
   }
 
   updateButtons(elements, newCount) {
+    const { likedTitle, subtitle1, subtitle2 } = this.i18n;
+
     if (elements.btn) {
       elements.btn.innerHTML = `
         <div class="flex items-center space-x-3">
@@ -925,8 +931,8 @@ class Upvote {
             <i class="fas fa-heart text-red-500"></i>
           </div>
           <div class="flex-1">
-            <p class="text-sm font-medium text-gray-900 dark:text-white">${newCount}人已点赞</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">感谢您的支持</p>
+            <p class="text-sm font-medium text-gray-900 dark:text-white">${newCount} ${likedTitle}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">${subtitle2}</p>
           </div>
         </div>`;
       elements.btn.disabled = true;
@@ -944,9 +950,6 @@ class Upvote {
     }
   }
 }
-
-const postUpvote = new Upvote("halo.upvoted.post.names", "posts");
-const singlePageUpvote = new Upvote("halo.upvoted.singlepage.names", "singlepages");
 // ┌─────────────────────────────────────────┐
 // │ 9.3 文章目录功能                        │
 // └─────────────────────────────────────────┘
@@ -977,7 +980,15 @@ function Tocbot() {
 // ┌─────────────────────────────────────────┐
 // │ 10.1 分类阅读量统计功能                  │
 // └─────────────────────────────────────────┘
-const categoryViewCount = {
+class CategoryViewCount {
+  constructor(i18n = {}) {
+    this.i18n = Object.assign(
+      {
+        readLabel: "阅读",
+      },
+      i18n,
+    );
+  }
   // 获取分类阅读量
   async getCategoryViews(categoryName) {
     try {
@@ -987,131 +998,157 @@ const categoryViewCount = {
       console.error("获取分类阅读量失败:", error);
       return 0;
     }
-  },
-
+  }
   // 格式化阅读量
   formatViews(views) {
     if (views >= 10000) return (views / 10000).toFixed(1) + "w";
     if (views >= 1000) return (views / 1000).toFixed(1) + "k";
     return views.toString();
-  },
-
+  }
   // 更新显示
   async updateDisplay(categoryName) {
     const element = document.getElementById("category-visit");
     if (!element) return;
 
     const totalViews = await this.getCategoryViews(categoryName);
-    element.textContent = `${this.formatViews(totalViews)} 阅读`;
-  },
-
+    element.textContent = `${this.formatViews(totalViews)} ${this.i18n.readLabel}`;
+  }
   // 初始化
   init() {
     const id = document.querySelector('[id^="items-"]')?.id;
     if (!id) return;
     this.updateDisplay(id.replace("items-", ""));
-  },
-};
-
+  }
+}
 // ┌─────────────────────────────────────────┐
 // │ 10.2 标签阅读量统计功能                  │
 // └─────────────────────────────────────────┘
-const tagViewCount = {
-  // 获取分类阅读量
-  async getCategoryViews(tagName) {
+class TagViewCount {
+  constructor(i18n = {}) {
+    this.i18n = Object.assign(
+      {
+        readLabel: "阅读", // 默认中文
+      },
+      i18n,
+    );
+  }
+  // 获取标签阅读量
+  async getTagViews(tagName) {
     try {
       const { data } = await axios.get(`/apis/api.content.halo.run/v1alpha1/tags/${tagName}/posts`);
       return data?.items?.reduce((sum, post) => sum + (post.stats?.visit ?? 0), 0) ?? 0;
     } catch (error) {
-      console.error("获取分类阅读量失败:", error);
+      console.error("获取标签阅读量失败:", error);
       return 0;
     }
-  },
-
+  }
   // 格式化阅读量
   formatViews(views) {
     if (views >= 10000) return (views / 10000).toFixed(1) + "w";
     if (views >= 1000) return (views / 1000).toFixed(1) + "k";
     return views.toString();
-  },
-
+  }
   // 更新显示
   async updateDisplay(tagName) {
     const element = document.getElementById("tag-visit");
     if (!element) return;
 
-    const totalViews = await this.getCategoryViews(tagName);
-    element.textContent = `${this.formatViews(totalViews)} 阅读`;
-  },
-
+    const totalViews = await this.getTagViews(tagName);
+    element.textContent = `${this.formatViews(totalViews)} ${this.i18n.readLabel}`;
+  }
   // 初始化
   init() {
     const id = document.querySelector('[id^="items-"]')?.id;
     if (!id) return;
     this.updateDisplay(id.replace("items-", ""));
-  },
-};
+  }
+}
 // ═══════════════════════════════════════════════════════════════════════════════
 // 11. 工具函数模块 - Utility Functions Module
 // ═══════════════════════════════════════════════════════════════════════════════
 // 功能: 通用工具函数、页面初始化
-
 // ┌─────────────────────────────────────────┐
-// │ 10.1 订阅组件样式重写                     │
+// │ Follow Card 样式与国际化初始化          │
 // └─────────────────────────────────────────┘
-
 function styleFollowCard() {
   const host = document.querySelector("follow-card");
+  if (!host || !host.shadowRoot) return;
 
-  if (host && host.shadowRoot) {
-    const shadow = host.shadowRoot;
+  const shadow = host.shadowRoot;
 
-    // 避免重复注入 style
-    if (!shadow.querySelector("style[data-follow-style]")) {
-      const style = document.createElement("style");
-      style.setAttribute("data-follow-style", "true");
-      style.textContent = `
-        form {
-          max-width: 28rem !important;
-          margin: 0 auto;
-        }
-        .subscribe-card {
-          margin-top: 1rem;
-        }
-        .flex-col {
-          flex-direction: row !important;
-        }
-        .input-wrapper {
-          display: flex;
-          align-items: center;
-        }
-        input {
-          padding: 10px 2rem !important;
-          font-size: 14px !important;
-          text-align: center;
-        }
+  // 注入样式（防止重复添加）
+  if (!shadow.querySelector("style[data-follow-style]")) {
+    const style = document.createElement("style");
+    style.setAttribute("data-follow-style", "true");
+    style.textContent = `
+      form {
+        max-width: 28rem !important;
+        margin: 0 auto;
+      }
+      .subscribe-card {
+        margin-top: 1rem;
+      }
+      .flex-col {
+        flex-direction: row !important;
+      }
+      .input-wrapper {
+        display: flex;
+        align-items: center;
+      }
+      input {
+        padding: 10px 2rem !important;
+        font-size: 14px !important;
+        text-align: center;
+      }
+      button {
+        padding: 0px 1rem !important;
+        font-size: 14px !important;
+        box-shadow: none !important;
+        width: fit-content !important;
+      }
+      button:hover {
+        transform: none !important;
+      }
+      @media (min-width: 640px) {
         button {
-          padding: 0px 1rem !important;
-          font-size: 14px !important;
-          box-shadow: none !important;
+          padding: 0px 2rem !important;
           width: fit-content !important;
         }
-        button:hover {
-          transform: none !important;
+        input {
+          padding: 10px 3rem !important;
+          font-size: 14px !important;
         }
-        @media (min-width: 640px) {
-          button {
-            padding: 0px 2rem !important;
-            width: fit-content !important;
-          }
-          input {
-            padding: 10px 3rem !important;
-            font-size: 14px !important;
-          }
-        }
-      `;
-      shadow.appendChild(style);
-    }
-    shadow.querySelectorAll("button svg").forEach((el) => el.remove());
+      }
+    `;
+    shadow.appendChild(style);
   }
+
+  // 移除按钮图标
+  shadow.querySelectorAll("button svg").forEach((el) => el.remove());
+
+  // 应用国际化文本
+  const input = shadow.querySelector("input");
+  const button = shadow.querySelector("button");
+  const placeholder = window.i18nPlaceholder || "";
+  const buttonText = window.i18nButtonText || "";
+
+  if (input) input.placeholder = placeholder;
+  if (button) button.textContent = buttonText;
+}
+
+// ┌─────────────────────────────────────────┐
+// │ 初始化 Follow Card（公共入口）          │
+// └─────────────────────────────────────────┘
+function initFollowCard() {
+  document.addEventListener("DOMContentLoaded", () => {
+    styleFollowCard();
+    const observer = new MutationObserver(() => {
+      const card = document.querySelector("follow-card");
+      if (card && card.shadowRoot) {
+        styleFollowCard();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
 }
