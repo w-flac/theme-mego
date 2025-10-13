@@ -26,19 +26,12 @@
                   <div class="space-y-2">
                     <div
                       class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md dark:from-blue-500/20 dark:to-purple-500/20"
-                      th:if="${theme.config.index_hero.hero_title.label}"
                     >
                       <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
-                      <span
-                        class="text-sm font-semibold text-gray-100"
-                        th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}"
-                        th:text="${theme.config.index_hero.hero_title.label}"
-                      ></span>
-                      <span
-                        class="text-sm font-semibold text-gray-100"
-                        th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}"
-                        th:text="#{common.hero.label}"
-                      ></span>
+                      <p class="text-sm font-semibold text-gray-100">
+                        <span th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}" th:text="${theme.config.index_hero.hero_title.label}"></span>
+                        <span th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.label)}" th:text="#{common.hero.label}"></span>
+                      </p>
                     </div>
                     <h1
                       class="title_text leading-tight font-bold text-white drop-shadow-lg transition-colors duration-300 dark:text-white/90"
@@ -46,39 +39,26 @@
                     >
                       <span th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.title)}" th:text="${theme.config.index_hero.hero_title.title}"></span>
                       <span th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.title)}" th:text="#{common.hero.title}"></span>
-
-                      <th:block th:if="${theme.config.index_hero.hero_title.enabled == true}">
-                        <span
-                          class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
-                          th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}"
-                          th:text="${theme.config.index_hero.hero_title.subtitle}"
-                        ></span>
-                        <span
-                          class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
-                          th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}"
-                          th:text="#{common.hero.subtitle}"
-                        ></span>
+                      <th:block th:if="${theme.config.index_hero.hero_title.enabled ?: true}">
+                        <span class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300">
+                          <span th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}" th:text="${theme.config.index_hero.hero_title.subtitle}"></span>
+                          <span th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.subtitle)}" th:text="#{common.hero.subtitle}"></span>
+                        </span>
                       </th:block>
                     </h1>
-                    <p
+                    <div
                       th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
                       class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
-                      th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}"
-                      th:text="${theme.config.index_hero.hero_title.description}"
-                    ></p>
-                    <p
-                      th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
-                      class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
-                      th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}"
-                      th:text="#{common.hero.description}"
-                    ></p>
+                    >
+                      <p th:if="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}" th:text="${theme.config.index_hero.hero_title.description}"></p>
+                      <p th:unless="${!#strings.isEmpty(theme.config.index_hero.hero_title.description)}" th:text="#{common.hero.description}"></p>
+                    </div>
                   </div>
-                  <div class="space-y-6">
+                  <div class="space-y-6" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}">
                     <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8">
                       <a
                         class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
                         th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
-                        th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
                       >
                         <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
                           <svg class="mr-1 h-4 w-4 transition-transform group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +79,6 @@
                       <a
                         class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-white/20 hover:shadow-white/5 sm:rounded-2xl sm:text-base sm:shadow-xl sm:hover:-translate-y-2 md:text-lg"
                         th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url2}"
-                        th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}"
                       >
                         <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
                           <svg class="mr-1 h-4 w-4 transition-transform duration-300 group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,26 +169,14 @@
       <section class="pt-12 pb-4 sm:py-24 sm:pb-0">
         <div class="mx-auto max-w-7xl">
           <div class="mb-12 text-center">
-            <h2
-              class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-              th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}"
-              th:text="${theme.config.index_blog.blog.blog_title}"
-            ></h2>
-            <h2
-              class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-              th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}"
-              th:text="#{widget.index.module.newPosts.title}"
-            ></h2>
-            <p
-              class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-              th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}"
-              th:text="${theme.config.index_blog.blog.blog_subtitle}"
-            ></p>
-            <p
-              class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-              th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}"
-              th:text="#{widget.index.module.newPosts.subtitle}"
-            ></p>
+            <h2 class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">
+              <span th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}" th:text="${theme.config.index_blog.blog.blog_title}"></span>
+              <span th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_title)}" th:text="#{widget.index.module.newPosts.title}"></span>
+            </h2>
+            <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400">
+              <span th:if="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}" th:text="${theme.config.index_blog.blog.blog_subtitle}"></span>
+              <span th:unless="${!#strings.isEmpty(theme.config.index_blog.blog.blog_subtitle)}" th:text="#{widget.index.module.newPosts.subtitle}"></span>
+            </p>
           </div>
           <ul class="grid grid-cols-1 gap-4 sm:gap-8 md:px-8" th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'lg:grid-cols-1' : 'lg:grid-cols-2'}">
             <li th:each="post : ${posts.items}" th:attr="id=|post-${post.metadata.name}|">
@@ -261,16 +228,16 @@
                       </div>
                       <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
                         <i class="fas fa-calendar-day text-white/60"></i>
-                        <span
-                          class="text-xs text-white/80 md:text-sm"
-                          th:if="${#locale.language == 'zh'}"
-                          th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
-                        ></span>
-                        <span
-                          class="text-xs text-white/80 md:text-sm"
-                          th:if="${#locale.language != 'zh'}"
-                          th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
-                        ></span>
+                        <div class="text-xs text-white/80 md:text-sm">
+                          <span
+                            th:if="${#locale.language == 'zh'}"
+                            th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+                          ></span>
+                          <span
+                            th:if="${#locale.language != 'zh'}"
+                            th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+                          ></span>
+                        </div>
                       </div>
                     </div>
                     <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
@@ -324,26 +291,20 @@
     <section class="absolute z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <div class="mx-auto max-w-7xl px-4 sm:py-24 md:px-8" th:if="${theme.config.index_other.category.category_enabled == true}">
         <div class="mb-12 text-center">
-          <h2
-            th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}"
-            th:text="${theme.config.index_other.category.category_items.category_title}"
-            class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
-          ></h2>
-          <h2
-            th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}"
-            th:text="#{widget.index.module.category.title}"
-            class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
-          ></h2>
-          <p
-            th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}"
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-            th:text="${theme.config.index_other.category.category_items.category_subtitle}"
-          ></p>
-          <p
-            th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}"
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-            th:text="#{widget.index.module.category.subtitle}"
-          ></p>
+          <h2 class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
+            <span
+              th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}"
+              th:text="${theme.config.index_other.category.category_items.category_title}"
+            ></span>
+            <span th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_title)}" th:text="#{widget.index.module.category.title}"></span>
+          </h2>
+          <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400">
+            <span
+              th:if="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}"
+              th:text="${theme.config.index_other.category.category_items.category_subtitle}"
+            ></span>
+            <span th:unless="${!#strings.isEmpty(theme.config.index_other.category.category_items.category_subtitle)}" th:text="#{widget.index.module.category.subtitle}"></span>
+          </p>
         </div>
         <ul class="grid grid-cols-3 gap-4 pb-12 xl:flex xl:flex-wrap xl:justify-center">
           <li
@@ -363,26 +324,14 @@
       </div>
       <div class="mx-auto max-w-7xl px-0 py-12 sm:py-24 md:px-8" th:if="${theme.config.index_other.tags.tags_enabled == true}">
         <div class="mb-12 text-center">
-          <h2
-            class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-            th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}"
-            th:text="${theme.config.index_other.tags.tags_items.tags_title}"
-          ></h2>
-          <h2
-            class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-            th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}"
-            th:text="#{widget.index.module.tag.title}"
-          ></h2>
-          <p
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-            th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}"
-            th:text="${theme.config.index_other.tags.tags_items.tags_subtitle}"
-          ></p>
-          <p
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-            th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}"
-            th:text="#{widget.index.module.tag.subtitle}"
-          ></p>
+          <h2 class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white">
+            <span th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}" th:text="${theme.config.index_other.tags.tags_items.tags_title}"></span>
+            <span th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_title)}" th:text="#{widget.index.module.tag.title}"></span>
+          </h2>
+          <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400">
+            <span th:if="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}" th:text="${theme.config.index_other.tags.tags_items.tags_subtitle}"></span>
+            <span th:unless="${!#strings.isEmpty(theme.config.index_other.tags.tags_items.tags_subtitle)}" th:text="#{widget.index.module.tag.subtitle}"></span>
+          </p>
         </div>
 
         <div class="mb-8 rounded-2xl bg-gray-400/5 p-4 sm:px-10 sm:py-12 dark:bg-white/5">
@@ -401,26 +350,23 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-center lg:max-w-none lg:grid-cols-2">
             <div class="mx-auto max-w-xl space-y-2 text-left lg:max-w-lg">
-              <h2
-                class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"
-                th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}"
-                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_title}"
-              ></h2>
-              <h2
-                class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"
-                th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}"
-                th:text="#{widget.index.module.subscribe.title}"
-              ></h2>
-              <p
-                class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300"
-                th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
-                th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle}"
-              ></p>
-              <p
-                class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300"
-                th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
-                th:text="#{widget.index.module.subscribe.subtitle}"
-              ></p>
+              <h2 class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                <span
+                  th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}"
+                  th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_title}"
+                ></span>
+                <span th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_title)}" th:text="#{widget.index.module.subscribe.title}"></span>
+              </h2>
+              <p class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300">
+                <span
+                  th:if="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
+                  th:text="${theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle}"
+                ></span>
+                <span
+                  th:unless="${!#strings.isEmpty(theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle)}"
+                  th:text="#{widget.index.module.subscribe.subtitle}"
+                ></span>
+              </p>
               <follow-card show-title="false"></follow-card>
             </div>
             <ul class="hidden grid-cols-1 items-center gap-x-4 gap-y-10 text-left sm:grid-cols-2 lg:grid">
