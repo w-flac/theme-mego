@@ -69,7 +69,7 @@ spec:
               id: enabled
               key: enabled
               label: 是否启用副标题
-              value: true
+              value: false
               placeholder: 请确认选择
               options:
                 - label: 是
@@ -328,7 +328,6 @@ spec:
                   value: "one"
                 - label: 双栏布局
                   value: "two"
-
     - group: index_other
       label: 其它模块
       formSchema:
@@ -359,7 +358,6 @@ spec:
                 - $formkit: text
                   name: category_title
                   label: 标题
-                  value: 分类库
                 - $formkit: text
                   name: category_subtitle
                   id: category_subtitle
@@ -450,7 +448,19 @@ spec:
                   id: subscribe_subtitle
                   key: subscribe_subtitle
                   label: 副标题
+                - $formkit: select
+                  name: slogan_enabled
+                  id: slogan_enabled
+                  key: slogan_enabled
+                  label: 是否启用口号
+                  placeholder: 请确认选择
+                  options:
+                      - label: 开启
+                        value: true
+                      - label: 关闭
+                        value: false
                 - $formkit: repeater
+                  if: "$value.slogan_enabled === true"
                   name: subscribe_slogan
                   id: subscribe_slogan
                   key: subscribe_slogan
