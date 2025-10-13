@@ -1,0 +1,112 @@
+<th:block th:fragment="postBlog(posts,displayType)">
+  <li th:each="post : ${posts}" th:attr="id=|post-${post.metadata.name}|">
+    <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
+      <div class="relative h-72 sm:h-80">
+        <th:block th:if="${not #strings.isEmpty(post.spec.cover)}">
+          <img
+            alt="images"
+            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+            loading="lazy"
+            sizes="(max-width: 1600px) 100vw, 1600px"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+            th:src="${post.spec.cover}"
+            th:alt="${post.spec.title}"
+            th:attr="data-src=${post.spec.cover},
+                               srcset=|${thumbnail.gen(post.spec.cover, 's')} 400w, ${thumbnail.gen(post.spec.cover, 'm')} 800w, ${thumbnail.gen(post.spec.cover, 'l')} 1200w|"
+          />
+        </th:block>
+        <th:block th:if="${#strings.isEmpty(post.spec.cover)}">
+          <img
+            alt="images"
+            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
+            loading="lazy"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+            th:src="${#theme.assets('/images/blog.avif')}"
+            th:attr="data-src=${#theme.assets('/images/blog.avif')}"
+            th:alt="${post.spec.title}"
+          />
+        </th:block>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
+        <div class="absolute top-4 left-4 flex justify-center space-x-2" th:if="${displayType == 'allCategories'}">
+          <a
+            class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
+            href=""
+            th:each="categories : ${post.categories}"
+            th:href="@{${categories.status.permalink}}"
+            th:text="${categories.spec.displayName}"
+            th:title="|#{page.post.categories}| + ':' +  |${categories.spec.displayName}|"
+          ></a>
+        </div>
+        <div class="absolute top-4 left-4 flex justify-center space-x-2" th:if="${displayType == 'currentTag'}">
+          <a
+            class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
+            th:href="@{${tag.status.permalink}}"
+            th:text="${tag.spec.displayName}"
+            th:title="|#{page.post.tags}| + ':' + |${tag.spec.displayName}|"
+          ></a>
+        </div>
+        <div class="absolute top-4 left-4 flex justify-center space-x-2" th:if="${displayType == 'currentCategory'}">
+          <a
+            class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
+            th:href="@{${category.status.permalink}}"
+            th:text="${category.spec.displayName}"
+            th:title="|#{page.post.categories}| + ':' +  |${categories.spec.displayName}|"
+          ></a>
+        </div>
+        <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:title="#{fragment.postCard.pinned}" th:if="${post.spec.pinned}">
+          <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
+        </div>
+        <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
+          <div class="mb-3 flex items-center space-x-5">
+            <div class="flex items-center space-x-2">
+              <img alt="" class="h-6 w-6 rounded-full object-cover ring-2 ring-white/20" th:src="${post.owner.avatar}" />
+              <span class="text-xs text-white md:text-sm" th:text="${post.owner.displayName}"></span>
+            </div>
+            <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
+              <i class="fas fa-calendar-day text-white/60"></i>
+              <span
+                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}| : |#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}|"
+              ></span>
+            </div>
+          </div>
+          <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
+            <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
+          </h2>
+          <a aria-label="read" class="overflow-hidden transition-all duration-500 ease-in-out" th:href="@{${post.status.permalink}}">
+            <p
+              class="mb-3 line-clamp-3 text-sm leading-relaxed text-white md:mb-4 md:text-base"
+              th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-1' : '')}"
+              th:text="${post.status.excerpt}"
+            ></p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3 text-xs text-white/80 md:space-x-4 md:text-sm">
+                <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                  <i class="fas fa-eye"></i>
+                  <span th:text="|${post.stats?.visit ?:0}|"></span>
+                </div>
+                <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                  <i class="fas fa-comment"></i>
+                  <span th:text="|${post.stats?.comment ?:0}|"></span>
+                </div>
+                <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
+                  <i class="fas fa-heart"></i>
+                  <span th:text="|${post.stats?.upvote ?:0}|"></span>
+                </div>
+              </div>
+              <button class="cursor-pointer p-2 text-xs font-medium text-white transition-colors hover:text-blue-300 md:text-sm">
+                <a
+                  aria-label="read"
+                  class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
+                  th:href="@{${post.status.permalink}}"
+                >
+                  <span th:text="#{widget.index.module.readMore}"></span>
+                  <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
+                </a>
+              </button>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </li>
+</th:block>

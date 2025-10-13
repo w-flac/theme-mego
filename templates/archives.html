@@ -39,11 +39,9 @@
             <div class="flex items-center space-x-6">
               <div class="flex items-center space-x-3">
                 <i class="fas fa-calendar text-gray-400 dark:text-gray-500"></i>
-                <h2 th:if="${#locale.language == 'zh'}" class="text-xl font-semibold text-gray-900 dark:text-white" th:text="|${archive.year}年${month.month}月|"></h2>
                 <h2
-                  th:if="${#locale.language != 'zh'}"
                   class="text-xl font-semibold text-gray-900 dark:text-white"
-                  th:text="${#temporals.format(#temporals.create(archive.year, month.month, 1), 'MMMM yyyy')}"
+                  th:text="${#locale.language == 'zh' ?  archive.year + '年' + month.month + '月' : #temporals.format(#temporals.create(archive.year, month.month, 1), 'MMMM yyyy')}"
                 ></h2>
               </div>
               <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
@@ -53,107 +51,7 @@
             </div>
           </div>
           <ul class="grid grid-cols-1 gap-6 md:px-8 lg:grid-cols-2">
-            <li th:each="post : ${month.posts}">
-              <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
-                <div class="relative h-72 sm:h-80">
-                  <th:block th:if="${not #strings.isEmpty(post.spec.cover)}">
-                    <img
-                      alt="images"
-                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                      loading="lazy"
-                      sizes="(max-width: 1600px) 100vw, 1600px"
-                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                      th:src="${post.spec.cover}"
-                      th:alt="${post.spec.title}"
-                      th:attr="data-src=${post.spec.cover},
-                               srcset=|${thumbnail.gen(post.spec.cover, 's')} 400w, ${thumbnail.gen(post.spec.cover, 'm')} 800w, ${thumbnail.gen(post.spec.cover, 'l')} 1200w|"
-                    />
-                  </th:block>
-                  <th:block th:if="${#strings.isEmpty(post.spec.cover)}">
-                    <img
-                      alt="images"
-                      class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                      loading="lazy"
-                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                      th:src="${#theme.assets('/images/blog.avif')}"
-                      th:attr="data-src=${#theme.assets('/images/blog.avif')}"
-                      th:alt="${post.spec.title}"
-                    />
-                  </th:block>
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20"></div>
-                  <div class="absolute top-4 left-4 flex justify-center space-x-2">
-                    <a
-                      class="rounded-xl border border-white/30 bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm md:px-3 md:text-sm"
-                      href=""
-                      th:each="categories : ${post.categories}"
-                      th:href="@{${categories.status.permalink}}"
-                      th:text="|${categories.spec.displayName}|"
-                      th:title="|分类：${categories.spec.displayName}|"
-                    ></a>
-                  </div>
-                  <div class="absolute top-1 right-4 rounded-full p-1.5 md:p-2" th:if="${post.spec.pinned}">
-                    <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
-                  </div>
-                  <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
-                    <div class="mb-3 flex items-center space-x-5">
-                      <div class="flex items-center space-x-2">
-                        <img alt="" class="h-6 w-6 rounded-full object-cover ring-2 ring-white/20" th:src="${post.owner.avatar}" />
-                        <span class="text-xs text-white md:text-sm" th:text="${post.owner.displayName}"></span>
-                      </div>
-                      <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
-                        <i class="fas fa-calendar-day text-white/60"></i>
-                        <span
-                          class="text-xs text-white/80 md:text-sm"
-                          th:if="${#locale.language == 'zh'}"
-                          th:text="#{page.archivers.postDate.zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')})}"
-                        ></span>
-                        <span
-                          class="text-xs text-white/80 md:text-sm"
-                          th:if="${#locale.language != 'zh'}"
-                          th:text="#{page.archivers.postDate.en(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')})}"
-                        ></span>
-                      </div>
-                    </div>
-                    <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
-                      <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
-                    </h2>
-                    <a aria-label="read" class="overflow-hidden transition-all duration-500 ease-in-out" th:href="@{${post.status.permalink}}">
-                      <p
-                        class="mb-3 line-clamp-3 text-sm leading-relaxed text-white md:mb-4 md:text-base"
-                        th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-1' : '')}"
-                        th:text="${post.status.excerpt}"
-                      ></p>
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-3 text-xs text-white/80 md:space-x-4 md:text-sm">
-                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
-                            <i class="fas fa-eye"></i>
-                            <span th:text="|${post.stats?.visit ?:0}|"></span>
-                          </div>
-                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
-                            <i class="fas fa-comment"></i>
-                            <span th:text="|${post.stats?.comment ?:0}|"></span>
-                          </div>
-                          <div class="flex items-center space-x-1 rounded-full bg-white/10 px-2 py-1 backdrop-blur-sm">
-                            <i class="fas fa-heart"></i>
-                            <span th:text="|${post.stats?.upvote ?:0}|"></span>
-                          </div>
-                        </div>
-                        <button class="cursor-pointer p-2 text-xs font-medium text-white transition-colors hover:text-blue-300 md:text-sm">
-                          <a
-                            aria-label="read"
-                            class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
-                            th:href="@{${post.status.permalink}}"
-                          >
-                            <span th:text="#{widget.index.module.readMore}"></span>
-                            <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
-                          </a>
-                        </button>
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
+            <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'allCategories')}"></th:block>
           </ul>
         </div>
       </th:block>
