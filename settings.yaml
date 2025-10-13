@@ -394,7 +394,7 @@ spec:
               id: tags_items
               key: tags_items
               if: "$value.tags_enabled === true"
-              label: 标签模块设置 /
+              label: 标签模块设置
               children:
                 - $formkit: text
                   name: tags_title
