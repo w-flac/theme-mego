@@ -121,7 +121,11 @@
     <!-- Index Module -->
     <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <!-- Site Statistics   -->
-      <div class="mx-auto max-w-7xl p-2 md:py-24 lg:px-8" th:classappend="${theme.config.index_hero.hero_enabled == false} ? 'pt-18' : ''">
+      <div
+        class="mx-auto max-w-7xl p-2 md:py-24 lg:px-8"
+        th:if="${theme.config.index_intro.intro.intro_enabled == true or theme.config.index_intro.website.website_enabled == true}"
+        th:classappend="${theme.config.index_hero.hero_enabled == false} ? 'pt-18' : ''"
+      >
         <div class="mx-auto max-w-2xl lg:max-w-none">
           <div class="text-center" th:if="${theme.config.index_intro.intro.intro_enabled == true}">
             <h2 class="text-4xl font-semibold text-balance text-gray-900 sm:text-5xl dark:text-white/70" th:text="${theme.config.index_intro.intro.content_items.title}"></h2>
