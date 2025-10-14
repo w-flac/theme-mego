@@ -5,15 +5,15 @@ metadata:
 spec:
   forms:
     - group: index_info
-      label: 信息概览
+      label: 一般设置
       formSchema:
         - $formkit: select
           name: info_enabled
           id: info_enabled
           key: info_enabled
-          label: 是否自定义站点信息
+          label: 是否启用站点信息
           placeholder: 请确认选择
-          value: false
+          value: true
           options:
             - label: 是
               value: true
@@ -26,6 +26,49 @@ spec:
           key: info_site
           label: 站点信息
           children:
+            - $formkit: select
+              name: site_enabled
+              id: site_enabled
+              key: site_enabled
+              value: "default"
+              label: 类型
+              options:
+                - label: 默认
+                  value: "default"
+                - label: 自定义
+                  value: "custom"
+        - $formkit: group
+          name: default
+          label: 默认
+          if: $get(site_enabled).value === 'default'
+          children:
+            - $formkit: text
+              name: title
+              label: 站点标题
+            - $formkit: text
+              name: description
+              label: 站点副标题
+            - $formkit: attachment
+              accepts:
+                - 'image/*'
+              name: logo
+              id: logo
+              key: logo
+              label: Logo
+        - $formkit: group
+          name: custom
+          label: 自定义
+          help: 此模式默认仅显示logo信息
+          if: $get(site_enabled).value === 'custom'
+          children:
+            - $formkit: attachment
+              accepts:
+                - 'image/*'
+              name: custom_logo
+              id: custom_logo
+              key: custom_logo
+              label: Logo
+              value: ''
     - group: index_hero
       label: Hero模块
       formSchema:
@@ -86,10 +129,8 @@ spec:
               options:
                   - label: 长文本
                     value: "long"
-                    if: "$value.subtitle_enabled === 'long'"
                   - label: 短文本
                     value: "short"
-                    if: "$value.subtitle_enabled === true"
               placeholder: 请确认选择
             - $formkit: text
               name: subtitle

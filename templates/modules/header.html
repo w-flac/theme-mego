@@ -2,11 +2,22 @@
   <div class="mx-auto max-w-7xl p-4">
     <div class="flex items-center justify-between">
       <a class="flex flex-shrink-0 items-center space-x-2" th:href="${site.url}">
-        <img alt="logo" class="size-8 rounded-2xl bg-cover lg:h-10 lg:w-10" th:if="not ${#strings.isEmpty(site.logo)}" th:src="${site.logo}" />
-        <div>
-          <span class="font-display text-base font-bold sm:text-xl" th:text="${site.title}"></span>
-          <div class="text-xs text-gray-900 dark:text-white/40" th:if="not ${#strings.isEmpty(site.subtitle)}" th:text="${site.subtitle}"></div>
-        </div>
+        <th:block th:if="${theme.config.index_info.info_site.site_enabled == 'default' or theme.config.index_info.info_site.site_enabled == 'custom'}">
+          <img
+            alt="logo"
+            th:classappend="${theme.config.index_info.info_site.site_enabled == 'default' ? 'size-8 rounded-2xl bg-cover lg:h-10 lg:w-10': 'bg-cover h-8 lg:h-10'}"
+            th:src="${theme.config.index_info.info_site.site_enabled == 'custom' ? theme.config.index_info.custom.custom_logo : (theme.config.index_info.default.logo ?: site.logo)}"
+            th:if="${theme.config.index_info.info_site.site_enabled == 'custom' ? not #strings.isEmpty(theme.config.index_info.custom.custom_logo) : not #strings.isEmpty(theme.config.index_info.default.logo ?: site.logo)}"
+          />
+          <div th:if="${theme.config.index_info.info_site.site_enabled == 'default'}">
+            <span class="font-display text-base font-bold sm:text-xl" th:text="${theme.config.index_info.default.title ?: site.title}"></span>
+            <div
+              class="text-xs text-gray-900 dark:text-white/40"
+              th:if="not ${#strings.isEmpty(theme.config.index_info.default.description ?: site.subtitle)}"
+              th:text="${theme.config.index_info.default.description ?: site.subtitle}"
+            ></div>
+          </div>
+        </th:block>
       </a>
       <ul class="hidden items-center justify-center whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
         <th:block th:each="menuItem,iter : ${menu.menuItems}">
