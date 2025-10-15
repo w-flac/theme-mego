@@ -22,10 +22,26 @@
       <ul class="hidden items-center justify-center whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
         <th:block th:each="menuItem,iter : ${menu.menuItems}">
           <li class="mx-2" th:if="${#lists.isEmpty(menuItem.children)}">
-            <a class="px-4 py-2 font-medium" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></a>
+            <a class="flex cursor-pointer items-center px-4 py-2" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
+              <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
+                <i
+                  class="mr-0.5 text-sm"
+                  th:classappend="${#annotations.getOrDefault(menuItem, 'MenuFont', '')}"
+                  th:style="'color: ' + ${#annotations.getOrDefault(menuItem, 'FontColor', '')} + ';'"
+                ></i>
+              </th:block>
+              <span class="font-medium" th:text="${menuItem.status.displayName}"></span>
+            </a>
           </li>
           <li class="mx-2" th:unless="${#lists.isEmpty(menuItem.children)}">
             <div class="relative flex cursor-pointer items-center justify-between px-4 py-2 font-medium" th:attr="id=|${menuItem.metadata.name}|" th:onclick="toggleMenu(this)">
+              <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
+                <i
+                  class="mr-1 text-sm"
+                  th:classappend="${#annotations.getOrDefault(menuItem, 'MenuFont', '')}"
+                  th:style="'color: ' + ${#annotations.getOrDefault(menuItem, 'FontColor', '')} + ';'"
+                ></i>
+              </th:block>
               <span class="h-full w-full" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></span>
               <svg class="ml-2" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -90,10 +106,26 @@
         </li>
         <th:block th:each=" menuItem,iter : ${menu.menuItems}">
           <li class="block py-2 text-lg font-medium" th:if="${#lists.isEmpty(menuItem.children)}">
-            <a target="_self" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}" th:text="${menuItem.status.displayName}"></a>
+            <a class="flex cursor-pointer items-center" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
+              <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
+                <i
+                  class="mr-0.5 text-sm"
+                  th:classappend="${#annotations.getOrDefault(menuItem, 'MenuFont', '')}"
+                  th:style="'color: ' + ${#annotations.getOrDefault(menuItem, 'FontColor', '')} + ';'"
+                ></i>
+              </th:block>
+              <span class="font-medium" th:text="${menuItem.status.displayName}"></span>
+            </a>
           </li>
           <li class="menu-item block py-2 text-lg font-medium" th:unless="${#lists.isEmpty(menuItem.children)}">
             <div class="flex cursor-pointer items-center justify-between">
+              <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
+                <i
+                  class="mr-1 text-sm"
+                  th:classappend="${#annotations.getOrDefault(menuItem, 'MenuFont', '')}"
+                  th:style="'color: ' + ${#annotations.getOrDefault(menuItem, 'FontColor', '')} + ';'"
+                ></i>
+              </th:block>
               <div
                 class="h-full w-full"
                 th:attr="id=|more-toggle-${menuItem.metadata.name}|"

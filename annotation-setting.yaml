@@ -55,3 +55,26 @@ spec:
 
 ---
 
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  generateName: annotation-setting-
+spec:
+  targetRef:
+    group: ""
+    kind: MenuItem
+  formSchema:
+    - $formkit: "text"
+      name: "MenuFont"
+      id: "MenuFont"
+      key: "MenuFont"
+      label: "图标"
+      clearable: true
+      help: "字体链接:https://fontawesome.com/search?f=classic&s=solid&ic=free&o=r"
+    - $formkit: "color"
+      name: "FontColor"
+      id: "FontColor"
+      key: "FontColor"
+      clearable: true
+      label: "颜色"
+      help: "设置自定义图标颜色"
