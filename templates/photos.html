@@ -25,7 +25,7 @@
           <a th:href="@{|/photos?group=${group.metadata.name}|}" th:text="${group.spec.displayName}"></a>
         </button>
       </div>
-      <ul class="columns-1 gap-4 transition-opacity duration-500 sm:columns-2 sm:gap-6 lg:columns-3 [&>*]:mb-4 [&>*]:sm:mb-6">
+      <ul class="columns-1 gap-4 transition-opacity duration-500 sm:columns-2 sm:gap-6 lg:columns-3 [&>*]:mb-4 [&>*]:sm:mb-6" id="photos-container">
         <li
           class="photo-item group relative translate-y-4 cursor-pointer overflow-hidden rounded-xl opacity-0 shadow-lg transition-all duration-700 hover:-translate-y-1 hover:shadow-2xl"
           th:each="photo : ${photos.items}"
@@ -55,10 +55,42 @@
           </div>
         </li>
       </ul>
+      <th:block th:if="${photos.hasNext()}">
+        <div class="mt-8 text-center" id="load-more-container"></div>
+        <div class="h-20" id="scroll-trigger"></div>
+      </th:block>
     </section>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
         initPhotoLazyLoad();
+        const group = new URLSearchParams(location.search).get('group');
+        const instance = initLoadMoreForPage({
+          postsContainerSelector: '#photos-container',
+          getNextPageUrl: page => `/photos/page/${page}${group ? `?group=${group}` : ''}`,
+          postSelector: '.photo-item',
+          skipContentFilter: true,
+          onInsert: nodes => {
+            nodes.forEach(n => setTimeout(() => n.classList.remove('opacity-0', 'translate-y-4'), 50));
+            initPhotoLazyLoad();
+          },
+          i18n: {
+            text: /*[[#{widget.loadMore.text}]]*/,
+            loading: /*[[#{widget.loadMore.loading}]]*/,
+            complete: /*[[#{widget.loadMore.complete}]]*/,
+            error: /*[[#{widget.loadMore.error}]]*/
+          }
+        });
+        if (instance) {
+          setTimeout(() => {
+            const trigger = document.getElementById('scroll-trigger');
+            const btn = document.getElementById('load-more-btn');
+            if (trigger && btn) {
+              new IntersectionObserver(entries => {
+                if (entries[0].isIntersecting && !instance.isLoading) btn.click();
+              }, { rootMargin: '200px', threshold: 0.1 }).observe(trigger);
+            }
+          }, 100);
+        }
       });
     </script>
     <th:block th:replace="~{modules/footer}" />

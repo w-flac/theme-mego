@@ -629,6 +629,7 @@ class LoadMoreButton {
     this.minPostsThreshold = options.minPostsThreshold || 10;
     this.postSelector = options.postSelector;
     this.onInsert = options.onInsert || null;
+    this.skipContentFilter = options.skipContentFilter || false; // 内容过滤（用于照片等场景）
     this.i18n = options.i18n || {
       text: "加载更多",
       loading: "加载中...",
@@ -695,11 +696,14 @@ class LoadMoreButton {
       const doc = parser.parseFromString(response.data, "text/html");
       const newPosts = doc.querySelectorAll(this.postSelector);
 
-      const filteredPosts = Array.from(newPosts).filter((post) => {
-        const hasTitle = post.querySelector("h2, h3");
-        const hasContent = post.querySelector("p");
-        return hasTitle && hasContent;
-      });
+      // 根据配置决定是否过滤内容（照片等场景不需要过滤）
+      const filteredPosts = this.skipContentFilter
+        ? Array.from(newPosts)
+        : Array.from(newPosts).filter((post) => {
+            const hasTitle = post.querySelector("h2");
+            const hasContent = post.querySelector("p");
+            return hasTitle && hasContent;
+          });
 
       this.currentPage++;
 
@@ -774,6 +778,7 @@ function initLoadMoreForPage(options) {
     insertPosition: options.insertPosition,
     minPostsThreshold: options.minPostsThreshold,
     onInsert: options.onInsert,
+    skipContentFilter: options.skipContentFilter,
     i18n: options.i18n,
   });
 }
