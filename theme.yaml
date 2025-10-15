@@ -5,7 +5,7 @@ metadata:
   annotations:
     "store.halo.run/app-id": "app-meJsF"
 spec:
-  displayName: Mego
+  displayName: MEGO
   author:
     name: 無.Flac
     website: https://w-flac.org.cn
