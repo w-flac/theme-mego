@@ -68,13 +68,6 @@ spec:
       name: "MenuFont"
       id: "MenuFont"
       key: "MenuFont"
-      label: "图标"
+      label: "图标SVG"
       clearable: true
-      help: "字体链接:https://fontawesome.com/search?f=classic&s=solid&ic=free&o=r"
-    - $formkit: "color"
-      name: "FontColor"
-      id: "FontColor"
-      key: "FontColor"
-      clearable: true
-      label: "颜色"
-      help: "设置自定义图标颜色"
+      help: "建议设置width和height为20"
