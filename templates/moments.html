@@ -1,0 +1,121 @@
+<!doctype html>
+<html
+  xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{modules/layout :: html(title = |#{page.moments.title} - ${site.title}|, hero = null, content = ~{::content}, head = null, footer = null, sidebar = null, contentClass = '')}"
+>
+  <th:block th:fragment="content">
+    <th:block th:replace="~{modules/header}" />
+    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
+      <div class="mx-auto max-w-3xl">
+        <div class="flex flex-col items-center justify-center space-y-4">
+          <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
+            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/moments.svg}" />
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.moments.title}"></h1>
+          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.moments.subtitle}"></p>
+        </div>
+      </div>
+    </div>
+    <section class="mx-auto max-w-4xl px-2 py-8 md:px-4">
+      <div class="scrollbar-hidden mb-6 flex items-center gap-2 overflow-x-auto rounded-2xl md:flex-wrap">
+        <button
+          th:classappend="${#lists.isEmpty(param.tag) ? '!bg-white !text-gray-900 dark:!bg-slate-700/70 dark:!text-slate-100' : ''}"
+          class="shrink-0 rounded-xl border border-transparent bg-gray-50/80 p-2 px-6 py-2 text-sm transition-colors dark:bg-white/5"
+        >
+          <a th:href="@{/moments}" th:text="#{common.all}"></a>
+        </button>
+        <button
+          th:each="tag : ${tags}"
+          th:classappend="${#lists.contains(param.tag, tag.name) ? '!bg-white !text-gray-900 dark:!bg-slate-700/70 dark:!text-slate-100' : ''}"
+          class="shrink-0 rounded-xl border border-transparent bg-gray-50/80 p-2 px-6 py-2 text-sm transition-colors dark:bg-white/5"
+        >
+          <a th:href="@{|?tag=${tag.name}|}">
+            <span th:text="|#${tag.name}|"></span>
+            <sup th:text="${tag.momentCount}"></sup>
+          </a>
+        </button>
+      </div>
+      <ul class="space-y-6">
+        <li
+          th:attr="data-moment=${moment.metadata.name}"
+          th:each="moment : ${moments.items}"
+          th:with="content=${moment.spec.content}"
+          class="moment-card transition-border overflow-hidden rounded-xl border border-gray-200 bg-gray-400/5 transition-colors duration-300 dark:border-gray-700 dark:bg-white/5"
+        >
+          <div class="p-4 md:p-6">
+            <div class="mb-4 flex items-center space-x-3">
+              <img th:src="${moment.owner.avatar}" alt="Avatar" class="size-10 rounded-sm" />
+              <div>
+                <h3 class="font-medium text-gray-900 dark:text-white" th:text="${moment.owner.displayName}"></h3>
+                <span class="text-xs text-gray-500 dark:text-gray-400" th:text="|${moment.owner.bio}| ?: |该用户很神秘| "></span>
+              </div>
+            </div>
+            <ul class="moment-items">
+              <li class="prose mb-6 text-base text-gray-700 md:text-base dark:text-gray-300" th:if="${not #strings.isEmpty(content.html)}" th:utext="${content.html}"></li>
+              <th:block th:if="${not #lists.isEmpty(content.medium)}">
+                <li
+                  class="mb-6 max-w-md has-[img:nth-child(2)]:grid has-[img:nth-child(2)]:grid-cols-3 has-[img:nth-child(2)]:gap-2 [&>img]:h-56 has-[img:nth-child(2)]:[&>img]:h-24 has-[img:nth-child(2)]:[&>img]:md:h-30"
+                >
+                  <img
+                    alt=""
+                    class="aspect-1 w-full cursor-pointer rounded-sm object-cover transition hover:opacity-90 has-[img:nth-child(2)]:h-24"
+                    th:each="momentItem : ${content.medium}"
+                    th:if="${momentItem.type.name == 'PHOTO'}"
+                    th:src="${momentItem.url}"
+                  />
+                </li>
+                <li>
+                  <video th:if="${momentItem.type.name == 'VIDEO'}" th:src="${momentItem.url}"></video>
+                </li>
+                <li>
+                  <audio th:if="${momentItem.type.name == 'AUDIO'}" th:src="${momentItem.url}" controls="true"></audio>
+                </li>
+              </th:block>
+              <li class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 text-xs md:space-x-4 md:text-sm">
+                  <div
+                    class="flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+                  >
+                    <i class="fas fa-comment text-xs"></i>
+                    <span th:text="|${moment.stats?.totalComment ?:0}|"></span>
+                  </div>
+                  <button 
+                    class="header-upvote-btn flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:scale-105 hover:text-red-500 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+                    th:attr="data-article-name=${moment.metadata.name}"
+                  >
+                    <i class="fas fa-heart text-xs transition-transform"></i>
+                    <span th:attr="data-moment-upvote=${moment.metadata.name}" th:text="|${moment.stats?.upvote ?:0}|"></span>
+                  </button>
+                </div>
+                <button
+                  onclick="this.closest('.moment-card').querySelector('.comment-section').classList.toggle('hidden')"
+                  class="flex items-center space-x-1 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+                >
+                  <i class="fa-solid fa-ellipsis text-xs"></i>
+                </button>
+              </li>
+              <li th:if="${haloCommentEnabled}" class="comment-section mt-6 hidden">
+                <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${moment.metadata.name}" />
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <th:block th:replace="~{modules/footer}" />
+
+    <script>
+      const momentUpvote = new Upvote(
+        "halo.upvoted.moment.names", 
+        "moments", 
+        undefined, 
+        {}, 
+        "moment.halo.run",
+        {
+          header: '[data-moment-upvote="{name}"]'
+        }
+      );
+      momentUpvote.init();
+    </script>
+  </th:block>
+</html>

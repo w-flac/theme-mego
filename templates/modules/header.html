@@ -5,7 +5,7 @@
         <th:block th:if="${theme.config.index_info.info_site.site_enabled == 'default' or theme.config.index_info.info_site.site_enabled == 'custom'}">
           <img
             alt="logo"
-            th:classappend="${theme.config.index_info.info_site.site_enabled == 'default' ? 'size-8 rounded-2xl bg-cover lg:h-10 lg:w-10': 'bg-cover h-8 lg:h-10'}"
+            th:classappend="${theme.config.index_info.info_site.site_enabled == 'default' ? 'size-9 md:size-8 rounded-xl md:rounded-2xl bg-cover lg:h-10 lg:w-10': 'bg-cover h-8 lg:h-10'}"
             th:src="${theme.config.index_info.info_site.site_enabled == 'custom' ? theme.config.index_info.custom.custom_logo : (theme.config.index_info.default.logo ?: site.logo)}"
             th:if="${theme.config.index_info.info_site.site_enabled == 'custom' ? not #strings.isEmpty(theme.config.index_info.custom.custom_logo) : not #strings.isEmpty(theme.config.index_info.default.logo ?: site.logo)}"
           />

@@ -826,10 +826,11 @@ const readingTime = {
 // │ 9.2 文章点赞功能                        │
 // └─────────────────────────────────────────┘
 class Upvote {
-  constructor(storageKey, plural, apiEndpoint = "/apis/api.halo.run/v1alpha1/trackers/upvote", i18n = {}) {
+  constructor(storageKey, plural, apiEndpoint = "/apis/api.halo.run/v1alpha1/trackers/upvote", i18n = {}, group = "content.halo.run", selectors = {}) {
     this.storageKey = storageKey;
     this.plural = plural;
     this.apiEndpoint = apiEndpoint;
+    this.group = group;
     this.i18n = Object.assign(
       {
         likedTitle: "人已点赞",
@@ -837,6 +838,18 @@ class Upvote {
         subtitle2: "感谢您的支持",
       },
       i18n,
+    );
+    
+    // 自定义选择器配置
+    this.selectors = Object.assign(
+      {
+        btn: '.upvote-btn',
+        headerBtn: '.header-upvote-btn',
+        count: '[data-upvote-post-name="{name}"]',
+        header: '[data-upvote-header-name="{name}"]',
+        sidebar: '[data-upvote-sidebar-name="{name}"]',
+      },
+      selectors,
     );
 
     this.liked = [];
@@ -868,7 +881,7 @@ class Upvote {
 
     try {
       await axios.post(this.apiEndpoint, {
-        group: "content.halo.run",
+        group: this.group,
         plural: this.plural,
         name: articleName,
       });
@@ -898,11 +911,11 @@ class Upvote {
   getElements(articleName) {
     if (!this.elementsCache.has(articleName)) {
       this.elementsCache.set(articleName, {
-        btn: document.querySelector(`.upvote-btn[data-article-name="${articleName}"]`),
-        headerBtn: document.querySelector(`.header-upvote-btn[data-article-name="${articleName}"]`),
-        count: document.querySelector(`[data-upvote-post-name="${articleName}"]`),
-        header: document.querySelector(`[data-upvote-header-name="${articleName}"]`),
-        sidebar: document.querySelector(`[data-upvote-sidebar-name="${articleName}"]`),
+        btn: document.querySelector(`${this.selectors.btn}[data-article-name="${articleName}"]`),
+        headerBtn: document.querySelector(`${this.selectors.headerBtn}[data-article-name="${articleName}"]`),
+        count: document.querySelector(this.selectors.count.replace('{name}', articleName)),
+        header: document.querySelector(this.selectors.header.replace('{name}', articleName)),
+        sidebar: document.querySelector(this.selectors.sidebar.replace('{name}', articleName)),
       });
     }
     return this.elementsCache.get(articleName);
@@ -1157,3 +1170,34 @@ function initFollowCard() {
     observer.observe(document.body, { childList: true, subtree: true });
   });
 }
+// ═══════════════════════════════════════════════════════════════════════════════
+// 12. 回到顶部模块 - Back to Top Module
+// ═══════════════════════════════════════════════════════════════════════════════
+// 功能: 平滑滚动到页面顶部，仅在滚动时显示
+(function () {
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("back-to-top");
+    if (!btn) return;
+    let hideTimer = null;
+    const SCROLL_THRESHOLD = 300;
+    const HIDE_DELAY = 2000;
+    const show = () => btn.classList.replace("opacity-0", "opacity-100") && btn.classList.replace("pointer-events-none", "pointer-events-auto");
+    const hide = () => btn.classList.replace("opacity-100", "opacity-0") && btn.classList.replace("pointer-events-auto", "pointer-events-none");
+    const onScroll = () => {
+      clearTimeout(hideTimer);
+      if ((window.pageYOffset || document.documentElement.scrollTop) > SCROLL_THRESHOLD) {
+        show();
+        hideTimer = setTimeout(hide, HIDE_DELAY);
+      } else {
+        hide();
+      }
+    };
+    const scrollToTop = () => {
+      clearTimeout(hideTimer);
+      hide();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    btn.addEventListener("click", scrollToTop);
+  });
+})();
