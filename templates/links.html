@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:replace="~{modules/layout :: html(title = '友链' + ' - ' + ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+<html th:replace="~{modules/layout :: html(title = |#{page.links.title} - ${site.title}|, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">

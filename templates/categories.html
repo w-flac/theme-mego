@@ -1,6 +1,6 @@
 <!doctype html>
 <html
-  th:replace="~{modules/layout :: html(title = |分类归档 - ${site.title}|, hero = null, content = ~{::content}, head = null, footer = null, sidebar = ~{::sidebar}, contentClass = '')}"
+  th:replace="~{modules/layout :: html(title = |#{page.categories.title} - ${site.title}|, hero = null, content = ~{::content}, head = null, footer = null, sidebar = ~{::sidebar}, contentClass = '')}"
   xmlns:th="https://www.thymeleaf.org"
 >
   <th:block th:fragment="content">

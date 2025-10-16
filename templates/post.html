@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:replace="~{modules/layout :: html(title = ${post.spec.title},head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+<html th:replace="~{modules/layout :: html(title = ${post.spec.title} + ' - ' + ${site.title},head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
     <div class="mx-auto mt-20 max-w-7xl px-4 pb-8 transition-colors duration-300 sm:px-6 lg:mt-24 lg:px-8">

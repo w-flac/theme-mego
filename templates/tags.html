@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:replace="~{modules/layout :: html(title = '标签归档' + ' - ' + ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
+<html th:replace="~{modules/layout :: html(title = |#{page.tags.title} - ${site.title}|, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
     <!--  Tags Title  -->
