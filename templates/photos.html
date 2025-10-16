@@ -21,7 +21,6 @@
         <button
           class="shrink-0 rounded-xl border border-transparent bg-gray-50/80 p-2 px-6 py-2 text-sm transition-colors dark:bg-white/5"
           th:classappend="${#lists.isEmpty(param.group) ? '!bg-white !text-gray-900 dark:!bg-slate-700/70 dark:!text-slate-100' : ''}"
-          th:each="group : ${photoFinder.groupBy()}"
         >
           <a th:href="@{/photos}" th:text="#{common.all}"></a>
         </button>
