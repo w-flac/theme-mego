@@ -9,7 +9,7 @@
       <div class="mx-auto max-w-3xl">
         <div class="flex flex-col items-center justify-center space-y-4">
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
-            <i class="fas fa-camera-retro text-2xl text-white sm:text-3xl"></i>
+            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/photos.svg}">
           </div>
           <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.photos.title}"></h1>
           <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.photos.subtitle}"></p>
@@ -91,6 +91,7 @@
         </a>
       </nav>
     </section>
+    <th:block th:replace="~{modules/footer}" />
     <script th:inline="javascript">
        document.addEventListener("DOMContentLoaded", () => {
         const group = new URLSearchParams(location.search).get('group');
@@ -127,13 +128,9 @@
             }, 100);
           }
         } else {
-          document.querySelectorAll('.photo-item').forEach(item => {
-            item.classList.remove('opacity-0', 'translate-y-4');
-            item.classList.add('opacity-100', 'translate-y-0');
-          });
+          initPhotoLazyLoad();
         }
       });
     </script>
-    <th:block th:replace="~{modules/footer}" />
   </th:block>
 </html>

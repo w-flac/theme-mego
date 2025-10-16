@@ -1,4 +1,4 @@
-<th:block th:fragment="postBlog(posts,displayType)">
+<th:block th:fragment="postBlog(posts,displayType,shortDate)">
   <li th:each="post : ${posts}" th:attr="id=|post-${post.metadata.name}|">
     <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
       <div class="relative h-72 sm:h-80">
@@ -65,7 +65,12 @@
             <div class="flex items-center space-x-1 text-xs text-white/80 md:text-sm">
               <i class="fas fa-calendar-day text-white/60"></i>
               <span
-                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}| : |#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}|"
+                th:if="${shortDate == null || !shortDate}"
+                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yyyy')})}| : |#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}|"
+              ></span>
+              <span
+                th:if="${shortDate != null && shortDate}"
+                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd') + '日'},${#dates.format(post.spec.publishTime,'MMM')})}| : |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')})}|"
               ></span>
             </div>
           </div>

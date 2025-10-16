@@ -12,33 +12,17 @@
     </th:block>
   </head>
   <body class="bg-gray-100 font-sans text-gray-900 transition-colors duration-200 dark:bg-gray-900 dark:text-white/70">
-    <div class="fixed inset-0 z-[9999] flex items-center justify-center bg-gray-100 transition-opacity duration-500 dark:bg-gray-900" id="global-loading">
-      <div class="flex flex-col items-center px-6">
-        <div class="relative inline-flex aspect-square min-h-44 min-w-44 items-center justify-center p-12 sm:min-h-52 sm:min-w-52 sm:p-16">
-          <div class="absolute inset-0 rounded-full border-[3px] border-gray-200 dark:border-gray-700"></div>
-          <div
-            class="absolute inset-0 animate-spin rounded-full border-[3px] border-transparent border-t-gray-700 border-r-gray-500 dark:border-t-gray-300 dark:border-r-gray-400"
-            style="animation-duration: 1.5s"
-          ></div>
-          <div
-            class="absolute inset-4 animate-spin rounded-full border-[3px] border-transparent border-b-gray-600 border-l-gray-500 dark:border-b-gray-400 dark:border-l-gray-500"
-            style="animation-duration: 2s; animation-direction: reverse"
-          ></div>
-          <div class="flex flex-col items-center justify-center space-y-4">
-            <div class="flex items-end space-x-1.5">
-              <div class="h-6 w-1.5 animate-pulse rounded-full bg-gray-800 [animation-delay:0ms] [animation-duration:1s] dark:bg-gray-200"></div>
-              <div class="h-10 w-1.5 animate-pulse rounded-full bg-gray-800 [animation-delay:150ms] [animation-duration:1s] dark:bg-gray-200"></div>
-              <div class="h-5 w-1.5 animate-pulse rounded-full bg-gray-800 [animation-delay:300ms] [animation-duration:1s] dark:bg-gray-200"></div>
-              <div class="h-8 w-1.5 animate-pulse rounded-full bg-gray-800 [animation-delay:450ms] [animation-duration:1s] dark:bg-gray-200"></div>
-              <div class="h-6 w-1.5 animate-pulse rounded-full bg-gray-800 [animation-delay:600ms] [animation-duration:1s] dark:bg-gray-200"></div>
-            </div>
-            <h1 class="animate-pulse text-center text-xs font-bold whitespace-nowrap text-gray-900 sm:text-sm dark:text-white" th:text="${site.title}"></h1>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <th:block th:replace="~{modules/loading}" />
     <th:block th:replace="${content}" />
+    <button
+    id="back-to-top"
+    class="pointer-events-none fixed right-8 bottom-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white opacity-0 shadow-lg inset-ring inset-ring-gray-200 backdrop-blur-md transition-opacity duration-300 dark:bg-white/10 dark:inset-ring-white/10"
+    aria-label="回到顶部"
+  >
+    <svg class="h-5 w-5 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
   </body>
   <script defer th:src="@{/assets/js/axios.min.js?v={version}(version=${theme.spec.version})}"></script>
   <script th:inline="javascript">

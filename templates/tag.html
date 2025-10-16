@@ -45,7 +45,7 @@
       <div class="relative grid grid-cols-1 gap-8" th:classappend="${posts.total == 0 ? '' : 'lg:grid-cols-4'}">
         <!--  Tag Card  -->
         <ul class="tag-post col-span-full space-y-8" th:classappend="${posts.total == 0 ? '' : 'lg:col-span-3'}">
-          <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'currentTag')}"></th:block>
+          <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'currentTag', shortDate = false)}"></th:block>
           <li class="flex flex-col items-center justify-center py-12 text-center text-gray-500 lg:mt-10 lg:min-h-96" th:if="${posts.total == 0}">
             <svg class="mb-3 h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
