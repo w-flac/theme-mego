@@ -63,42 +63,75 @@
           </div>
         </li>
       </ul>
-      <th:block th:if="${photos.hasNext()}">
+
+      <th:block th:if="${#lists.isEmpty(param.group) && photos.hasNext()}">
         <div class="mt-8 text-center" id="load-more-container"></div>
         <div class="h-20" id="scroll-trigger"></div>
       </th:block>
+      <nav th:if="${!#lists.isEmpty(param.group)}" class="mt-8 flex items-center justify-center gap-6">
+        <a
+          th:href="${photos.hasPrevious() ? photos.prevUrl : '#'}"
+          th:classappend="${!photos.hasPrevious() ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:-translate-y-1 hover:shadow-lg'}"
+          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+        >
+          <i class="fas fa-chevron-left mr-2"></i>
+          <span th:text="#{common.previous}"></span>
+        </a>
+        <div class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-3 shadow-sm dark:bg-white/10">
+          <span class="text-sm font-bold text-gray-900 dark:text-white" th:text="${photos.page}"></span>
+          <span class="text-xs text-gray-400 dark:text-gray-500">/</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${photos.totalPages}"></span>
+        </div>
+        <a
+          th:href="${photos.hasNext() ? photos.nextUrl : '#'}"
+          th:classappend="${!photos.hasNext() ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:-translate-y-1 hover:shadow-lg'}"
+          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+        >
+          <span th:text="#{common.next}"></span>
+          <i class="fas fa-chevron-right ml-2"></i>
+        </a>
+      </nav>
     </section>
     <script th:inline="javascript">
        document.addEventListener("DOMContentLoaded", () => {
-        initPhotoLazyLoad();
         const group = new URLSearchParams(location.search).get('group');
-        const instance = initLoadMoreForPage({
-          postsContainerSelector: '#photos-container',
-          getNextPageUrl: page => `/photos/page/${page}${group ? `?group=${group}` : ''}`,
-          postSelector: '.photo-item',
-          minPostsThreshold: 1,
-          skipContentFilter: true,
-          onInsert: nodes => {
-            nodes.forEach(n => setTimeout(() => n.classList.remove('opacity-0', 'translate-y-4'), 50));
-            initPhotoLazyLoad();
-          },
-          i18n: {
-            text: /*[[#{widget.loadMore.text}]]*/,
-            loading: /*[[#{widget.loadMore.loading}]]*/,
-            complete: /*[[#{widget.loadMore.complete}]]*/,
-            error: /*[[#{widget.loadMore.error}]]*/
-          }
-        });
-        if (instance) {
-          setTimeout(() => {
-            const trigger = document.getElementById('scroll-trigger');
-            const btn = document.getElementById('load-more-btn');
-            if (trigger && btn) {
-              new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting && !instance.isLoading) btn.click();
-              }, { rootMargin: '200px', threshold: 0.1 }).observe(trigger);
+
+        if (!group) {
+          initPhotoLazyLoad();
+          const instance = initLoadMoreForPage({
+            postsContainerSelector: '#photos-container',
+            getNextPageUrl: page => `/photos/page/${page}`,
+            postSelector: '.photo-item',
+            minPostsThreshold: 1,
+            skipContentFilter: true,
+            onInsert: nodes => {
+              nodes.forEach(n => setTimeout(() => n.classList.remove('opacity-0', 'translate-y-4'), 50));
+              initPhotoLazyLoad();
+            },
+            i18n: {
+              text: /*[[#{widget.loadMore.text}]]*/,
+              loading: /*[[#{widget.loadMore.loading}]]*/,
+              complete: /*[[#{widget.loadMore.complete}]]*/,
+              error: /*[[#{widget.loadMore.error}]]*/
             }
-          }, 100);
+          });
+
+          if (instance) {
+            setTimeout(() => {
+              const trigger = document.getElementById('scroll-trigger');
+              const btn = document.getElementById('load-more-btn');
+              if (trigger && btn) {
+                new IntersectionObserver(entries => {
+                  if (entries[0].isIntersecting && !instance.isLoading) btn.click();
+                }, { rootMargin: '200px', threshold: 0.1 }).observe(trigger);
+              }
+            }, 100);
+          }
+        } else {
+          document.querySelectorAll('.photo-item').forEach(item => {
+            item.classList.remove('opacity-0', 'translate-y-4');
+            item.classList.add('opacity-100', 'translate-y-0');
+          });
         }
       });
     </script>
