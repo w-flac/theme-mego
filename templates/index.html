@@ -49,8 +49,8 @@
                       <p th:text="|${theme.config.index_hero.hero_title.description}| ?: |#{common.hero.description}|"></p>
                     </div>
                   </div>
-                  <div class="space-y-6" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}">
-                    <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8">
+                  <div class="space-y-6" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open' || theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
+                    <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == 'open'}">
                       <a
                         class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
                         th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
