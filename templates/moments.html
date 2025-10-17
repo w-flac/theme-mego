@@ -35,87 +35,47 @@
           </a>
         </button>
       </div>
+      <!--  moment content    -->
       <ul class="space-y-6">
-        <li
-          th:attr="data-moment=${moment.metadata.name}"
-          th:each="moment : ${moments.items}"
-          th:with="content=${moment.spec.content}"
-          class="moment-card transition-border overflow-hidden rounded-xl border border-gray-200 bg-gray-400/5 transition-colors duration-300 dark:border-gray-700 dark:bg-white/5"
-        >
-          <div class="p-4 md:p-6">
-            <div class="mb-4 flex items-center space-x-3">
-              <img th:src="${moment.owner.avatar}" alt="Avatar" class="size-10 rounded-sm" />
-              <div>
-                <h3 class="font-medium text-gray-900 dark:text-white" th:text="${moment.owner.displayName}"></h3>
-                <span class="text-xs text-gray-500 dark:text-gray-400" th:text="|${moment.owner.bio}| ?: |该用户很神秘| "></span>
-              </div>
-            </div>
-            <ul class="moment-items">
-              <li class="prose mb-6 text-base text-gray-700 md:text-base dark:text-gray-300" th:if="${not #strings.isEmpty(content.html)}" th:utext="${content.html}"></li>
-              <th:block th:if="${not #lists.isEmpty(content.medium)}">
-                <li
-                  class="mb-6 max-w-md has-[img:nth-child(2)]:grid has-[img:nth-child(2)]:grid-cols-3 has-[img:nth-child(2)]:gap-2 [&>img]:h-56 has-[img:nth-child(2)]:[&>img]:h-24 has-[img:nth-child(2)]:[&>img]:md:h-30"
-                >
-                  <img
-                    alt=""
-                    class="aspect-1 w-full cursor-pointer rounded-sm object-cover transition hover:opacity-90 has-[img:nth-child(2)]:h-24"
-                    th:each="momentItem : ${content.medium}"
-                    th:if="${momentItem.type.name == 'PHOTO'}"
-                    th:src="${momentItem.url}"
-                  />
-                </li>
-                <li>
-                  <video th:if="${momentItem.type.name == 'VIDEO'}" th:src="${momentItem.url}"></video>
-                </li>
-                <li>
-                  <audio th:if="${momentItem.type.name == 'AUDIO'}" th:src="${momentItem.url}" controls="true"></audio>
-                </li>
-              </th:block>
-              <li class="flex items-center justify-between">
-                <div class="flex items-center space-x-3 text-xs md:space-x-4 md:text-sm">
-                  <div
-                    class="flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
-                  >
-                    <i class="fas fa-comment text-xs"></i>
-                    <span th:text="|${moment.stats?.totalComment ?:0}|"></span>
-                  </div>
-                  <button 
-                    class="header-upvote-btn flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:scale-105 hover:text-red-500 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
-                    th:attr="data-article-name=${moment.metadata.name}"
-                  >
-                    <i class="fas fa-heart text-xs transition-transform"></i>
-                    <span th:attr="data-moment-upvote=${moment.metadata.name}" th:text="|${moment.stats?.upvote ?:0}|"></span>
-                  </button>
-                </div>
-                <button
-                  onclick="this.closest('.moment-card').querySelector('.comment-section').classList.toggle('hidden')"
-                  class="flex items-center space-x-1 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
-                >
-                  <i class="fa-solid fa-ellipsis text-xs"></i>
-                </button>
-              </li>
-              <li th:if="${haloCommentEnabled}" class="comment-section mt-6 hidden">
-                <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${moment.metadata.name}" />
-              </li>
-            </ul>
-          </div>
-        </li>
+        <th:block th:each="moment : ${moments.items}">
+          <th:block th:replace="~{modules/moment-list :: momentCard(${moment})}" />
+        </th:block>
       </ul>
+      <nav th:if="${moments.nextUrl}" class="mt-8 flex items-center justify-center gap-6">
+        <a
+          th:href="${moments.hasPrevious() ? moments.prevUrl : 'javascript:void(0)'}"
+          th:classappend="${!moments.hasPrevious() ? 'opacity-50 cursor-not-allowed' : ''}"
+          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+        >
+          <i class="fas fa-chevron-left mr-2"></i>
+          <span th:text="#{common.previous}"></span>
+        </a>
+        <div class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-3 shadow-sm dark:bg-white/10">
+          <span class="text-sm font-bold text-gray-900 dark:text-white" th:text="${moments.page}"></span>
+          <span class="text-xs text-gray-400 dark:text-gray-500">/</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${moments.totalPages}"></span>
+        </div>
+        <a
+          th:href="${moments.hasNext() ? moments.nextUrl : 'javascript:void(0)'}"
+          th:classappend="${!moments.hasNext() ? 'opacity-50 cursor-not-allowed' : ''}"
+          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+        >
+          <span th:text="#{common.next}"></span>
+          <i class="fas fa-chevron-right ml-2"></i>
+        </a>
+      </nav>
     </section>
+    <th:block th:replace="~{modules/shareModal}" />
     <th:block th:replace="~{modules/footer}" />
-
     <script>
-      const momentUpvote = new Upvote(
-        "halo.upvoted.moment.names", 
-        "moments", 
-        undefined, 
-        {}, 
-        "moment.halo.run",
-        {
-          header: '[data-moment-upvote="{name}"]'
-        }
-      );
-      momentUpvote.init();
+      document.addEventListener('DOMContentLoaded', function() {
+        const momentUpvote = new Upvote("halo.upvoted.moment.names", "moments", undefined, {}, "moment.halo.run", {
+          headerBtnAttr: '[data-moment-name="{name}"]',
+          header: '[data-moment-upvote="{name}"]',
+        });
+        momentUpvote.init();
+        setTimeout(() => shareModalInstance(), 100);
+      });
     </script>
   </th:block>
 </html>
