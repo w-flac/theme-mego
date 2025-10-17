@@ -38,6 +38,15 @@
     @apply rounded-sm bg-gray-400/20 p-1 text-gray-900/80 dark:bg-white/25 dark:text-white/80;
 }
 
+.prose :where(a.tag) {
+    @apply inline-flex items-center rounded-full border border-gray-300 bg-gray-100/80 px-2.5 py-0.5 text-xs font-medium text-gray-800 no-underline backdrop-blur-sm dark:border-gray-600 dark:bg-gray-700/80 dark:text-gray-200;
+}
+
+.prose :where(a.tag)::before {
+    content: "#";
+    @apply mr-0.5 opacity-80;
+}
+
 @utility scrollbar-hidden {
     scrollbar-width: none;
     -ms-overflow-style: none;

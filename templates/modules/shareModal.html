@@ -1,0 +1,31 @@
+<div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 opacity-0 backdrop-blur-sm transition-opacity duration-200 ease-out">
+  <div id="shareContent" class="mx-4 w-full max-w-md scale-97 transform rounded-2xl bg-white p-6 shadow-xl transition-all duration-200 ease-out dark:bg-gray-800">
+    <div class="mb-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-share-nodes text-blue-500"></i>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white" th:text="#{common.share.title}"></h3>
+      </div>
+      <button id="shareClose" class="text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-300">
+        <i class="fa-solid fa-xmark text-xl"></i>
+      </button>
+    </div>
+
+    <p class="mb-4 text-sm text-gray-600 dark:text-gray-400" th:text="#{common.share.description}"></p>
+
+    <div class="flex items-center gap-2">
+      <input
+        id="shareUrlInput"
+        type="text"
+        readonly
+        class="flex-1 cursor-pointer rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+        value=""
+      />
+      <button id="copyBtn" class="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600" th:text="#{common.copy}"></button>
+    </div>
+
+    <p id="copySuccess" class="mt-2 hidden text-sm text-green-600 dark:text-green-400">
+      <i class="fa-solid fa-circle-check mr-1"></i>
+      <span th:text="#{common.share.success}"></span>
+    </p>
+  </div>
+</div>

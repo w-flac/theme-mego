@@ -839,12 +839,14 @@ class Upvote {
       },
       i18n,
     );
-    
+
     // 自定义选择器配置
     this.selectors = Object.assign(
       {
-        btn: '.upvote-btn',
-        headerBtn: '.header-upvote-btn',
+        btnClass: ".upvote-btn",
+        headerBtnClass: ".header-upvote-btn",
+        btnAttr: '[data-article-name="{name}"]',
+        headerBtnAttr: '[data-article-name="{name}"]',
         count: '[data-upvote-post-name="{name}"]',
         header: '[data-upvote-header-name="{name}"]',
         sidebar: '[data-upvote-sidebar-name="{name}"]',
@@ -870,7 +872,8 @@ class Upvote {
     e.preventDefault();
     e.stopPropagation();
 
-    const articleName = btn.dataset.articleName;
+    // 从按钮的 data 属性中查找名称（支持 data-article-name, data-moment-name 等）
+    const articleName = btn.dataset.articleName || btn.dataset.momentName;
     if (articleName) this.click(articleName);
   }
 
@@ -910,12 +913,15 @@ class Upvote {
 
   getElements(articleName) {
     if (!this.elementsCache.has(articleName)) {
+      const btnSelector = this.selectors.btnClass + this.selectors.btnAttr.replace("{name}", articleName);
+      const headerBtnSelector = this.selectors.headerBtnClass + this.selectors.headerBtnAttr.replace("{name}", articleName);
+
       this.elementsCache.set(articleName, {
-        btn: document.querySelector(`${this.selectors.btn}[data-article-name="${articleName}"]`),
-        headerBtn: document.querySelector(`${this.selectors.headerBtn}[data-article-name="${articleName}"]`),
-        count: document.querySelector(this.selectors.count.replace('{name}', articleName)),
-        header: document.querySelector(this.selectors.header.replace('{name}', articleName)),
-        sidebar: document.querySelector(this.selectors.sidebar.replace('{name}', articleName)),
+        btn: document.querySelector(btnSelector),
+        headerBtn: document.querySelector(headerBtnSelector),
+        count: document.querySelector(this.selectors.count.replace("{name}", articleName)),
+        header: document.querySelector(this.selectors.header.replace("{name}", articleName)),
+        sidebar: document.querySelector(this.selectors.sidebar.replace("{name}", articleName)),
       });
     }
     return this.elementsCache.get(articleName);
@@ -1080,6 +1086,89 @@ class TagViewCount {
     if (!id) return;
     this.updateDisplay(id.replace("items-", ""));
   }
+}
+// ┌─────────────────────────────────────────┐
+// │ 10.3 分享模块                 │
+// └─────────────────────────────────────────┘
+function shareModalInstance() {
+  const shareModal = document.getElementById("shareModal");
+  const modalContent = document.getElementById("shareContent");
+  const closeBtn = document.getElementById("shareClose");
+  const shareInput = document.getElementById("shareUrlInput");
+  const copyBtn = document.getElementById("copyBtn");
+  const copySuccess = document.getElementById("copySuccess");
+
+  if (!shareModal || !modalContent || !closeBtn || !shareInput || !copyBtn || !copySuccess) {
+    return;
+  }
+
+  function preventScroll(e) {
+    e.preventDefault();
+  }
+  function openModal(url) {
+    shareInput.value = url;
+    document.body.style.overflow = "hidden";
+    document.body.addEventListener("touchmove", preventScroll, { passive: false });
+    shareModal.classList.remove("hidden");
+    modalContent.classList.add("scale-97");
+    shareModal.classList.add("opacity-0");
+    requestAnimationFrame(() => {
+      shareModal.classList.add("flex");
+      shareModal.classList.remove("opacity-0");
+      modalContent.classList.remove("scale-97");
+    });
+    copySuccess.classList.add("hidden");
+  }
+  closeBtn.onclick = () => {
+    document.body.style.overflow = "";
+    document.body.removeEventListener("touchmove", preventScroll);
+    shareModal.classList.add("opacity-0");
+    modalContent.classList.add("scale-97");
+    setTimeout(() => {
+      shareModal.classList.add("hidden");
+      shareModal.classList.remove("flex");
+    }, 200);
+  };
+  function copyLink() {
+    shareInput.select();
+    shareInput.setSelectionRange(0, 99999);
+    try {
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(shareInput.value);
+      } else {
+        document.execCommand("copy");
+      }
+      copySuccess.classList.remove("hidden");
+      setTimeout(() => copySuccess.classList.add("hidden"), 2000);
+    } catch (err) {
+      console.error("复制失败:", err);
+    }
+  }
+
+  shareInput.onclick = copyBtn.onclick = copyLink;
+
+  document.addEventListener("click", function (e) {
+    const shareBtn = e.target.closest(".moment-share-btn");
+    if (shareBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const url = window.location.origin + shareBtn.dataset.shareUrl;
+      openModal(url);
+    }
+  });
+  document.addEventListener(
+    "touchend",
+    function (e) {
+      const shareBtn = e.target.closest(".moment-share-btn");
+      if (shareBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = window.location.origin + shareBtn.dataset.shareUrl;
+        openModal(url);
+      }
+    },
+    { passive: false },
+  );
 }
 // ═══════════════════════════════════════════════════════════════════════════════
 // 11. 工具函数模块 - Utility Functions Module

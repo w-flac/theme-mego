@@ -70,7 +70,7 @@
               ></span>
               <span
                 th:if="${shortDate != null && shortDate}"
-                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd') + '日'},${#dates.format(post.spec.publishTime,'MMM')})}| : |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')})}|"
+                th:text="${#locale.language == 'zh'} ? |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd') + '日'},${#dates.format(post.spec.publishTime,'MMM')})}| : |#{page.archives.date_short(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM') + ','})}|"
               ></span>
             </div>
           </div>

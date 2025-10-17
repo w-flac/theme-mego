@@ -1,0 +1,77 @@
+<th:block th:fragment="momentCard(momentItem)">
+  <li
+    th:attr="data-moment=${momentItem.metadata.name}"
+    th:with="content=${momentItem.spec.content}"
+    class="moment-card transition-border overflow-hidden rounded-xl border border-gray-200 bg-gray-400/5 transition-colors duration-300 dark:border-gray-700 dark:bg-white/5"
+  >
+    <div class="p-4 md:p-6">
+      <div class="mb-4 flex items-center space-x-3">
+        <img th:src="${momentItem.owner.avatar}" alt="Avatar" class="size-10 rounded-sm" />
+        <div>
+          <h3 class="font-medium text-gray-900 dark:text-white" th:text="${momentItem.owner.displayName}"></h3>
+          <span class="text-xs text-gray-500 dark:text-gray-400" th:text="|${momentItem.owner.bio}| ?: |该用户很神秘| "></span>
+        </div>
+      </div>
+      <div class="moment-items">
+        <div class="prose mb-6 text-base text-gray-700 md:text-base dark:text-gray-300" th:if="${not #strings.isEmpty(content.html)}" th:utext="${content.html}"></div>
+        <th:block th:if="${not #lists.isEmpty(content.medium)}">
+          <div
+            class="mb-6 max-w-md has-[img:nth-child(2)]:grid has-[img:nth-child(2)]:grid-cols-3 has-[img:nth-child(2)]:gap-2 [&>audio]:w-full [&>img]:h-56 has-[img:nth-child(2)]:[&>img]:h-24 has-[img:nth-child(2)]:[&>img]:md:h-30 [&>video]:aspect-video [&>video]:w-full [&>video]:rounded-md"
+          >
+            <th:block th:each="momentMedia : ${content.medium}">
+              <img
+                th:if="${momentMedia.type.name == 'PHOTO'}"
+                alt=""
+                class="aspect-1 w-full cursor-pointer rounded-sm object-cover transition hover:opacity-90"
+                th:src="${momentMedia.url}"
+                th:srcset="|${thumbnail.gen(momentMedia.url, 's')} 400w,
+                          ${thumbnail.gen(momentMedia.url, 'm')} 800w,
+                          ${thumbnail.gen(momentMedia.url, 'l')} 1200w|"
+                sizes="(max-width: 1200px) 100vw, 1200px"
+              />
+              <video th:if="${momentMedia.type.name == 'VIDEO'}" th:src="${momentMedia.url}" class="aspect-video max-h-56 w-full rounded-md" controls></video>
+              <audio th:if="${momentMedia.type.name == 'AUDIO'}" th:src="${momentMedia.url}" class="w-full" controls></audio>
+            </th:block>
+          </div>
+        </th:block>
+      </div>
+      <!--     button       -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3 text-xs">
+          <button
+            onclick="this.closest('.moment-card').querySelector('.comment-section').classList.toggle('hidden')"
+            class="flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+          >
+            <i class="fas fa-comment text-xs"></i>
+            <span class="text-xs" th:text="|${momentItem.stats?.totalComment ?:0}|"></span>
+          </button>
+          <button
+            class="header-upvote-btn flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:scale-105 hover:text-red-500 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+            th:attr="data-moment-name=${momentItem.metadata.name}"
+          >
+            <i class="fas fa-heart text-xs transition-transform"></i>
+            <span class="text-xs" th:attr="data-moment-upvote=${momentItem.metadata.name}" th:text="|${momentItem.stats?.upvote ?:0}|"></span>
+          </button>
+          <div
+            class="flex items-center space-x-1.5 rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+          >
+            <i class="fas fa-calendar-day text-xs"></i>
+            <span
+              th:text="${#locale.language == 'zh'} ? |#{page.archives.date_zh2(${#dates.format(momentItem.spec.releaseTime,'dd')},${#dates.format(momentItem.spec.releaseTime,'MM')},${#dates.format(momentItem.spec.releaseTime,'yyyy')})}| : |#{page.archives.date(${#dates.format(momentItem.spec.releaseTime,'dd')},${#dates.format(momentItem.spec.releaseTime,'MMM')},${#dates.format(momentItem.spec.releaseTime,'yyyy')})}|"
+            ></span>
+          </div>
+        </div>
+        <button
+          class="moment-share-btn flex shrink-0 items-center rounded-full bg-gray-50/80 px-2 py-1 text-gray-600 transition hover:bg-gray-100 dark:bg-white/10 dark:text-gray-300 dark:hover:bg-white/20"
+          th:attr="data-share-url=${'/moments/' + momentItem.metadata.name}"
+        >
+          <i class="fa-solid fa-share text-xs"></i>
+        </button>
+      </div>
+      <!--     comment       -->
+      <div th:if="${haloCommentEnabled}" class="comment-section mt-6 hidden">
+        <halo:comment group="moment.halo.run" kind="Moment" th:attr="name=${momentItem.metadata.name}" />
+      </div>
+    </div>
+  </li>
+</th:block>
