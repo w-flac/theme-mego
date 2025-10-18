@@ -516,15 +516,18 @@ html::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.25);
 }
 
-.moment-items iframe {
-    max-width: 28rem;;
-    max-height: 14rem; /* Tailwind max-h-56 对应 */
+.moment-items iframe,
+.moment-items video {
+    max-width: 28rem;
+    max-height: 14rem;
     aspect-ratio: 16 / 9;
-    border-radius: 0.375rem; /* Tailwind rounded-md */
+    border-radius: 0.375rem;
     display: block;
 }
+
 @media (min-width: 768px) {
-    .moment-items iframe {
+    .moment-items iframe,
+    .moment-items video {
         max-height: 14rem;
     }
 }
