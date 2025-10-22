@@ -28,6 +28,9 @@
 .prose :where(pre) {
     @apply pt-0 pr-0 pb-0 pl-0;
 }
+.prose :where(strong) {
+    @apply font-semibold text-gray-900 dark:text-white/70;
+}
 
 :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
 :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
