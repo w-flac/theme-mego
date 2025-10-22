@@ -69,6 +69,23 @@ spec:
               key: custom_logo
               label: Logo
               value: ''
+        - $formkit: group
+          name: info_setting
+          id: info_setting
+          key: info_setting
+          label: 移动端菜单
+          children:
+            - $formkit: checkbox
+              name: s_enabled
+              id: s_enabled
+              key: s_enabled
+              label: 显示搜索栏
+              value: true
+              help: 自定义菜单SVG用户选项
+
+
+
+
     - group: index_hero
       label: Hero模块
       formSchema:
