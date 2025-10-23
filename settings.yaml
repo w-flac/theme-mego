@@ -69,6 +69,19 @@ spec:
               key: custom_logo
               label: Logo
               value: ''
+        - $formkit: group
+          name: info_setting
+          id: info_setting
+          key: info_setting
+          label: 自定义设置
+          children:
+            - $formkit: checkbox
+              name: s_enabled
+              id: s_enabled
+              key: s_enabled
+              label: 显示搜索栏
+              value: ''
+              help: 自定义菜单SVG用户选项
     - group: index_hero
       label: Hero模块
       formSchema:
@@ -655,3 +668,71 @@ spec:
                   id: gongan
                   key: gongan
                   label: 公安备案
+    - group: donate
+      label: 赞赏设置
+      formSchema:
+        - $formkit: checkbox
+          name: p_enabled
+          id: p_enabled
+          key: p_enabled
+          label: 显示赞赏栏
+          value: false
+          help: 此选项仅在文章或单独页面显示
+        - $formkit: group
+          name: info_zz
+          id: info_zz
+          key: info_zz
+          label: 赞赏设置
+          if: $get(p_enabled).value === true
+          children:
+            - $formkit: group
+              name: p_aside
+              id: p_aside
+              key: p_aside
+              label: 侧边栏
+              children:
+                - $formkit: text
+                  name: a_title
+                  id: a_title
+                  key: a_title
+                  label: 标题
+                - $formkit: text
+                  name: a_subtitle
+                  id: a_subtitle
+                  key: a_title
+                  label: 简介
+            - $formkit: group
+              name: p_items
+              id: p_items
+              key: p_items
+              label: 模态框
+              children:
+                - $formkit: text
+                  name: p_title
+                  id: p_title
+                  key: p_title
+                  label: 标题
+                - $formkit: text
+                  name: p_subtitle
+                  id: p_subtitle
+                  key: p_title
+                  label: 简介
+            - $formkit: repeater
+              name: donate_items
+              id: donate_items
+              key: donate_items
+              label: 赞赏码列表
+              value: [ ]
+              children:
+                - $formkit: text
+                  name: type
+                  id: type
+                  key: type
+                  label: 类型
+                - $formkit: attachment
+                  accepts:
+                    - 'image/*'
+                  name: qrcode
+                  id: qrcode
+                  key: qrcode
+                  label: 二维码图片

@@ -48,15 +48,21 @@
                 />
               </svg>
               <ul
-                class="pointer-events-none absolute top-full left-1/2 z-10 mt-2 w-40 max-w-md -translate-x-1/2 translate-y-1 overflow-hidden rounded-2xl bg-white p-2 opacity-0 shadow-lg outline-1 -outline-offset-1 outline-white/10 backdrop-blur transition duration-200 ease-out dark:bg-gray-800"
+                class="pointer-events-none absolute top-full left-1/2 z-10 mt-2 w-40 max-w-md -translate-x-1/2 translate-y-1 overflow-hidden rounded-2xl bg-white p-2 opacity-0 shadow-lg transition duration-200 ease-out dark:bg-gray-800"
                 th:attr="id=|children-${menuItem.metadata.name}|"
               >
-                <li class="group relative flex items-center gap-x-6 rounded-lg text-sm leading-6" th:each="childMenuItem : ${menuItem.children}">
+                <li class="group flex rounded-lg text-sm leading-6" th:each="childMenuItem : ${menuItem.children}">
                   <a
-                    class="flex-auto rounded-lg p-2 text-center hover:bg-gray-100 dark:hover:bg-white/5"
+                    class="flex-auto rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-white/5"
+                    th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(childMenuItem, 'MenuFont', ''))} ? 'flex items-center justify-center' : 'text-center'"
                     th:href="@{${childMenuItem.status.href}}"
                     th:target="${childMenuItem.spec.target?.value}"
                   >
+                    <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(childMenuItem, 'MenuFont', ''))}">
+                      <span class="mr-1 inline-block">
+                        <th:block th:utext="${#annotations.getOrDefault(childMenuItem, 'MenuFont', '')}"></th:block>
+                      </span>
+                    </th:block>
                     <span class="block font-semibold text-gray-900 dark:text-white/70" th:text="${childMenuItem.status.displayName}"></span>
                   </a>
                 </li>
@@ -96,11 +102,14 @@
   >
     <div class="flex h-full w-full flex-col justify-center px-10">
       <ul class="space-y-2" th:with="menu = ${menuFinder.getPrimary()}">
-        <li class="flex items-center justify-between py-2 text-lg font-medium" th:if="${pluginFinder.available('PluginSearchWidget')}">
+        <li
+          class="flex items-center justify-between py-2 text-lg font-medium"
+          th:if="${pluginFinder.available('PluginSearchWidget') and theme.config.index_info.info_setting.s_enabled == true}"
+        >
           <a href="javascript:SearchWidget.open()" th:text="#{fragment.header.search}" th:title="#{fragment.header.search}"></a>
           <i class="fas fa-search text-sm"></i>
         </li>
-        <th:block th:each=" menuItem,iter : ${menu.menuItems}">
+        <th:block th:each="menuItem,iter : ${menu.menuItems}">
           <li class="block py-2 text-lg font-medium" th:if="${#lists.isEmpty(menuItem.children)}">
             <a class="flex cursor-pointer items-center" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
               <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
@@ -139,7 +148,18 @@
               class="border-apple-gray-300 pointer-events-none max-h-0 overflow-hidden border-l border-dashed pl-3 text-base font-medium opacity-0 transition-all duration-300 ease-in-out"
             >
               <li class="py-2 first:pt-3" th:each="childMenuItem : ${menuItem.children}">
-                <a target="_self" th:href="@{${childMenuItem.status.href}}" th:target="${childMenuItem.spec.target?.value}" th:text="${childMenuItem.status.displayName}"></a>
+                <a
+                  th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(childMenuItem, 'MenuFont', ''))} ? 'flex items-center' : ''"
+                  th:href="@{${childMenuItem.status.href}}"
+                  th:target="${childMenuItem.spec.target?.value}"
+                >
+                  <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(childMenuItem, 'MenuFont', ''))}">
+                    <span class="mr-1 inline-block">
+                      <th:block th:utext="${#annotations.getOrDefault(childMenuItem, 'MenuFont', '')}"></th:block>
+                    </span>
+                  </th:block>
+                  <span class="block font-semibold text-gray-900 dark:text-white/70" th:text="${childMenuItem.status.displayName}"></span>
+                </a>
               </li>
             </ul>
           </li>
