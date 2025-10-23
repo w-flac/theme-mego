@@ -66,9 +66,28 @@
               </div>
             </div>
           </div>
+          <th:block th:if="${theme.config.donate.p_enabled}">
+            <div class="mt-6 rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5">
+              <button
+                id="showDonateBtn"
+                class="group w-full rounded-lg bg-white/50 p-3 text-left transition-all duration-300 hover:scale-105 hover:bg-white/80 dark:border-gray-600/50 dark:bg-white/5 dark:hover:bg-gray-800/80"
+              >
+                <div class="flex items-center space-x-3">
+                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 dark:bg-green-400">
+                    <i class="fas fa-qrcode text-white"></i>
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white" th:text="${theme.config.donate.info_zz.p_aside.a_title}"></p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400" th:text="${theme.config.donate.info_zz.p_aside.a_subtitle}"></p>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </th:block>
         </aside>
       </div>
     </div>
+    <th:block th:replace="~{modules/donate}" />
     <th:block th:replace="~{modules/footer}" />
     <script th:src="@{/assets/js/tocbot.min.js}"></script>
     <script th:inline="javascript">
@@ -82,6 +101,7 @@
       readingTime.calculate();
       Tocbot();
       singlePageUpvote.init();
+      initDonateModal();
     </script>
   </th:block>
 </html>

@@ -1290,3 +1290,59 @@ function initFollowCard() {
     btn.addEventListener("click", scrollToTop);
   });
 })();
+// ═══════════════════════════════════════════════════════════════════════════════
+// 13. 赞赏模块 - Donate Module
+// ═══════════════════════════════════════════════════════════════════════════════
+// 功能: 赞赏模态框控制，支持打开、关闭、背景点击关闭
+function initDonateModal() {
+  const donateModal = document.getElementById("donateModal");
+  const donateContent = document.getElementById("donateContent");
+  const showDonateBtn = document.getElementById("showDonateBtn");
+  const donateClose = document.getElementById("donateClose");
+
+  if (!donateModal || !donateContent || !showDonateBtn || !donateClose) return;
+
+  let scrollPosition = 0;
+  const ANIMATION_DURATION = 200;
+
+  const lockBodyScroll = () => {
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    document.body.style.cssText = `position: fixed; top: -${scrollPosition}px; width: 100%`;
+  };
+
+  const unlockBodyScroll = () => {
+    document.body.style.cssText = "";
+    window.scrollTo(0, scrollPosition);
+  };
+
+  const showModal = () => {
+    donateModal.classList.remove("hidden");
+    donateContent.classList.add("scale-97");
+    donateModal.classList.add("opacity-0");
+    requestAnimationFrame(() => {
+      donateModal.classList.remove("opacity-0");
+      donateContent.classList.remove("scale-97");
+    });
+  };
+
+  const hideModal = () => {
+    donateModal.classList.add("opacity-0");
+    donateContent.classList.add("scale-97");
+    setTimeout(() => donateModal.classList.add("hidden"), ANIMATION_DURATION);
+  };
+
+  const openModal = () => {
+    if (!donateModal.classList.contains("hidden")) return;
+    lockBodyScroll();
+    showModal();
+  };
+
+  const closeModal = () => {
+    hideModal();
+    setTimeout(unlockBodyScroll, ANIMATION_DURATION);
+  };
+
+  showDonateBtn.addEventListener("click", openModal);
+  donateClose.addEventListener("click", closeModal);
+  donateModal.addEventListener("click", (e) => e.target === donateModal && closeModal());
+}
