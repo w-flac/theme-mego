@@ -486,30 +486,17 @@ a.toc-link {
     transition: color 0.3s;
 }
 
-/* ---------------- Firefox ---------------- */
+/* 通用 */
 html {
-    overflow-y: overlay; /* Chrome / Edge 支持浮动滚动条，Firefox 会忽略 */
-}
-
-/* ---------------- Chrome / Safari / Edge ---------------- */
-html::-webkit-scrollbar {
-    width: 4px; /* 垂直滚动条宽度 */
-    height: 4px; /* 横向滚动条高度 */
-}
-
-html::-webkit-scrollbar-track {
-    background: transparent; /* 轨道透明 */
-}
-
-html::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0);
-    border-radius: 2px;
-}
-
-/* 鼠标悬停时显示滚动条 */
-html::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
-}
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge (旧版) */
+  }
+  
+  /* Chrome / Safari / 新 Edge */
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  
 
 /* 暗黑模式 */
 [data-color-scheme="dark"] html::-webkit-scrollbar-thumb {

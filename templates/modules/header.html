@@ -102,11 +102,14 @@
   >
     <div class="flex h-full w-full flex-col justify-center px-10">
       <ul class="space-y-2" th:with="menu = ${menuFinder.getPrimary()}">
-        <li class="flex items-center justify-between py-2 text-lg font-medium" th:if="${pluginFinder.available('PluginSearchWidget') and theme.config.index_info.info_setting.s_enabled}">
+        <li
+          class="flex items-center justify-between py-2 text-lg font-medium"
+          th:if="${pluginFinder.available('PluginSearchWidget') and theme.config.index_info.info_setting.s_enabled == true}"
+        >
           <a href="javascript:SearchWidget.open()" th:text="#{fragment.header.search}" th:title="#{fragment.header.search}"></a>
           <i class="fas fa-search text-sm"></i>
         </li>
-        <th:block th:each=" menuItem,iter : ${menu.menuItems}">
+        <th:block th:each="menuItem,iter : ${menu.menuItems}">
           <li class="block py-2 text-lg font-medium" th:if="${#lists.isEmpty(menuItem.children)}">
             <a class="flex cursor-pointer items-center" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
               <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
