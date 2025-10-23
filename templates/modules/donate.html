@@ -1,0 +1,29 @@
+<div id="donateModal" th:if="${theme.config.donate.p_enabled}" class="fixed inset-0 z-50 hidden flex items-center justify-center overflow-y-auto bg-black/60 backdrop-blur-sm transition-opacity duration-200 ease-out">
+  <div id="donateContent" class="relative max-w-5xl min-w-xl scale-97 transform rounded-2xl bg-white p-8 shadow-2xl transition-all duration-200 ease-out dark:bg-gray-800">
+    <button id="donateClose" class="absolute top-4 right-4 text-gray-500 transition hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+
+    <div class="mb-8 space-y-3 text-center">
+      <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-500 text-white shadow-lg">
+        <i class="fas fa-coins text-2xl"></i>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white" th:utext="${theme.config.donate.info_zz.p_items.p_title}"></h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400" th:utext="${theme.config.donate.info_zz.p_items.p_subtitle}"></p>
+    </div>
+
+    <div class="prose grid place-items-center gap-4 text-center" th:classappend="|grid-cols-${#lists.size(theme.config.donate.info_zz.donate_items)}|">
+      <div class="w-52" th:each="donate_item : ${theme.config.donate.info_zz.donate_items}">
+        <div class="rounded-lg bg-white p-2">
+          <img th:src="${donate_item.qrcode}" th:alt="${donate_item.type}" class="w-full rounded-lg object-cover" />
+        </div>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">[[${donate_item.type}]]</p>
+      </div>
+    </div>
+    <!-- <div class="mt-2 text-center">
+      <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-green-600 transition hover:text-green-700 dark:text-green-400 dark:hover:text-green-300">
+        <span>查看打赏列表</span>
+      </a>
+    </div> -->
+  </div>
+</div>
