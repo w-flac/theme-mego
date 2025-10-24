@@ -151,6 +151,34 @@
     }
 }
 
+@keyframes scroll-mouse {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(18px);
+    }
+}
+
+@keyframes scroll-mouse-touch {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(12px);
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-12px);
+    }
+}
+
 /* ┌───────────────────────┐*/
 /* │   自定义字体            │*/
 /* └───────────────────────┘*/
