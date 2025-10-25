@@ -15,7 +15,8 @@
         <div class="flex h-full w-full items-center justify-center px-6 sm:px-4 lg:px-12">
           <div class="mb-14 flex max-w-6xl flex-col items-center space-y-8 text-center lg:space-y-12">
             <img
-              th:src="${theme.config.resume.hero.h_logo ?: '/upload/icon.jpg'}"
+              th:if="${not #strings.isEmpty(theme.config.resume.hero.h_logo)}"
+              th:src="${theme.config.resume.hero.h_logo}"
               alt=""
               class="h-32 w-32 overflow-hidden rounded-full object-cover ring-4 shadow-2xl ring-white sm:h-40 sm:w-40 lg:h-48 lg:w-48"
             />
