@@ -736,3 +736,405 @@ spec:
                   id: qrcode
                   key: qrcode
                   label: 二维码图片
+    - group: resume
+      label: AboutME
+      formSchema:
+        - $formkit: group
+          name: read
+          help: 注意！本模块需在页面选取模版后才能生效
+          children:
+            - $formkit: checkbox
+              name: r_enabled
+              id: r_enabled
+              key: r_enabled
+              label: 我已知晓注意事项
+        - $formkit: group
+          name: hero
+          id: hero
+          key: hero
+          if: $get(r_enabled).value === true
+          label: 个人信息
+          children:
+            - $formkit: attachment
+              accepts:
+                - 'image/*'
+              name: h_logo
+              id: h_logo
+              key: h_logo
+              label: Logo
+              value: ''
+            - $formkit: text
+              name: h_name
+              id: h_name
+              key: h_name
+              label: 姓名
+            - $formkit: text
+              name: h_post
+              id: h_post
+              key: h_post
+              label: 职称
+            - $formkit: text
+              name: h_sub
+              id: h_sub
+              key: h_sub
+              label: 简介
+            - $formkit: select
+              name: h_selt
+              id: h_selt
+              key: h_selt
+              label: 是否显示快捷按钮
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+        - $formkit: group
+          name: github
+          id: github
+          key: github
+          if: $get(r_enabled).value === true
+          label: 图表统计
+          children:
+            - $formkit: select
+              name: github_enabled
+              id: github_enabled
+              key: github_enabled
+              label: 是否启用图表统计
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: group
+              name: github_title
+              id: github_title
+              key: github_title
+              if: "$value.github_enabled === true"
+              children:
+                - $formkit: text
+                  name: g_title
+                  id: g_title
+                  key: g_title
+                  label: 分隔标题
+            - $formkit: group
+              name: github_graph
+              id: github_graph
+              key: github_graph
+              if: "$value.github_enabled === true"
+              children:
+                - $formkit: text
+                  name: g_graph
+                  id: g_graph
+                  key: g_graph
+                  label: 热力图
+                - $formkit: text
+                  name: g_title
+                  id: g_title
+                  key: g_title
+                  label: 类型
+            - $formkit: repeater
+              name: github_list
+              id: github_list
+              key: github_list
+              if: "$value.github_enabled === true"
+              value: []
+              max: 3
+              label: 新增图表
+              children:
+                - $formkit: text
+                  name: l_url
+                  id: l_url
+                  key: l_url
+                  label: 请输入URL地址
+                - $formkit: text
+                  name: l_title
+                  id: l_title
+                  key: l_title
+                  label: 类型
+        - $formkit: group
+          name: work
+          id: work
+          key: work
+          if: $get(r_enabled).value === true
+          label: 工作模块
+          children:
+            - $formkit: select
+              name: work_enabled
+              id: work_enabled
+              key: work_enabled
+              label: 是否启用工作模块
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: group
+              name: work_title
+              id: work_title
+              key: gwork_title
+              if: "$value.work_enabled === true"
+              children:
+                - $formkit: text
+                  name: w_title
+                  id: w_title
+                  key: w_title
+                  label: 分隔标题
+            - $formkit: repeater
+              name: work_items
+              id: work_items
+              key: work_items
+              if: "$value.work_enabled === true"
+              label: 新增列表
+              value: []
+              children:
+                - $formkit: text
+                  name: w_title
+                  id: w_title
+                  key: w_title
+                  label: 职位
+                - $formkit: text
+                  name: w_company
+                  id: w_company
+                  key: w_company
+                  label: 公司
+                - $formkit: text
+                  name: w_period
+                  id: w_period
+                  key: w_period
+                  label: 时间
+                - $formkit: text
+                  name: w_description
+                  id: w_description
+                  key: w_description
+                  label: 描述
+                  height: 200px
+        - $formkit: group
+          name: projects
+          id: projects
+          key: projects
+          if: $get(r_enabled).value === true
+          label: 项目模块
+          children:
+            - $formkit: select
+              name: projects_enabled
+              id: projects_enabled
+              key: projects_enabled
+              label: 是否启用项目模块
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: group
+              name: projects_title
+              id: projects_title
+              key: projects_title
+              if: "$value.projects_enabled === true"
+              children:
+                - $formkit: text
+                  name: p_title
+                  id: p_title
+                  key: p_title
+                  label: 分隔标题
+            - $formkit: repeater
+              name: projects_items
+              id: projects_items
+              key: projects_items
+              if: "$value.projects_enabled === true"
+              label: 项目列表
+              value: []
+              children:
+                - $formkit: text
+                  name: p_title
+                  id: p_title
+                  key: p_title
+                  label: 项目名称
+                - $formkit: text
+                  name: p_description
+                  id: p_description
+                  key: p_description
+                  label: 项目描述
+                - $formkit: text
+                  if: "$value.p_enabled === true"
+                  name: p_url
+                  id: p_url
+                  key: p_url
+                  label: 外部链接
+                - $formkit: code
+                  name: p_icon
+                  id: p_icon
+                  key: p_icon
+                  language: html
+                  height: 100px
+                  label: SVG图标
+                - $formkit: select
+                  name: p_enabled
+                  id: p_enabled
+                  key: p_enabled
+                  label: 是否启用外部链接
+                  placeholder: 请确认选择
+                  value: ''
+                  options:
+                    - label: 是
+                      value: true
+                    - label: 否
+                      value: false
+        - $formkit: group
+          name: skills
+          id: skills
+          key: skills
+          if: $get(r_enabled).value === true
+          label: 技能模块
+          children:
+            - $formkit: select
+              name: skills_enabled
+              id: skills_enabled
+              key: skills_enabled
+              label: 是否启用技能模块
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: group
+              name: skills_title
+              id: skills_title
+              key: skills_title
+              if: "$value.skills_enabled === true"
+              children:
+                - $formkit: text
+                  name: s_title
+                  id: s_title
+                  key: s_title
+                  label: 分隔标题
+            - $formkit: repeater
+              name: skills_items
+              id: skills_items
+              key: skills_items
+              if: "$value.skills_enabled === true"
+              label: 技能列表
+              value: []
+              children:
+                - $formkit: code
+                  name: s_icon
+                  id: s_icon
+                  key: s_icon
+                  language: html
+                  height: 100px
+                  label: SVG图标
+                - $formkit: text
+                  name: s_title
+                  id: s_title
+                  key: s_title
+                  label: 技能分类
+                - $formkit: text
+                  name: s_description
+                  id: s_description
+                  key: s_description
+                  label: 技能描述
+                - $formkit: color
+                  name: s_color
+                  id: s_color
+                  key: s_color
+                  label: 背景颜色
+        - $formkit: group
+          name: contact
+          id: contact
+          key: contact
+          if: $get(r_enabled).value === true
+          label: 联系模块
+          children:
+            - $formkit: select
+              name: contact_enabled
+              id: contact_enabled
+              key: contact_enabled
+              label: 是否启用联系方式
+              placeholder: 请确认选择
+              value: ''
+              options:
+                - label: 是
+                  value: true
+                - label: 否
+                  value: false
+            - $formkit: group
+              name: contact_title
+              id: contact_title
+              key: contact_title
+              if: "$value.contact_enabled === true"
+              children:
+                - $formkit: text
+                  name: s_title
+                  id: s_title
+                  key: s_title
+                  label: 分隔标题
+            - $formkit: group
+              name: contact_items
+              id: contact_items
+              key: contact_items
+              if: "$value.contact_enabled === true"
+              children:
+                - $formkit: text
+                  name: contact_title
+                  id: contact_title
+                  key: contact_title
+                  label: 标题
+                - $formkit: text
+                  name: contact_subtitle
+                  id: contact_subtitle
+                  key: contact_subtitle
+                  label: 副标题
+            - $formkit: repeater
+              name: contact_list
+              id: contact_list
+              key: contact_list
+              if: "$value.contact_enabled === true"
+              label: 联系列表
+              value: []
+              children:
+                - $formkit: select
+                  name: c_icon
+                  id: c_icon
+                  key: c_icon
+                  label: 图标
+                  placeholder: 请选择图标
+                  options:
+                    - label: Mail
+                      value: s-i-mail
+                    - label: Facebook
+                      value: s-i-facebook
+                    - label: X
+                      value: s-i-X
+                    - label: GitHub
+                      value: s-i-github
+                    - label: LinkedIn
+                      value: s-i-linkedin
+                    - label: Telegram
+                      value: s-i-telegram
+                    - label: 微博
+                      value: s-i-weibo
+                - $formkit: text
+                  name: c_type
+                  id: c_type
+                  key: c_type
+                  label: 类型
+                - $formkit: text
+                  name: c_url
+                  id: c_url
+                  key: c_url
+                  label: 链接
+                - $formkit: text
+                  name: c_value
+                  id: c_value
+                  key: c_value
+                  label: 用户名
+                  help: 邮箱请写完整链接
