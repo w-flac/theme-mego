@@ -57,3 +57,11 @@
         display: none;
     }
 }
+
+@utility animate-scroll-mouse {
+    animation: scroll-mouse 2s ease-in-out infinite;
+}
+
+@utility animate-scroll-mouse-touch {
+    animation: scroll-mouse-touch 1.5s ease-in-out infinite;
+}
