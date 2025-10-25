@@ -73,7 +73,7 @@ spec:
           name: info_setting
           id: info_setting
           key: info_setting
-          label: 自定义设置
+          label: 聚合设置
           children:
             - $formkit: checkbox
               name: s_enabled
@@ -82,6 +82,13 @@ spec:
               label: 显示搜索栏
               value: ''
               help: 自定义菜单SVG用户选项
+            - $formkit: checkbox
+              name: c_enabled
+              id: c_enabled
+              key: c_enabled
+              label: 分类归档图标颜色渲染
+              value: ''
+              help: 开启后分类归档页面图标颜色将生效
     - group: index_hero
       label: Hero模块
       formSchema:

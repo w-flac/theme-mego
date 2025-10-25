@@ -27,7 +27,9 @@
           <div class="flex items-center justify-between">
             <div>
               <i
-                th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(category, 'font', '')) ? #annotations.getOrDefault(category, 'font', '') : 'fas fa-folder-open'}"
+                class=""
+                th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(category, 'font', '')) ? #annotations.getOrDefault(category, 'font', '') : 'fas fa-folder-open'} + ' ' + ${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? #annotations.getOrDefault(category, 'color', '') : ''}"
+                th:style="${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
               ></i>
               <span class="ml-1 text-sm font-medium" th:text="${category.spec.displayName}"></span>
             </div>
@@ -96,7 +98,9 @@
             <div class="flex items-center justify-between">
               <div>
                 <i
-                  th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(category, 'font', '')) ? #annotations.getOrDefault(category, 'font', '') : 'fas fa-folder-open'}"
+                  class=""
+                  th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(category, 'font', '')) ? #annotations.getOrDefault(category, 'font', '') : 'fas fa-folder-open'} + ' ' + ${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? #annotations.getOrDefault(category, 'color', '') : ''}"
+                  th:style="${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
                 ></i>
                 <span class="ml-1 text-sm font-medium" th:text="${child.spec.displayName}"></span>
               </div>
