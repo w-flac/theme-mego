@@ -63,6 +63,7 @@
 - [x] [瞬间插件](https://www.halo.run/store/apps/app-SnwWD) - Halo 2.0 的瞬间管理模块。
 - [x] [链接管理](https://www.halo.run/store/apps/app-hfbQg) - 链接管理模块，可用于管理网站友情链接。
 - [x] [文章订阅](https://www.halo.run/store/apps/app-yldNX) - 允许用户轻松订阅您的网站或博客，及时获取最新文章通知。
+- [x] [AboutME](https://www.itheme.net/about) - 自定义关于模板，让访客更好地了解你。
 - [x] 文章目录 - 支持自动生成文章目录，方便阅读。
 - [x] 明暗切换 - 提供夜间模式和日间模式切换功能。
 - [x] 字数统计 - 自动统计文章字数，估算阅读时间。

@@ -86,9 +86,9 @@ spec:
               name: c_enabled
               id: c_enabled
               key: c_enabled
-              label: 分类归档图标颜色渲染
+              label: 分类图标颜色渲染
               value: ''
-              help: 开启后分类归档页面图标颜色将生效
+              help: 开启后 /categories 页面下图标颜色将生效
     - group: index_hero
       label: Hero模块
       formSchema:
