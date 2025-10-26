@@ -10,7 +10,6 @@
           class="from-soft-coral/30 to-coral-red/30 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br mix-blend-multiply blur-3xl filter dark:from-orange-400/20 dark:to-red-400/20 dark:mix-blend-screen"
         ></div>
       </div>
-      <!-- Hero Section -->
       <section class="relative my-16 h-screen w-full snap-start overflow-hidden">
         <div class="flex h-full w-full items-center justify-center px-6 sm:px-4 lg:px-12">
           <div class="mb-14 flex max-w-6xl flex-col items-center space-y-8 text-center lg:space-y-12">
@@ -32,7 +31,7 @@
               <div class="flex flex-wrap justify-center gap-4" th:if="${theme.config.resume.hero.h_selt == true}">
                 <a
                   href="#contact"
-                  class="inline-flex items-center gap-3 rounded-xl bg-slate-900 px-3 py-1.5 text-sm text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 sm:px-4 sm:py-4 sm:text-base dark:border dark:border-white/30 dark:bg-transparent"
+                  class="inline-flex items-center gap-3 rounded-xl bg-slate-900 px-4 py-3 text-sm text-white shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 sm:px-4 sm:py-4 sm:text-base dark:border dark:border-white/30 dark:bg-transparent"
                 >
                   <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -42,11 +41,11 @@
                       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                     ></path>
                   </svg>
-                  <span class="font-medium">联系方式</span>
+                  <span class="font-medium" th:text="#{page.resume.contact}"></span>
                 </a>
                 <a
                   href="/"
-                  class="inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 sm:px-4 sm:py-4 sm:text-base dark:border-white/20 dark:bg-white/15 dark:text-white"
+                  class="inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 sm:px-4 sm:py-4 sm:text-base dark:border-white/20 dark:bg-white/15 dark:text-white"
                 >
                   <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -56,15 +55,13 @@
                       d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                     ></path>
                   </svg>
-                  <span class="font-medium">返回主页</span>
+                  <span class="font-medium" th:text="#{page.resume.backToHome}"></span>
                 </a>
               </div>
             </div>
           </div>
         </div>
-
         <div class="absolute bottom-16 left-1/2 -translate-x-1/2">
-          <!-- 移动端：优雅的滑动提示 -->
           <div class="flex flex-col items-center gap-2 md:hidden">
             <div class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-gray-400/30 dark:border-gray-500/30">
               <div class="animate-scroll-mouse-touch absolute left-1/2">
@@ -72,16 +69,12 @@
               </div>
             </div>
           </div>
-
-          <!-- 桌面端：鼠标图标 -->
           <div class="relative hidden h-12 w-7 rounded-t-[14px] rounded-b-lg border-2 border-gray-500 md:block dark:border-gray-400">
             <div class="absolute top-1/2 left-1/2 h-3 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-500 opacity-50 dark:bg-gray-400"></div>
             <div class="animate-scroll-mouse absolute top-3 left-1/2 h-1.5 w-1.5 rounded-full bg-gray-500 dark:bg-gray-400"></div>
           </div>
         </div>
       </section>
-
-      <!-- GitHub 统计 Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.github.github_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -89,7 +82,6 @@
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.github.github_title.g_title}"></h2>
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
-
           <div class="space-y-8">
             <div
               class="overflow-hidden rounded-2xl border border-gray-200 bg-white/50 p-2 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 sm:p-8 dark:border-gray-700 dark:bg-gray-800/50"
@@ -102,7 +94,6 @@
                 loading="lazy"
               />
             </div>
-
             <div
               class="grid gap-6 md:items-stretch"
               th:if="${not #lists.isEmpty(theme.config.resume.github.github_list)}"
@@ -118,13 +109,11 @@
           </div>
         </div>
       </section>
-
-      <!-- Work Experience Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.work.work_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.work.work_title.w_title}">工作经历</h2>
+            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.work.work_title.w_title}"></h2>
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
           <div class="space-y-8">
@@ -144,13 +133,11 @@
           </div>
         </div>
       </section>
-
-      <!-- Projects Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.projects.projects_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.projects.projects_title.p_title}">精选项目</h2>
+            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.projects.projects_title.p_title}"></h2>
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
 
@@ -180,16 +167,13 @@
           </div>
         </div>
       </section>
-
-      <!-- Skills Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.skills.skills_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.skills.skills_title.s_title}">技能专长</h2>
+            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.skills.skills_title.s_title}"></h2>
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
-
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div
               class="rounded-2xl p-6 text-white shadow-xl transition-all duration-300 ease-out hover:-translate-y-2"
@@ -205,25 +189,20 @@
           </div>
         </div>
       </section>
-
-      <!-- Contact Section -->
       <section id="contact" class="flex min-h-screen snap-start items-center pb-32 md:pb-0" th:if="${theme.config.resume.contact.contact_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
-            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.contact.contact_title.s_title}">联系方式</h2>
+            <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.contact.contact_title.s_title}"></h2>
             <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
-
-          <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-12 shadow-2xl">
+          <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl md:p-12">
             <div
               class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00IDQtNC0xLjc5LTQtNHptMCAyNGMwLTIuMjEgMS43OS00IDQtNHM0IDEuNzkgNCA0LTEuNzktNC00IDQtNC0xLjc5LTQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"
             ></div>
-
             <div class="relative">
-              <p class="mb-3 text-2xl font-bold text-white" th:text="${theme.config.resume.contact.contact_items.contact_title}">让我们一起创造些什么</p>
-              <p class="mb-10 text-lg text-slate-400" th:text="${theme.config.resume.contact.contact_items.contact_subtitle}">随时欢迎交流合作机会</p>
-
+              <p class="mb-3 text-2xl font-bold text-white" th:text="${theme.config.resume.contact.contact_items.contact_title}"></p>
+              <p class="mb-10 text-lg text-slate-400" th:text="${theme.config.resume.contact.contact_items.contact_subtitle}"></p>
               <div class="grid gap-6 sm:grid-cols-2">
                 <a
                   th:href="${contact.c_url}"
