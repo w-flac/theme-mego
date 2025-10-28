@@ -7,18 +7,13 @@ spec:
     - group: index_info
       label: 一般设置
       formSchema:
-        - $formkit: select
+        - $formkit: checkbox
           name: info_enabled
           id: info_enabled
           key: info_enabled
-          label: 是否启用站点信息
+          label: 启用站点信息
           placeholder: 请确认选择
           value: true
-          options:
-            - label: 是
-              value: true
-            - label: 否
-              value: false
         - $formkit: group
           name: info_site
           if: $get(info_enabled).value === true
@@ -92,18 +87,13 @@ spec:
     - group: index_hero
       label: Hero模块
       formSchema:
-        - $formkit: select
+        - $formkit: checkbox
           name: hero_enabled
           id: hero_enabled
           key: hero_enabled
-          label: 是否启用Hero模块
+          label: 启用Hero模块
           placeholder: 请确认选择
           value: true
-          options:
-            - label: 是
-              value: true
-            - label: 否
-              value: false
         - $formkit: group
           name: hero_title
           if: $get(hero_enabled).value === true
@@ -127,18 +117,12 @@ spec:
               key: description
               label: 描述
               height: 200px
-            - $formkit: select
+            - $formkit: checkbox
               name: enabled
               id: enabled
               key: enabled
-              label: 是否启用副标题
+              label: 启用副标题
               value: false
-              placeholder: 请确认选择
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
             - $formkit: select
               name: subtitle_enabled
               id: subtitle_enabled
@@ -151,7 +135,6 @@ spec:
                     value: "long"
                   - label: 短文本
                     value: "short"
-              placeholder: 请确认选择
             - $formkit: text
               name: subtitle
               id: subtitle
@@ -176,22 +159,17 @@ spec:
           key: hero_urls
           label: Hero链接
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: hero_urls_enabled
               id: hero_urls_enabled
               key: hero_urls_enabled
-              label: 是否启用链接模块
-              placeholder: 请确认选择
-              options:
-                - label: 关闭
-                  value: "off"
-                - label: 开启
-                  value: "open"
+              label: 启用链接模块
+              value: false
             - $formkit: group
               name: hero_urls_items
               id: hero_urls_items
               key: hero_urls_items
-              if: "$value.hero_urls_enabled === 'open'"
+              if: $value.hero_urls_enabled === true
               children:
                 - $formkit: text
                   name: title1
@@ -220,17 +198,12 @@ spec:
           key: hero_signs
           label: Hero标志
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: hero_signs_enabled
               id: hero_signs_enabled
               key: hero_signs_enabled
-              label: 是否启用标识模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用标识模块
+              value: false
             - $formkit: group
               name: hero_signs_items
               id: hero_signs_items
@@ -261,17 +234,12 @@ spec:
           key: intro
           label: 站点简介
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: intro_enabled
               id: intro_enabled
               key: intro_enabled
-              label: 是否启用简介模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用简介模块
+              value: false
             - $formkit: group
               name: content_items
               id: content_items
@@ -294,17 +262,12 @@ spec:
           key: website
           label: 站点统计
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: website_enabled
               id: website_enabled
               key: website_enabled
-              label: 是否启用站点统计
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用站点统计
+              value: false
             - $formkit: repeater
               name: type
               id: type
@@ -383,7 +346,7 @@ spec:
               id: blog_enabled
               key: blog_enabled
               label: 博客布局样式
-              placeholder: 请确认选择
+              value: "two"
               options:
                 - label: 单栏布局
                   value: "one"
@@ -398,17 +361,12 @@ spec:
           key: category
           label: 分类模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: category_enabled
               id: category_enabled
               key: category_enabled
-              label: 是否启用分类模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用分类模块
+              value: false
             - $formkit: group
               name: category_items
               id: category_items
@@ -439,17 +397,12 @@ spec:
           key: tags
           label: 标签模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: tags_enabled
               id: tags_enabled
               key: tags_enabled
-              label: 是否启用标签模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用标签模块
+              value: false
             - $formkit: group
               name: tags_items
               id: tags_items
@@ -481,17 +434,12 @@ spec:
           key: subscribe
           label: 订阅模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: subscribe_enabled
               id: subscribe_enabled
               key: subscribe_enabled
-              label: 是否启用订阅模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用订阅模块
+              value: false
             - $formkit: group
               name: subscribe_items
               id: subscribe_items
@@ -513,7 +461,7 @@ spec:
                   name: slogan_enabled
                   id: slogan_enabled
                   key: slogan_enabled
-                  label: 是否启用口号
+                  label: 启用口号
                   placeholder: 请确认选择
                   options:
                       - label: 开启
@@ -558,17 +506,12 @@ spec:
           key: footer_social
           label: 社交模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: social_enabled
               id: social_enabled
               key: social_enabled
-              label: 是否启用社交模块
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 启用社交模块
+              value: false
             - $formkit: repeater
               name: footer_social_items
               id: footer_social_items
@@ -635,29 +578,18 @@ spec:
           key: footer_other
           label: 其它类别
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: other_enabled
               id: other_enabled
               key: other_enabled
-              label: 是否开启建站与主题信息？
-              placeholder: 请确认选择
-              value: 开启
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
-            - $formkit: select
+              label: 开启建站与主题信息？
+              value: true
+            - $formkit: checkbox
               name: beian_enabled
               id: beian_enabled
               key: beian_enabled
-              label: 是否开启备案信息？
-              placeholder: 请确认选择
-              options:
-                - label: 开启
-                  value: true
-                - label: 关闭
-                  value: false
+              label: 开启备案信息？
+              value: false
             - $formkit: group
               name: beian_items
               id: beian_items
@@ -785,18 +717,12 @@ spec:
               id: h_sub
               key: h_sub
               label: 简介
-            - $formkit: select
+            - $formkit: checkbox
               name: h_selt
               id: h_selt
               key: h_selt
-              label: 是否显示快捷按钮
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 显示快捷按钮
+              value: false  
         - $formkit: group
           name: github
           id: github
@@ -804,18 +730,12 @@ spec:
           if: $get(r_enabled).value === true
           label: 图表统计
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: github_enabled
               id: github_enabled
               key: github_enabled
-              label: 是否启用图表统计
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 启用图表统计
+              value: false
             - $formkit: group
               name: github_title
               id: github_title
@@ -869,18 +789,12 @@ spec:
           if: $get(r_enabled).value === true
           label: 工作模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: work_enabled
               id: work_enabled
               key: work_enabled
-              label: 是否启用工作模块
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 启用工作模块
+              value: false
             - $formkit: group
               name: work_title
               id: work_title
@@ -928,18 +842,12 @@ spec:
           if: $get(r_enabled).value === true
           label: 项目模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: projects_enabled
               id: projects_enabled
               key: projects_enabled
-              label: 是否启用项目模块
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 启用项目模块
+              value: false
             - $formkit: group
               name: projects_title
               id: projects_title
@@ -986,7 +894,7 @@ spec:
                   name: p_enabled
                   id: p_enabled
                   key: p_enabled
-                  label: 是否启用外部链接
+                  label: 启用外部链接
                   placeholder: 请确认选择
                   value: ''
                   options:
@@ -1001,18 +909,12 @@ spec:
           if: $get(r_enabled).value === true
           label: 技能模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: skills_enabled
               id: skills_enabled
               key: skills_enabled
-              label: 是否启用技能模块
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 启用技能模块
+              value: false
             - $formkit: group
               name: skills_title
               id: skills_title
@@ -1061,18 +963,12 @@ spec:
           if: $get(r_enabled).value === true
           label: 联系模块
           children:
-            - $formkit: select
+            - $formkit: checkbox
               name: contact_enabled
               id: contact_enabled
               key: contact_enabled
-              label: 是否启用联系方式
-              placeholder: 请确认选择
-              value: ''
-              options:
-                - label: 是
-                  value: true
-                - label: 否
-                  value: false
+              label: 启用联系方式
+              value: false
             - $formkit: group
               name: contact_title
               id: contact_title
