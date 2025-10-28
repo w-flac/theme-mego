@@ -12,7 +12,6 @@ spec:
           id: info_enabled
           key: info_enabled
           label: 启用站点信息
-          placeholder: 请确认选择
           value: true
         - $formkit: group
           name: info_site
