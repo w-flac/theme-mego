@@ -39,9 +39,13 @@ spec:
           children:
             - $formkit: text
               name: title
+              id: title
+              key: title
               label: 站点标题
             - $formkit: text
               name: description
+              id: description
+              key: description
               label: 站点副标题
             - $formkit: attachment
               accepts:
@@ -52,6 +56,8 @@ spec:
               label: Logo
         - $formkit: group
           name: custom
+          id: custom
+          key: custom
           label: 自定义
           help: 此模式默认仅显示logo信息
           if: $get(site_enabled).value === 'custom'
