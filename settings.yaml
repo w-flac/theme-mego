@@ -467,7 +467,6 @@ spec:
                   id: slogan_enabled
                   key: slogan_enabled
                   label: 启用口号
-                  placeholder: 请确认选择
                   value: false
                 - $formkit: repeater
                   if: "$value.slogan_enabled === true"
