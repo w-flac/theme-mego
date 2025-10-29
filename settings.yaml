@@ -462,17 +462,13 @@ spec:
                   id: subscribe_subtitle
                   key: subscribe_subtitle
                   label: 副标题
-                - $formkit: select
+                - $formkit: checkbox
                   name: slogan_enabled
                   id: slogan_enabled
                   key: slogan_enabled
                   label: 启用口号
                   placeholder: 请确认选择
-                  options:
-                      - label: 开启
-                        value: true
-                      - label: 关闭
-                        value: false
+                  value: false
                 - $formkit: repeater
                   if: "$value.slogan_enabled === true"
                   name: subscribe_slogan
