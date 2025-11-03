@@ -13,6 +13,15 @@
     @apply text-gray-900 dark:text-white/70;
 }
 
+.prose :where(blockquote p ,a,h1,h2,h3,h4,h5,h6) {
+    font-style: normal;
+}
+
+.prose :where(blockquote p)::before,
+.prose :where(blockquote p)::after {
+    content: "";
+}
+
 .prose :where(table, tr, td, a) {
     @apply !text-gray-900 dark:!text-white/70;
 }
@@ -37,7 +46,7 @@
     content: "";
 }
 
-.prose :where(p code) {
+.prose :where(p code,code) {
     @apply rounded-sm bg-gray-400/20 p-1 text-gray-900/80 dark:bg-white/25 dark:text-white/80;
 }
 
