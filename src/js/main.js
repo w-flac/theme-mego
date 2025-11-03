@@ -979,7 +979,7 @@ class Upvote {
 // └─────────────────────────────────────────┘
 function Tocbot() {
   const content = document.querySelector(".prose");
-  const titles = content?.querySelectorAll("h2, h3, h4, h5");
+  const titles = content?.querySelectorAll("h1, h2, h3, h4, h5");
   const tocContainer = document.getElementById("tocbot");
 
   if (!titles?.length) {
@@ -989,7 +989,7 @@ function Tocbot() {
   tocbot.init({
     tocSelector: ".toc",
     contentSelector: ".prose",
-    headingSelector: "h2, h3, h4, h5",
+    headingSelector: "h1, h2, h3, h4, h5",
     collapseDepth: 4,
     headingsOffset: 100,
     scrollSmooth: true,
