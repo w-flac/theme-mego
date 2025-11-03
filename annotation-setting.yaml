@@ -72,3 +72,77 @@ spec:
       label: "图标SVG"
       clearable: true
       help: "建议设置width和height为20"
+
+---
+
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: post-share-pan
+spec:
+  targetRef:
+    group: "content.halo.run"
+    kind: Post
+  formSchema:
+    - help: 输入为空时，前台不渲染
+    - $formkit: text
+      name: shareBaidu
+      key: shareBaidu
+      id: shareBaidu
+      label: 百度网盘
+      placeholder: 请输入百度网盘链接
+      clearable: true
+    - $formkit: text
+      name: baiduPwd
+      key: baiduPwd
+      id: baiduPwd
+      label: 百度网盘提取码
+      if: "$get('shareBaidu').value"
+    - $formkit: text
+      name: share123
+      key: share123
+      id: share123
+      label: 123云盘
+      placeholder: 请输入123云盘链接
+      clearable: true
+    - $formkit: text
+      name: pwd123
+      key: pwd123
+      id: pwd123
+      label: 123云盘提取码
+      if: "$get('share123').value"
+    - $formkit: text
+      name: shareKua
+      key: shareKua
+      id: shareKua
+      label: 夸克网盘链接
+      placeholder: 请输入夸克网盘链接
+      clearable: true
+    - $formkit: text
+      name: kuaPwd
+      key: kuaPwd
+      id: kuaPwd
+      label: 夸克网盘提取码
+      if: "$get('shareKua').value"
+    - $formkit: text
+      name: shareOther
+      key: shareOther
+      id: shareOther
+      label: 其他网盘链接
+      placeholder: 请输入其他网盘链接
+      clearable: true
+    - $formkit: text
+      name: otherName
+      key: otherName
+      id: otherName
+      label: 其他网盘名称
+      placeholder: 请输入其他网盘名称
+      clearable: true
+      if: "$get('shareOther').value"
+    - $formkit: text
+      name: otherPwd
+      key: otherPwd
+      id: otherPwd
+      label: 其他网盘提取码
+      clearable: true
+      if: "$get('shareOther').value"

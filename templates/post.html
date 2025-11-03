@@ -22,7 +22,6 @@
       <div class="grid grid-cols-1 gap-8 xl:grid-cols-4">
         <div class="space-y-8 lg:col-span-3 lg:mr-4">
           <h1 class="text-4xl leading-tight font-bold text-gray-900 lg:text-5xl dark:text-white" th:text="${post.spec.title}"></h1>
-
           <div class="mb-12 flex items-center justify-between text-sm lg:justify-start">
             <div class="flex w-full items-center justify-between space-x-4 lg:w-auto">
               <div class="flex items-center space-x-2 text-gray-500 dark:text-gray-400">
@@ -67,6 +66,7 @@
             </div>
           </div>
           <section class="prose max-w-full text-gray-900 dark:text-white/70" th:utext="${post.content.content}"></section>
+          <th:block th:replace="~{modules/share-pan :: sharePan}"></th:block>
           <div class="py-5 sm:py-8" th:if="${haloCommentEnabled}">
             <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
             <span id="comment"></span>
