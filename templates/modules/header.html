@@ -107,7 +107,7 @@
                   onclick="this.href = '/signup?redirect_uri=' + encodeURIComponent(window.location.href)"
                 >
                   <i class="fa-solid fa-user-plus ml-2"></i>
-                  <span class="block overflow-hidden text-gray-900 dark:text-white/70">注册</span>
+                  <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.register}"></span>
                 </a>
               </li>
               <li class="group flex rounded-lg text-sm leading-6">
@@ -118,7 +118,7 @@
                   onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
                 >
                   <i class="fa-solid fa-right-from-bracket ml-2"></i>
-                  <span class="block overflow-hidden text-gray-900 dark:text-white/70">登录</span>
+                  <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.login}"></span>
                 </a>
               </li>
               <li class="group flex rounded-lg text-sm leading-6">
@@ -128,7 +128,7 @@
                   href="/uc"
                 >
                   <i class="fa-solid fa-gear ml-2 scale-x-[-1]"></i>
-                  <span class="block overflow-hidden text-gray-900 dark:text-white/70">用户</span>
+                  <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.profile}"></span>
                 </a>
               </li>
               <li class="group flex rounded-lg text-sm leading-6">
@@ -138,7 +138,7 @@
                   href="/logout"
                 >
                   <i class="fa-solid fa-right-from-bracket ml-2 scale-x-[-1]"></i>
-                  <span class="block overflow-hidden text-gray-900 dark:text-white/70">退出</span>
+                  <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.logout}"></span>
                 </a>
               </li>
             </ul>
