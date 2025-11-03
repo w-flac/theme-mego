@@ -229,6 +229,47 @@ document.addEventListener("DOMContentLoaded", () => {
     slider.addEventListener("transitionend", onTransitionEnd);
   });
 });
+
+// ┌─────────────────────────────────────────┐
+// │ 3.3 用户快捷菜单切换                     │
+// └─────────────────────────────────────────┘
+document.addEventListener("DOMContentLoaded", () => {
+  const userQuickButton = document.getElementById("user-quick-button");
+  const userQuickMenu = document.getElementById("user-quick-menu");
+  if (!userQuickButton || !userQuickMenu) return;
+
+  // 初始状态：确保菜单是隐藏的
+  userQuickMenu.classList.add("pointer-events-none", "opacity-0", "translate-y-1");
+  userQuickMenu.classList.remove("pointer-events-auto", "opacity-100", "translate-y-0");
+
+  userQuickButton.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isHidden = userQuickMenu.classList.contains("pointer-events-none");
+
+    if (isHidden) {
+      // 显示菜单
+      userQuickMenu.classList.remove("pointer-events-none", "opacity-0", "translate-y-1");
+      userQuickMenu.classList.add("pointer-events-auto", "opacity-100", "translate-y-0");
+
+      // 点击其他地方隐藏菜单
+      const hideMenu = (event) => {
+        if (!userQuickButton.contains(event.target) && !userQuickMenu.contains(event.target)) {
+          userQuickMenu.classList.add("pointer-events-none", "opacity-0", "translate-y-1");
+          userQuickMenu.classList.remove("pointer-events-auto", "opacity-100", "translate-y-0");
+          document.removeEventListener("click", hideMenu);
+        }
+      };
+      // 延迟添加监听器，避免立即触发
+      setTimeout(() => {
+        document.addEventListener("click", hideMenu);
+      }, 0);
+    } else {
+      // 隐藏菜单
+      userQuickMenu.classList.add("pointer-events-none", "opacity-0", "translate-y-1");
+      userQuickMenu.classList.remove("pointer-events-auto", "opacity-100", "translate-y-0");
+    }
+  });
+});
 // ═══════════════════════════════════════════════════════════════════════════════
 // 4. 导航菜单模块 - Navigation Menu Module
 // ═══════════════════════════════════════════════════════════════════════════════
