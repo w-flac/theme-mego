@@ -57,7 +57,7 @@
           <i class="fas fa-location-pin text-xs text-gray-400 md:text-xl"></i>
         </div>
         <div class="absolute right-0 bottom-0 left-0 p-3 md:p-4">
-          <div class="mb-3 flex items-center space-x-5">
+          <div class="flex items-center space-x-5" th:classappend="${theme.config.index_blog.blog.blog_items.b_card != true ? 'mb-3' : 'mb-2'}">
             <div class="flex items-center space-x-2">
               <img alt="" class="h-6 w-6 rounded-full object-cover ring-2 ring-white/20" th:src="${post.owner.avatar}" />
               <span class="text-xs text-white md:text-sm" th:text="${post.owner.displayName}"></span>
@@ -74,13 +74,16 @@
               ></span>
             </div>
           </div>
-          <h2 class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl">
+          <h2
+            class="mb-3 text-lg leading-tight font-bold text-white drop-shadow-lg md:text-2xl"
+            th:classappend="${theme.config.index_blog.blog.blog_items.b_card == true ? 'md:hidden' : ''}"
+          >
             <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}"></a>
           </h2>
           <a aria-label="read" class="overflow-hidden transition-all duration-500 ease-in-out" th:href="@{${post.status.permalink}}">
             <p
-              class="mb-3 line-clamp-3 text-sm leading-relaxed text-white md:mb-4 md:text-base"
-              th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-1' : '')}"
+              class="line-clamp-3 text-sm leading-relaxed text-white md:text-base"
+              th:classappend="${(theme.config.index_blog.blog.blog_enabled == 'one' ? 'sm:line-clamp-2' : (theme.config.index_blog.blog.blog_enabled == 'two' ? 'sm:line-clamp-2' : '')) + (theme.config.index_blog.blog.blog_items.b_card != true ? ' md:mb-3' : ' md:mb-2')}"
               th:text="${post.status.excerpt}"
             ></p>
             <div class="flex items-center justify-between">

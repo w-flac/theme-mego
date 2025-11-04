@@ -170,7 +170,7 @@
             <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="|${theme.config.index_blog.blog.blog_subtitle}| ?: |#{widget.index.module.newPosts.subtitle}|"></p>
           </div>
           <ul
-            class="grid grid-cols-1 gap-4 sm:gap-8 md:px-8"
+            class="grid grid-cols-1 gap-4 sm:gap-8 lg:px-8"
             th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'lg:grid-cols-1 mx-auto max-w-6xl' : 'lg:grid-cols-2'}"
           >
             <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'allCategories', shortDate = false)}"></th:block>

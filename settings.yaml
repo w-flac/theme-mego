@@ -364,6 +364,19 @@ spec:
                   value: "one"
                 - label: 双栏布局
                   value: "two"
+            - $formkit: group
+              name: blog_items
+              id: blog_items
+              key: blog_items
+              label: 博客卡片规则
+              children:
+                - $formkit: checkbox
+                  name: b_card
+                  id: b_card
+                  key: b_card
+                  label: 是否启用文章展示图优化
+                  help: "适用于自定义文章标题封面图用户，开启后将隐藏默认文章标题。"
+                  value: false
     - group: index_other
       label: 其它模块
       formSchema:
