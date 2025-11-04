@@ -73,7 +73,7 @@
           </li>
         </th:block>
       </ul>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 md:gap-4">
         <div
           class="relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition-colors duration-150 ease-out will-change-[background-color] select-none dark:bg-gray-600"
           id="theme-toggle"
@@ -87,7 +87,14 @@
           <svg class="h-[22px] w-6 cursor-pointer transition-opacity duration-300 hover:opacity-80 dark:text-white/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
             <path
               fill="currentColor"
+              id="icon-bar"
               d="M384 224L480 224L480 160L384 160L384 224zM96 224L96 144C96 117.5 117.5 96 144 96L496 96C522.5 96 544 117.5 544 144L544 240C544 266.5 522.5 288 496 288L144 288C117.5 288 96 266.5 96 240L96 224zM256 480L480 480L480 416L256 416L256 480zM96 480L96 400C96 373.5 117.5 352 144 352L496 352C522.5 352 544 373.5 544 400L544 496C544 522.5 522.5 544 496 544L144 544C117.5 544 96 522.5 96 496L96 480z"
+            />
+            <path
+              class="hidden"
+              id="icon-close"
+              fill="currentColor"
+              d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM231 231C240.4 221.6 255.6 221.6 264.9 231L319.9 286L374.9 231C384.3 221.6 399.5 221.6 408.8 231C418.1 240.4 418.2 255.6 408.8 264.9L353.8 319.9L408.8 374.9C418.2 384.3 418.2 399.5 408.8 408.8C399.4 418.1 384.2 418.2 374.9 408.8L319.9 353.8L264.9 408.8C255.5 418.2 240.3 418.2 231 408.8C221.7 399.4 221.6 384.2 231 374.9L286 319.9L231 264.9C221.6 255.5 221.6 240.3 231 231z"
             />
           </svg>
         </button>
