@@ -1,7 +1,7 @@
 <header
   class="fixed top-0 z-50 w-full border-b border-black/10 bg-gray-100 backdrop-blur-[20px] transition-colors duration-200 dark:border-b dark:border-white/10 dark:bg-gray-900"
 >
-  <div class="mx-auto max-w-7xl p-4">
+  <div class="mx-auto max-w-7xl p-4 sm:px-8 md:px-20 lg:p-4">
     <div class="flex items-center justify-between">
       <a class="flex flex-shrink-0 items-center space-x-2" th:href="${site.url}">
         <th:block th:if="${theme.config.index_info.info_site.site_enabled == 'default' or theme.config.index_info.info_site.site_enabled == 'custom'}">
@@ -21,9 +21,9 @@
           </div>
         </th:block>
       </a>
-      <ul class="hidden items-center justify-center whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
+      <ul class="hidden items-center justify-center gap-1 overflow-hidden whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
         <th:block th:each="menuItem,iter : ${menu.menuItems}">
-          <li class="mx-2" th:if="${#lists.isEmpty(menuItem.children)}">
+          <li class="" th:if="${#lists.isEmpty(menuItem.children)}">
             <a class="flex cursor-pointer items-center px-4 py-2" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
               <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
                 <span class="mr-1 inline-block">
@@ -73,7 +73,7 @@
           </li>
         </th:block>
       </ul>
-      <div class="flex items-center">
+      <div class="flex items-center gap-4">
         <div
           class="relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition-colors duration-150 ease-out will-change-[background-color] select-none dark:bg-gray-600"
           id="theme-toggle"
@@ -83,21 +83,23 @@
             id="theme-toggle-slider"
           ></div>
         </div>
-        <button class="p-2 lg:hidden" id="mobile-btn">
-          <svg class="h-6 w-6 text-gray-500 dark:text-white" id="menu-icon" stroke="currentColor" viewBox="0 0 24 24">
-            <path d="M4 6h16M4 12h16M4 18h16" id="icon-bar" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            <path class="hidden" d="M6 6l12 12M6 18L18 6" id="icon-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+        <button class="lg:hidden" id="mobile-btn">
+          <svg class="h-[22px] w-6 cursor-pointer transition-opacity duration-300 hover:opacity-80 dark:text-white/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+            <path
+              fill="currentColor"
+              d="M384 224L480 224L480 160L384 160L384 224zM96 224L96 144C96 117.5 117.5 96 144 96L496 96C522.5 96 544 117.5 544 144L544 240C544 266.5 522.5 288 496 288L144 288C117.5 288 96 266.5 96 240L96 224zM256 480L480 480L480 416L256 416L256 480zM96 480L96 400C96 373.5 117.5 352 144 352L496 352C522.5 352 544 373.5 544 400L544 496C544 522.5 522.5 544 496 544L144 544C117.5 544 96 522.5 96 496L96 480z"
+            />
           </svg>
         </button>
-        <a class="mx-2 hidden px-2 lg:block" href="javascript:SearchWidget.open()" th:if="${pluginFinder.available('PluginSearchWidget')}" th:title="#{fragment.header.search}">
-          <i class="fas fa-search"></i>
+        <a class="hidden lg:block" href="javascript:SearchWidget.open()" th:if="${pluginFinder.available('PluginSearchWidget')}" th:title="#{fragment.header.search}">
+          <i class="fas fa-search dark:text-white/80"></i>
         </a>
         <th:block th:if="${theme.config.index_info.info_setting.u_enabled == true}">
-          <div class="relative hidden lg:block">
-            <i class="fa-solid fa-bars-progress mr-2 cursor-pointer px-1 transition-opacity hover:opacity-80" id="user-quick-button"></i>
+          <div class="relative">
+            <i class="fa-solid fa-user-gear mr-2 cursor-pointer px-1 transition-opacity duration-300 hover:opacity-80 dark:text-white/80" id="user-quick-button"></i>
             <ul
               id="user-quick-menu"
-              class="pointer-events-none absolute top-full left-1/2 z-10 mt-2 w-32 -translate-x-1/2 translate-y-1 overflow-hidden rounded-2xl bg-white p-2 opacity-0 shadow-lg transition duration-200 ease-out dark:bg-gray-800"
+              class="pointer-events-none absolute top-full right-0 z-10 mt-2 w-32 translate-y-1 overflow-hidden rounded-2xl bg-white p-2 opacity-0 shadow-lg transition duration-200 ease-out 2xl:right-auto 2xl:left-1/2 2xl:-translate-x-1/2 dark:bg-gray-800"
             >
               <li class="group flex rounded-lg text-sm leading-6">
                 <a
