@@ -66,7 +66,7 @@
             </div>
           </div>
           <section class="prose max-w-full text-gray-900 dark:text-white/70" th:utext="${post.content.content}"></section>
-          <th:block th:replace="~{modules/share-pan :: sharePan}"></th:block>
+          <th:block th:replace="~{modules/sharePan :: sharePan}"></th:block>
           <div class="py-5 sm:py-8" th:if="${haloCommentEnabled}">
             <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
             <span id="comment"></span>

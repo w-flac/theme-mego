@@ -96,6 +96,33 @@ spec:
               label: 站点快捷登陆
               value: ''
               help: 开启后将在首页 header 显示
+        - $formkit: group
+          name: share_setting
+          id: share_setting
+          key: share_setting
+          label: 资源下载设置
+          help: 如果开启了资源下载模块，则需要设置资源下载标题和提示语
+          children:
+            - $formkit: checkbox
+              name: share_enabled
+              id: share_enabled
+              key: share_enabled
+              label: 启用资源下载模块
+              value: false
+            - $formkit: text
+              name: share_title
+              id: share_title
+              key: share_title
+              label: 资源下载标题
+              value: '资源下载'
+              if: $get(share_enabled).value === true
+            - $formkit: text
+              name: share_subtitle
+              id: share_subtitle
+              key: share_subtitle
+              label: 资源下载提示语
+              value: '提示：如遇链接失效，请在评论区留言反馈'
+              if: $get(share_enabled).value === true
     - group: index_hero
       label: Hero模块
       formSchema:
