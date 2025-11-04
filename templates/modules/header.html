@@ -21,7 +21,7 @@
           </div>
         </th:block>
       </a>
-      <ul class="hidden items-center justify-center gap-1 overflow-hidden whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
+      <ul class="hidden items-center justify-center gap-2 whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
         <th:block th:each="menuItem,iter : ${menu.menuItems}">
           <li class="" th:if="${#lists.isEmpty(menuItem.children)}">
             <a class="flex cursor-pointer items-center px-4 py-2" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
