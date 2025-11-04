@@ -1,6 +1,6 @@
 <th:block th:fragment="postBlog(posts,displayType,shortDate)">
   <li th:each="post : ${posts}" th:attr="id=|post-${post.metadata.name}|">
-    <div class="overflow-hidden rounded-2xl border border-white/20 shadow-xl backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl">
+    <div class="overflow-hidden rounded-2xl border border-white/20 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2">
       <div class="relative h-72 sm:h-80">
         <th:block th:if="${not #strings.isEmpty(post.spec.cover)}">
           <img
