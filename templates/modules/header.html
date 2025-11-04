@@ -23,7 +23,7 @@
       </a>
       <ul class="hidden items-center justify-center gap-2 whitespace-nowrap lg:flex lg:text-base" th:with="menu = ${menuFinder.getPrimary()}">
         <th:block th:each="menuItem,iter : ${menu.menuItems}">
-          <li class="" th:if="${#lists.isEmpty(menuItem.children)}">
+          <li class="menuItem" th:if="${#lists.isEmpty(menuItem.children)}">
             <a class="flex cursor-pointer items-center px-4 py-2" th:href="@{${menuItem.status.href}}" th:target="${menuItem.spec.target?.value}">
               <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
                 <span class="mr-1 inline-block">
@@ -33,7 +33,7 @@
               <span class="font-medium" th:text="${menuItem.status.displayName}"></span>
             </a>
           </li>
-          <li class="mx-2" th:unless="${#lists.isEmpty(menuItem.children)}">
+          <li class="menuItem mx-2" th:unless="${#lists.isEmpty(menuItem.children)}">
             <div class="relative flex cursor-pointer items-center justify-between px-4 py-2 font-medium" th:attr="id=|${menuItem.metadata.name}|" th:onclick="toggleMenu(this)">
               <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(menuItem, 'MenuFont', ''))}">
                 <span class="mr-1 inline-block">
