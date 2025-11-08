@@ -9,8 +9,16 @@
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
             <i class="fas fa-tags sm:text-3x l text-2xl text-white"></i>
           </div>
-          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.tags.title}"></h1>
-          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.tags.subtitle}"></p>
+          <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
+            <h1
+              class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70"
+              th:text="|${paSetting != null and paSetting.pt_enabled == true and paSetting.pt_title != null and paSetting.pt_title != ''}| ? |${paSetting.pt_title}| : |#{page.tags.title}|"
+            ></h1>
+            <p
+              class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300"
+              th:text="|${paSetting != null and paSetting.pt_enabled == true and paSetting.pt_subtitle != null and paSetting.pt_subtitle != ''}| ? |${paSetting.pt_subtitle}| : |#{page.tags.subtitle}|"
+            ></p>
+          </th:block>
         </div>
       </div>
     </div>

@@ -12,8 +12,16 @@
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
             <i class="fas fa-folder-open text-2xl text-white sm:text-3xl"></i>
           </div>
-          <h1 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="#{page.categories.title}">分类归档</h1>
-          <p class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300" th:text="#{page.categories.subtitle}">资源分类集合，快速定位所需内容</p>
+          <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
+            <h1
+              class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70"
+              th:text="|${paSetting != null and paSetting.pc_enabled == true and paSetting.pc_title != null and paSetting.pc_title != ''}| ? |${paSetting.pc_title}| : |#{page.categories.title}|"
+            ></h1>
+            <p
+              class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300"
+              th:text="|${paSetting != null and paSetting.pc_enabled == true and paSetting.pc_subtitle != null and paSetting.pc_subtitle != ''}| ? |${paSetting.pc_subtitle}| : |#{page.categories.subtitle}|"
+            ></p>
+          </th:block>
         </div>
       </div>
     </div>

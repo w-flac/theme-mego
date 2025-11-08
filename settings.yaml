@@ -1089,3 +1089,135 @@ spec:
                   key: c_value
                   label: 用户名
                   help: 邮箱请写完整链接
+    - group: page_setting
+      label: 页面模版
+      formSchema:
+        - $formkit: group
+          name: read
+          help: 此选项开启后可修改模版页面信息，如：归档、分类归档、标签归档、链接页、瞬间页。
+          children:
+            - $formkit: checkbox
+              name: page_enabled
+              id: page_enabled
+              key: page_enabled
+              label: 我已知晓注意事项
+        - $formkit: group
+          name: pa_setting
+          id: pa_setting
+          key: pa_setting
+          if: $get(page_enabled).value === true
+          children:
+            - $formkit: checkbox
+              name: pa_enabled
+              id: pa_enabled
+              key: pa_enabled
+              label: 归档 /archives
+              value: false
+              help: 启用后，将修改归档页面的模版。
+            - $formkit: text
+              name: pa_title
+              id: pa_title
+              key: pa_title
+              label: 标题
+              if: "$value.pa_enabled === true"
+            - $formkit: text
+              name: pa_subtitle
+              id: pa_subtitle
+              key: pa_subtitle
+              label: 副标题
+              if: "$value.pa_enabled === true"
+            - $formkit: checkbox
+              name: pc_enabled
+              id: pc_enabled
+              key: pc_enabled
+              label: 分类 /categories
+              value: false
+              help: 启用后，将修改分类归档页面的模版。
+            - $formkit: text
+              name: pc_title
+              id: pc_title
+              key: pc_title
+              label: 标题
+              if: "$value.pc_enabled === true"
+            - $formkit: text
+              name: pc_subtitle
+              id: pc_subtitle
+              key: pc_subtitle
+              label: 副标题
+              if: "$value.pc_enabled === true"
+            - $formkit: checkbox
+              name: pt_enabled
+              id: pt_enabled
+              key: pt_enabled
+              label: 标签 /tags
+              value: false
+              help: 启用后，将修改标签归档页面的模版。
+            - $formkit: text
+              name: pt_title
+              id: pt_title
+              key: pt_title
+              label: 标题
+              if: "$value.pt_enabled === true"
+            - $formkit: text
+              name: pt_subtitle
+              id: pt_subtitle
+              key: pt_subtitle
+              label: 副标题
+              if: "$value.pt_enabled === true"
+            - $formkit: checkbox
+              name: pl_enabled
+              id: pl_enabled
+              key: pl_enabled
+              label: 链接 /links
+              value: false
+              help: 启用后，将修改链接页面的模版。
+            - $formkit: text
+              name: pl_title
+              id: pl_title
+              key: pl_title
+              label: 标题
+              if: "$value.pl_enabled === true"
+            - $formkit: text
+              name: pl_subtitle
+              id: pl_subtitle
+              key: pl_subtitle
+              label: 副标题
+              if: "$value.pl_enabled === true"
+            - $formkit: checkbox
+              name: pm_enabled
+              id: pm_enabled
+              key: pm_enabled
+              label: 瞬间 /moments
+              value: false
+              help: 启用后，将修改瞬间页面的模版。
+            - $formkit: text
+              name: pm_title
+              id: pm_title
+              key: pm_title
+              label: 标题
+              if: "$value.pm_enabled === true"
+            - $formkit: text
+              name: pm_subtitle
+              id: pm_subtitle
+              key: pm_subtitle
+              label: 副标题
+              if: "$value.pm_enabled === true"
+            - $formkit: checkbox
+              name: pp_enabled
+              id: pp_enabled
+              key: pp_enabled
+              label: 图库 /photos
+              value: false
+              help: 启用后，将修改图库页面的模版。
+            - $formkit: text
+              name: pp_title
+              id: pp_title
+              key: pp_title
+              label: 标题
+              if: "$value.pp_enabled === true"
+            - $formkit: text
+              name: pp_subtitle
+              id: pp_subtitle
+              key: pp_subtitle
+              label: 副标题
+              if: "$value.pp_enabled === true"
