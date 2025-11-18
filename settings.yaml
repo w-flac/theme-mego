@@ -4,6 +4,7 @@ metadata:
   name: theme-mego-setting
 spec:
   forms:
+    #一般设置
     - group: index_info
       label: 一般设置
       formSchema:
@@ -96,6 +97,20 @@ spec:
               label: 站点快捷登陆
               value: ''
               help: 开启后将在首页 header 显示
+            - $formkit: checkbox
+              name: post_aside
+              id: post_aside
+              key: post_aside
+              label: 禁用文章侧边栏
+              value: ''
+              help: 开启后将禁用文章侧边栏
+            - $formkit: checkbox
+              name: page_aside
+              id: page_aside
+              key: page_aside
+              label: 禁用页面侧边栏
+              value: ''
+              help: 开启后将禁用页面侧边栏
         - $formkit: group
           name: share_setting
           id: share_setting
@@ -123,6 +138,7 @@ spec:
               label: 资源下载提示语
               value: '提示：如遇链接失效，请在评论区留言反馈'
               if: $get(share_enabled).value === true
+    #Hero模块
     - group: index_hero
       label: Hero模块
       formSchema:
@@ -264,6 +280,7 @@ spec:
                       id: text
                       key: text
                       label: 标识内容
+    #站点模块
     - group: index_intro
       label: 站点模块
       formSchema:
@@ -361,6 +378,7 @@ spec:
                   key: subtitle
                   if: "$value.type_items === 'percentage'"
                   label: 文字
+    #博客模块
     - group: index_blog
       label: 博客模块
       formSchema:
@@ -404,6 +422,7 @@ spec:
               label: 是否启用文章展示图优化
               help: "适用于自定义文章标题封面图用户，开启后将隐藏默认文章标题。"
               value: false
+    #其它模块
     - group: index_other
       label: 其它模块
       formSchema:
@@ -545,6 +564,7 @@ spec:
                       key: subtitle
                       label: 简介
                       value: ""
+    #页脚模块
     - group: index_footer
       label: 页脚模块
       formSchema:
@@ -655,6 +675,7 @@ spec:
                   id: gongan
                   key: gongan
                   label: 公安备案
+    #赞赏设置
     - group: donate
       label: 赞赏设置
       formSchema:
@@ -723,6 +744,7 @@ spec:
                   id: qrcode
                   key: qrcode
                   label: 二维码图片
+    #关于信息
     - group: resume
       label: AboutME
       formSchema:
@@ -735,6 +757,19 @@ spec:
               id: r_enabled
               key: r_enabled
               label: 我已知晓注意事项
+        - $formkit: group
+          name: resume_setting
+          id: resume_setting
+          key: resume_setting
+          label: 一般设置
+          if: $get(r_enabled).value === true
+          children:
+            - $formkit: checkbox
+              name: resume_enabled
+              id: resume_enabled
+              key: resume_enabled
+              label: 启用菜单栏显示
+              value: false
         - $formkit: group
           name: hero
           id: hero
@@ -1089,8 +1124,9 @@ spec:
                   key: c_value
                   label: 用户名
                   help: 邮箱请写完整链接
+    #页面设置
     - group: page_setting
-      label: 页面模版
+      label: 页面设置
       formSchema:
         - $formkit: group
           name: read
