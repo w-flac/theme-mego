@@ -1,13 +1,13 @@
 <th:block
   th:fragment="sharePan"
-  th:if="${theme.config.index_info.share_setting != null and theme.config.index_info.share_setting.share_enabled == 'true' and (not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName1', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName2', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName3', '')))}"
+  th:if="${theme.config.index_info.share_setting.share_enabled}"
 >
   <div class="mt-8 rounded-lg border border-gray-200 bg-gray-400/5 p-6 backdrop-blur-sm dark:border-gray-600 dark:bg-white/5 transition-colors duration-300">
     <div class="mb-4 flex items-center gap-1 text-lg font-semibold text-gray-900 dark:text-white">
       <i class="fa-solid fa-download text-blue-600 dark:text-white"></i>
-      <span th:text="${theme.config.index_info.share_setting.share_title ?: '资源下载'}"></span>
+      <span th:text="${theme.config?.index_info?.share_setting?.share_title ?: '资源下载'}"></span>
     </div>
-    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3" th:if="${not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName1', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName2', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName3', ''))}">
       <th:block th:if="${not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName1', ''))}">
         <a
           th:href="${#annotations.getOrDefault(post, 'shareUrl1', '')}"
@@ -62,7 +62,7 @@
         <svg class="mr-1 h-3 w-3 shrink-0 text-blue-600 dark:text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
         </svg>
-        <span th:text="${theme.config.index_info.share_setting.share_subtitle ?: '提示：如遇链接失效，请在评论区留言反馈'}"></span>
+        <span th:text="${theme.config?.index_info?.share_setting?.share_subtitle ?: '提示：如遇链接失效，请在评论区留言反馈'}"></span>
       </p>
     </div>
   </div>
