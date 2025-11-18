@@ -1,6 +1,6 @@
 <th:block
   th:fragment="sharePan"
-  th:if="${theme.config.index_info.share_setting.share_enabled and (not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName1', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName2', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName3', '')))}"
+  th:if="${theme.config.index_info.share_setting != null and theme.config.index_info.share_setting.share_enabled == 'true' and (not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName1', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName2', '')) or not #strings.isEmpty(#annotations.getOrDefault(post, 'shareName3', '')))}"
 >
   <div class="mt-8 rounded-lg border border-gray-200 bg-gray-400/5 p-6 backdrop-blur-sm dark:border-gray-600 dark:bg-white/5 transition-colors duration-300">
     <div class="mb-4 flex items-center gap-1 text-lg font-semibold text-gray-900 dark:text-white">
