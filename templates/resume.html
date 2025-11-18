@@ -1,7 +1,10 @@
 <!doctype html>
 <html class="" th:replace="~{modules/layout :: html(title = ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
-    <div class="max-h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth py-12">
+      <th:block th:if="${theme.config.resume.resume_setting.resume_enabled == true}">
+          <th:block th:replace="~{modules/header}" />
+      </th:block>
+     <div class="max-h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth py-12">
       <div class="pointer-events-none absolute inset-0 overflow-hidden">
         <div
           class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/30 to-purple-400/30 mix-blend-multiply blur-3xl filter dark:from-blue-400/20 dark:to-purple-400/20 dark:mix-blend-screen"
@@ -223,5 +226,49 @@
         </div>
       </section>
     </div>
+    <script th:inline="javascript">
+      document.addEventListener("DOMContentLoaded", () => {
+        const scrollContainer = document.querySelector('.max-h-screen.snap-y.overflow-y-scroll');
+        const backToTopBtn = document.getElementById("back-to-top");
+        
+        if (!scrollContainer || !backToTopBtn) return;
+        
+        let hideTimer = null;
+        const SCROLL_THRESHOLD = 300;
+        const HIDE_DELAY = 2000;
+        
+        const show = () => {
+          backToTopBtn.classList.replace("opacity-0", "opacity-100");
+          backToTopBtn.classList.replace("pointer-events-none", "pointer-events-auto");
+        };
+        
+        const hide = () => {
+          backToTopBtn.classList.replace("opacity-100", "opacity-0");
+          backToTopBtn.classList.replace("pointer-events-auto", "pointer-events-none");
+        };
+        
+        const onScroll = () => {
+          clearTimeout(hideTimer);
+          if (scrollContainer.scrollTop > SCROLL_THRESHOLD) {
+            show();
+            hideTimer = setTimeout(hide, HIDE_DELAY);
+          } else {
+            hide();
+          }
+        };
+        
+        const scrollToTop = () => {
+          clearTimeout(hideTimer);
+          hide();
+          scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+        };
+        
+        scrollContainer.addEventListener("scroll", onScroll, { passive: true });
+        backToTopBtn.addEventListener("click", scrollToTop);
+        
+        // 初始检查
+        onScroll();
+      });
+    </script>
   </th:block>
 </html>
