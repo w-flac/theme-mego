@@ -46,7 +46,7 @@
       </div>
     </div>
     <!--  Category  -->
-    <section class="mx-auto max-w-7xl px-2 py-8 md:px-4">
+    <section class="mx-auto max-w-6xl px-2 py-8 md:px-0">
       <div class="relative grid grid-cols-1 gap-8" th:classappend="${posts.total == 0 ? '' : 'lg:grid-cols-4'}">
         <ul class="category-post col-span-full space-y-8" th:classappend="${posts.total == 0 ? '' : 'lg:col-span-3'}">
           <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'currentCategory', shortDate = false)}"></th:block>

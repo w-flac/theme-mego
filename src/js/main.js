@@ -1358,9 +1358,11 @@ function initDonateModal() {
 
   const showModal = () => {
     donateModal.classList.remove("hidden");
+    donateModal.classList.add("flex");
     donateContent.classList.add("scale-97");
     donateModal.classList.add("opacity-0");
     requestAnimationFrame(() => {
+      donateModal.classList.remove("hidden");
       donateModal.classList.remove("opacity-0");
       donateContent.classList.remove("scale-97");
     });

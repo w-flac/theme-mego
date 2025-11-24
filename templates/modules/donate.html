@@ -1,4 +1,8 @@
-<div id="donateModal" th:if="${theme.config.donate.p_enabled}" class="fixed inset-0 z-50 hidden flex items-center justify-center overflow-y-auto bg-black/60 backdrop-blur-sm transition-opacity duration-200 ease-out">
+<div
+  id="donateModal"
+  th:if="${theme.config.donate.p_enabled}"
+  class="fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto bg-black/60 backdrop-blur-sm transition-opacity duration-200 ease-out"
+>
   <div id="donateContent" class="relative max-w-5xl min-w-xl scale-97 transform rounded-2xl bg-white p-8 shadow-2xl transition-all duration-200 ease-out dark:bg-gray-800">
     <button id="donateClose" class="absolute top-4 right-4 text-gray-500 transition hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
       <i class="fa-solid fa-xmark text-lg"></i>

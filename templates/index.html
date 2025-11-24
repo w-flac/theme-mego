@@ -122,7 +122,7 @@
     <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <!-- Site Statistics   -->
       <div
-        class="mx-auto max-w-7xl p-2 md:py-24 lg:px-8"
+        class="mx-auto max-w-6xl px-4 md:py-24"
         th:if="${theme.config.index_intro.intro.intro_enabled == true or theme.config.index_intro.website.website_enabled == true}"
         th:classappend="${theme.config.index_hero.hero_enabled == false} ? 'pt-18' : ''"
       >
@@ -160,8 +160,8 @@
         </div>
       </div>
       <!--  Blog Post   -->
-      <section class="pt-12 pb-4 sm:py-24 sm:pb-0">
-        <div class="mx-auto max-w-7xl">
+      <section class="pt-12 pb-4 sm:py-24 px-4 sm:pb-0">
+        <div class="mx-auto max-w-6xl">
           <div class="mb-12 text-center">
             <h2
               class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
@@ -170,7 +170,7 @@
             <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="|${theme.config.index_blog.blog.blog_subtitle}| ?: |#{widget.index.module.newPosts.subtitle}|"></p>
           </div>
           <ul
-            class="grid grid-cols-1 gap-4 sm:gap-8"
+            class="grid grid-cols-1 gap-4"
             th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'lg:grid-cols-1 mx-auto max-w-6xl' : 'lg:grid-cols-2'}"
           >
             <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'allCategories', shortDate = false)}"></th:block>
@@ -184,7 +184,7 @@
     <!-- other Module -->
     <section class="absolute z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <!-- Categories -->
-      <div class="mx-auto max-w-7xl px-4 sm:py-24 md:px-8" th:if="${theme.config.index_other.category.category_enabled == true}">
+      <div class="mx-auto max-w-6xl px-4" th:if="${theme.config.index_other.category.category_enabled == true}">
         <div class="mb-12 text-center">
           <h2
             class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
@@ -212,7 +212,7 @@
         </ul>
       </div>
       <!--  tags  -->
-      <div class="mx-auto max-w-7xl px-0 py-12 sm:py-24 md:px-8" th:if="${theme.config.index_other.tags.tags_enabled == true}">
+      <div class="mx-auto max-w-6xl py-12 sm:py-24" th:if="${theme.config.index_other.tags.tags_enabled == true}">
         <div class="mb-12 text-center">
           <h2
             th:text="|${theme.config.index_other.tags.tags_items.tags_title}| ?: |#{widget.index.module.tag.title}|"
@@ -236,7 +236,7 @@
         </div>
       </div>
       <div class="rounded-3xl bg-gray-400/5 py-16 sm:py-24 lg:py-32 dark:bg-white/5" th:if="${theme.config.index_other.subscribe.subscribe_enabled}">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-6xl px-6 lg:px-8">
           <div
             class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-center lg:max-w-none"
             th:classappend="${theme.config.index_other.subscribe.subscribe_items.slogan_enabled} ? ' lg:grid-cols-2' : ''"
