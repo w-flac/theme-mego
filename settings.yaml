@@ -111,6 +111,13 @@ spec:
               label: 禁用页面侧边栏
               value: ''
               help: 开启后将禁用页面侧边栏
+            - $formkit: checkbox
+              name: link_enabled
+              id: link_enabled
+              key: link_enabled
+              label: 启用友情链接评论
+              value: ''
+              help: 开启后将显示友情链接评论
         - $formkit: group
           name: share_setting
           id: share_setting

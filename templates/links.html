@@ -6,7 +6,7 @@
       <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
         <div class="flex flex-col items-center justify-center space-y-4">
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
-            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/links.svg}">
+            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/links.svg}" />
           </div>
           <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
             <h1
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="mx-auto max-w-6xl px-4 py-8 sm:px-0">
       <th:block th:each="group,iterStat : ${groups}">
         <div class="mb-6">
           <div class="mb-4 flex items-center space-x-2">
@@ -54,6 +54,13 @@
           </div>
         </div>
       </th:block>
+      <div
+        class="mt-16 rounded-2xl border border-gray-200 bg-gray-400/5 px-4 py-8 lg:px-8 dark:border-gray-700 dark:bg-gray-800"
+        th:if="${(theme.config.index_info.info_setting.link_enabled ?: false) and (haloCommentEnabled ?: false)}"
+      >
+        <halo:comment group="plugin.halo.run" kind="Plugin" th:attr="name=${pluginName}" />
+        <span id="comment"></span>
+      </div>
     </section>
     <th:block th:replace="~{modules/footer}" />
   </th:block>
