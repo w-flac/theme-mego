@@ -811,11 +811,12 @@ spec:
               id: h_post
               key: h_post
               label: 职称
-            - $formkit: text
+            - $formkit: code
               name: h_sub
               id: h_sub
               key: h_sub
               label: 简介
+              height: 100px
             - $formkit: checkbox
               name: h_selt
               id: h_selt
@@ -928,7 +929,7 @@ spec:
                   id: w_period
                   key: w_period
                   label: 时间
-                - $formkit: text
+                - $formkit: code
                   name: w_description
                   id: w_description
                   key: w_description
@@ -971,11 +972,12 @@ spec:
                   id: p_title
                   key: p_title
                   label: 项目名称
-                - $formkit: text
+                - $formkit: code
                   name: p_description
                   id: p_description
                   key: p_description
                   label: 项目描述
+                  height: 200px
                 - $formkit: text
                   if: "$value.p_enabled === true"
                   name: p_url
@@ -1045,11 +1047,12 @@ spec:
                   id: s_title
                   key: s_title
                   label: 技能分类
-                - $formkit: text
+                - $formkit: code
                   name: s_description
                   id: s_description
                   key: s_description
                   label: 技能描述
+                  height: 100px
                 - $formkit: color
                   name: s_color
                   id: s_color
