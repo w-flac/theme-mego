@@ -3,15 +3,35 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // 功能: 防止页面加载时的主题闪烁，提前设置主题状态
 (function () {
-  const savedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const shouldUseDark = savedTheme === "dark" || (savedTheme === null && prefersDark);
+  const initTheme = () => {
+    if (!window.themeConfig) {
+      setTimeout(initTheme, 1);
+      return;
+    }
 
-  if (shouldUseDark) {
-    document.documentElement.setAttribute("data-color-scheme", "dark");
-  } else {
-    document.documentElement.removeAttribute("data-color-scheme");
-  }
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const themeSetting = window.themeConfig.theme_setting;
+
+    let shouldUseDark;
+    if (themeSetting === true || themeSetting === "true") {
+      shouldUseDark = true;
+    } else if (savedTheme === "dark") {
+      shouldUseDark = true;
+    } else if (savedTheme === "light") {
+      shouldUseDark = false;
+    } else {
+      shouldUseDark = prefersDark;
+    }
+
+    if (shouldUseDark) {
+      document.documentElement.setAttribute("data-color-scheme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-color-scheme");
+    }
+  };
+
+  initTheme();
 })();
 // ═══════════════════════════════════════════════════════════════════════════════
 // 全局 Loading 效果模块 - Global Loading Module
@@ -197,18 +217,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // 获取当前主题
   const getCurrentTheme = () => html.getAttribute("data-color-scheme") === "dark";
 
-  // 设置主题
+  // 设置主题（只保存用户偏好，不改变主题设置的优先级）
   const setTheme = (isDark) => {
     html.setAttribute("data-color-scheme", isDark ? "dark" : "");
     localStorage.setItem("theme", isDark ? "dark" : "light");
     slider.style.transform = isDark ? "translateX(20px)" : "translateX(0)";
   };
 
-  // 初始化滑块
-  const savedTheme = localStorage.getItem("theme");
-  const initialDark = savedTheme === "dark" || getCurrentTheme();
+  // 设置滑块
+  const currentTheme = getCurrentTheme();
   slider.style.transition = "none";
-  setTheme(initialDark);
+  slider.style.transform = currentTheme ? "translateX(20px)" : "translateX(0)";
   requestAnimationFrame(() => {
     slider.style.transition = ""; // 恢复过渡动画
   });

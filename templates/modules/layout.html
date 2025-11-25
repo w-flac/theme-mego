@@ -7,6 +7,11 @@
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/assets/css/style.css?v={version}(version=${theme.spec.version})}" />
     <script th:src="@{/assets/js/main.js?v={version}(version=${theme.spec.version})}"></script>
+    <script th:inline="javascript">
+      window.themeConfig = {
+        theme_setting: /*[[${theme.config.index_info.info_setting.theme_setting ?: false}]]*/ false
+      };
+    </script>
     <th:block th:if="${head != null}">
       <th:block th:replace="${head}" />
     </th:block>
