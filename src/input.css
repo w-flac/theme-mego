@@ -22,12 +22,12 @@
     content: "";
 }
 
-.prose :where(table, tr, td, a) {
+.prose :where(table,th, tr, td, a) {
     @apply !text-gray-900 dark:!text-white/70;
 }
 
-.prose :where(td) {
-    border: 1px solid rgb(221, 221, 221);
+.prose :where(td,th) {
+   @apply border border-solid border-gray-300 dark:border-gray-600;
 }
 
 .prose :where(table) {
@@ -57,6 +57,13 @@
 .prose :where(a.tag)::before {
     content: "#";
     @apply mr-0.5 opacity-80;
+}
+
+.prose :where(.column){
+    @apply p-4 border border-solid border-gray-300 dark:border-gray-600 rounded-lg;
+    span>strong{
+        @apply text-inherit;
+    }
 }
 
 @utility scrollbar-hidden {
