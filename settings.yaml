@@ -118,6 +118,13 @@ spec:
               label: 启用友情链接评论
               value: ''
               help: 开启后将显示友情链接评论
+            - $formkit: checkbox
+              name: theme_setting
+              id: theme_setting
+              key: theme_setting
+              label: 默认使用深色模式
+              value: ''
+              help: 开启后主题默认使用深色模式
         - $formkit: group
           name: share_setting
           id: share_setting
@@ -624,6 +631,8 @@ spec:
                       value: s-i-reddit
                     - label: TikTok
                       value: s-i-tiktok
+                    - label: QQ
+                      value: s-i-qq
                     - label: CSDN
                       value: s-i-csdn
                     - label: Telegram
