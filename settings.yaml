@@ -1118,6 +1118,8 @@ spec:
                       value: s-i-X
                     - label: GitHub
                       value: s-i-github
+                    - label: QQ
+                      value: s-i-qq
                     - label: LinkedIn
                       value: s-i-linkedin
                     - label: Telegram
