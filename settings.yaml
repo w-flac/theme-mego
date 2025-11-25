@@ -124,7 +124,7 @@ spec:
               key: theme_setting
               label: 默认使用深色模式
               value: ''
-              help: 开启后主题默认使用深色模式
+              help: 开启后主题默认使用深色模式，隐藏主题切换按钮
         - $formkit: group
           name: share_setting
           id: share_setting
