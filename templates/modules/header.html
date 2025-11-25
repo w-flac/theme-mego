@@ -75,6 +75,7 @@
       </ul>
       <div class="flex items-center gap-2 md:gap-4">
         <div
+          th:if="${theme.config.index_info.info_setting.theme_setting == null or theme.config.index_info.info_setting.theme_setting == false }"
           class="relative h-5 w-10 cursor-pointer rounded-full bg-gray-300 transition-colors duration-150 ease-out will-change-[background-color] select-none dark:bg-gray-600"
           id="theme-toggle"
         >
