@@ -164,7 +164,10 @@
                   ></i>
                 </div>
                 <h3 class="mb-3 text-xl font-bold text-gray-900 dark:text-white" th:text="${project.p_title}"></h3>
-                <div class="scrollbar-hidden text-gray-600 md:h-40 md:overflow-y-auto dark:text-gray-300">
+                <div
+                  th:classappend="${theme.config.resume.projects.p_height == true ? 'md:h-40' : ''}"
+                  class="scrollbar-hidden text-gray-600 md:overflow-y-auto dark:text-gray-300"
+                >
                   <p class="leading-relaxed whitespace-pre-line" th:text="${project.p_description}"></p>
                 </div>
               </a>
@@ -181,12 +184,13 @@
           </div>
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div
-              class="rounded-2xl p-6 text-white shadow-xl transition-all duration-300 ease-out hover:-translate-y-2"
+              class="rounded-2xl p-6 shadow-xl transition-all duration-300 ease-out hover:-translate-y-2"
               th:each="skill : ${theme.config.resume.skills.skills_items}"
-              th:style="|background-color: ${skill.s_color}|"
+              th:classappend="${#strings.isEmpty(skill.s_color) ? 'bg-gray-400/5 dark:bg-white/10 text-gray-900 dark:text-white ' : 'text-white'}"
+              th:style="${not #strings.isEmpty(skill.s_color) ? 'background-color: ' + skill.s_color  : ''}"
             >
               <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm" th:if="${not #strings.isEmpty(skill.s_icon)}">
-                <th:block th:utext="${skill.s_icon}"></th:block>
+                <th:block th:utext="${skill.s_icon.value}"></th:block>
               </div>
               <h3 class="mb-3 text-lg font-bold" th:text="${skill.s_title}"></h3>
               <p class="text-sm leading-relaxed opacity-90" th:text="${skill.s_description}"></p>
@@ -215,7 +219,7 @@
                   th:each="contact : ${theme.config.resume.contact.contact_list}"
                 >
                   <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                    <i class="h-6 w-6 !bg-white" th:classappend="${contact.c_icon}"></i>
+                    <i class="h-6 w-6 !bg-white" th:utext="${contact.c_icon.value}"></i>
                   </div>
                   <div>
                     <div class="mb-1 text-xs text-slate-400" th:text="${contact.c_type}"></div>

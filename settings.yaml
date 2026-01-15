@@ -969,6 +969,12 @@ spec:
                       value: true
                     - label: 否
                       value: false
+            - $formkit: checkbox
+              if: "$value.projects_enabled === true"
+              name: p_height
+              id: p_height
+              key: p_height
+              label: 启用长文本
         - $formkit: group
           name: skills
           id: skills
@@ -1004,13 +1010,12 @@ spec:
                 - type: text
                   label: $value.s_title
               children:
-                - $formkit: code
+                - $formkit: iconify
                   name: s_icon
                   id: s_icon
                   key: s_icon
-                  language: html
-                  height: 100px
-                  label: SVG图标
+                  label: 技能图标
+                  format: svg
                 - $formkit: text
                   name: s_title
                   id: s_title
@@ -1075,34 +1080,19 @@ spec:
               label: 联系列表
               value: []
               itemLabels:
+                - type: iconify
+                  label: $value.c_icon
                 - type: text
                   label: $value.c_type
                 - type: text
                   label: $value.c_value
               children:
-                - $formkit: select
+                - $formkit: iconify
                   name: c_icon
                   id: c_icon
                   key: c_icon
                   label: 图标
-                  placeholder: 请选择图标
-                  options:
-                    - label: Mail
-                      value: s-i-mail
-                    - label: Facebook
-                      value: s-i-facebook
-                    - label: X
-                      value: s-i-X
-                    - label: GitHub
-                      value: s-i-github
-                    - label: QQ
-                      value: s-i-qq
-                    - label: LinkedIn
-                      value: s-i-linkedin
-                    - label: Telegram
-                      value: s-i-telegram
-                    - label: 微博
-                      value: s-i-weibo
+                  format: svg
                 - $formkit: text
                   name: c_type
                   id: c_type
