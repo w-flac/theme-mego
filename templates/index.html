@@ -119,7 +119,7 @@
       <div class="pointer-events-none fixed z-10 h-screen min-h-screen w-full bg-black/80 opacity-0 will-change-[opacity]" id="shade"></div>
     </section>
     <!-- Index Module -->
-    <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
+    <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 md:py-12 dark:bg-gray-900">
       <!-- Site Statistics   -->
       <div
         class="mx-auto max-w-6xl px-4 md:py-24"
@@ -179,7 +179,7 @@
       </section>
     </section>
     <!-- other Module -->
-    <section class="absolute z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
+    <section class="absolute z-10 w-full space-y-12 bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
       <!-- Categories -->
       <div class="mx-auto max-w-6xl px-4" th:if="${theme.config.index_other.category.category_enabled == true}">
         <div class="mb-12 text-center">
@@ -197,14 +197,18 @@
             class="overflow-hidden rounded-2xl border border-gray-100 shadow-lg hover:border-gray-100/60 xl:h-24 xl:w-36 dark:border-white/20"
             th:each="category : ${categoryFinder.getByNames(theme.config.index_other.category.category_items.category_list)}"
           >
-            <div class="relative flex h-full flex-col items-center justify-center p-4" th:classappend="${#annotations.getOrDefault(category, 'color', 'gradient-bg-9')}">
-              <div class="absolute inset-0 bg-black opacity-30"></div>
-              <a class="flex flex-col items-center" th:href="@{${category.status.permalink}}">
-                <i class="relative z-10 mb-2 text-3xl text-white" th:classappend="${#annotations.getOrDefault(category, 'font', 'fas fa-file')}"></i>
-                <h3 class="relative z-10 text-center text-sm font-bold text-white" th:text="${category.spec.displayName}"></h3>
-                <div class="border-opacity-40 absolute top-2 right-2 h-3 w-3 rounded-full border border-transparent bg-gray-100 dark:bg-gray-900"></div>
-              </a>
-            </div>
+            <th:block th:with="colorClass = ${#annotations.getOrDefault(category, 'color', '')}, iconClass = ${#annotations.getOrDefault(category, 'font', '')}">
+              <div class="relative flex h-full flex-col items-center justify-center p-4" th:classappend="${#strings.isEmpty(colorClass) ? 'gradient-bg-1' : colorClass}">
+                <div class="absolute inset-0 bg-black opacity-30"></div>
+                <a class="flex flex-col items-center" th:href="@{${category.status.permalink}}">
+                  <div th:if="${not #strings.isEmpty(iconClass)}" th:utext="${iconClass}" class="relative z-10 mb-2 size-[1.875rem] text-white"></div>
+                  <i th:unless="${not #strings.isEmpty(iconClass)}" class="fas fa-folder-open relative z-10 mb-2 text-3xl text-white"></i>
+
+                  <h3 class="relative z-10 text-center text-sm font-bold text-white" th:text="${category.spec.displayName}"></h3>
+                  <div class="border-opacity-40 absolute top-2 right-2 h-3 w-3 rounded-full border border-transparent bg-gray-100 dark:bg-gray-900"></div>
+                </a>
+              </div>
+            </th:block>
           </li>
         </ul>
       </div>
