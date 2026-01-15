@@ -9,12 +9,16 @@
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5" th:attr="id=|items-${category.metadata.name}|">
       <div class="mx-auto max-w-3xl">
         <div class="mb-4 flex flex-col items-center justify-center sm:mb-6">
-          <div
-            class="mb-3 flex h-12 w-12 flex-col items-center justify-center rounded-xl p-4 shadow-lg sm:mb-4 sm:h-16 sm:w-16 sm:rounded-2xl"
-            th:classappend="${#annotations.getOrDefault(category, 'color', 'gradient-bg-9')}"
-          >
-            <i class="shrink-0 text-3xl text-white" th:classappend="${#annotations.getOrDefault(category, 'font', '')}"></i>
-          </div>
+          <th:block th:with="fontIcon = ${#annotations.getOrDefault(category, 'font', '')},colorClass = ${#annotations.getOrDefault(category, 'color', '')}">
+            <div
+              class="mb-3 flex h-12 w-12 flex-col items-center justify-center rounded-xl p-4 shadow-lg sm:mb-4 sm:h-16 sm:w-16 sm:rounded-2xl"
+              th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'bg-gray-500'}"
+            >
+              <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-[2rem]"></div>
+              <i th:unless="${not #strings.isEmpty(fontIcon)}" class="fas fa-folder-open text-2xl text-white"></i>
+            </div>
+          </th:block>
+
           <h3 class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70" th:text="${category.spec.displayName}"></h3>
         </div>
         <div class="mx-auto mb-6 px-4 sm:mb-8">
@@ -83,12 +87,16 @@
                     th:each="category : ${categories}"
                     th:href="@{${category.status.permalink}}"
                   >
-                    <div
-                      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg shadow-md"
-                      th:classappend="${#annotations.getOrDefault(category, 'color', 'gradient-bg-9')}"
-                    >
-                      <i class="text-sm text-white" th:classappend="${#annotations.getOrDefault(category, 'font', 'fas fa-file')}"></i>
-                    </div>
+                    <th:block th:with="fontIcon = ${#annotations.getOrDefault(category, 'font', '')},colorClass = ${#annotations.getOrDefault(category, 'color', '')}">
+                      <div
+                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg shadow-md"
+                        th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'bg-gray-500'}"
+                      >
+                        <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-5"></div>
+                        <i th:unless="${not #strings.isEmpty(fontIcon)}" class="fas fa-folder-open text-base text-white"></i>
+                      </div>
+                    </th:block>
+
                     <div class="flex-1 shrink-0">
                       <p class="font-semibold text-gray-900 dark:text-white" th:text="${category.spec.displayName}"></p>
                       <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${category.status?.visiblePostCount ?: 0} + ' ' + #{page.archives.title.post}"></span>
