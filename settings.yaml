@@ -8,7 +8,7 @@ spec:
     - group: index_info
       label: 一般设置
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: info_enabled
           id: info_enabled
           key: info_enabled
@@ -49,7 +49,7 @@ spec:
               label: 站点副标题
             - $formkit: attachment
               accepts:
-                - 'image/*'
+                - "image/*"
               name: logo
               id: logo
               key: logo
@@ -64,12 +64,12 @@ spec:
           children:
             - $formkit: attachment
               accepts:
-                - 'image/*'
+                - "image/*"
               name: custom_logo
               id: custom_logo
               key: custom_logo
               label: Logo
-              value: ''
+              value: ""
         - $formkit: group
           name: info_setting
           id: info_setting
@@ -81,82 +81,49 @@ spec:
               id: s_enabled
               key: s_enabled
               label: 显示搜索栏
-              value: ''
-              help: 自定义菜单SVG用户选项
-            - $formkit: checkbox
-              name: c_enabled
-              id: c_enabled
-              key: c_enabled
-              label: 分类图标颜色渲染
-              value: ''
-              help: 开启后 /categories 页面下图标颜色将生效
+              value: false
+              help: 开启后移动端将显示搜索
             - $formkit: checkbox
               name: u_enabled
               id: u_enabled
               key: u_enabled
               label: 站点快捷登陆
-              value: ''
+              value: false
               help: 开启后将在首页 header 显示
             - $formkit: checkbox
               name: post_aside
               id: post_aside
               key: post_aside
               label: 禁用文章侧边栏
-              value: ''
+              value: false
               help: 开启后将禁用文章侧边栏
             - $formkit: checkbox
               name: page_aside
               id: page_aside
               key: page_aside
               label: 禁用页面侧边栏
-              value: ''
+              value: false
               help: 开启后将禁用页面侧边栏
             - $formkit: checkbox
               name: link_enabled
               id: link_enabled
               key: link_enabled
               label: 启用友情链接评论
-              value: ''
+              value: false
               help: 开启后将显示友情链接评论
             - $formkit: checkbox
               name: theme_setting
               id: theme_setting
               key: theme_setting
               label: 默认使用深色模式
-              value: ''
-              help: 开启后主题默认使用深色模式，隐藏主题切换按钮
-        - $formkit: group
-          name: share_setting
-          id: share_setting
-          key: share_setting
-          label: 资源下载设置
-          help: 如果开启了资源下载模块，则需要设置资源下载标题和提示语
-          children:
-            - $formkit: checkbox
-              name: share_enabled
-              id: share_enabled
-              key: share_enabled
-              label: 启用资源下载模块
               value: false
-            - $formkit: text
-              name: share_title
-              id: share_title
-              key: share_title
-              label: 资源下载标题
-              value: '资源下载'
-              if: $get(share_enabled).value === true
-            - $formkit: text
-              name: share_subtitle
-              id: share_subtitle
-              key: share_subtitle
-              label: 资源下载提示语
-              value: '提示：如遇链接失效，请在评论区留言反馈'
-              if: $get(share_enabled).value === true
+              help: 开启后主题默认使用深色模式，隐藏主题切换按钮
+
     #Hero模块
     - group: index_hero
       label: Hero模块
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: hero_enabled
           id: hero_enabled
           key: hero_enabled
@@ -200,10 +167,10 @@ spec:
               label: 副标题类型
               value: "short"
               options:
-                  - label: 长文本
-                    value: "long"
-                  - label: 短文本
-                    value: "short"
+                - label: 长文本
+                  value: "long"
+                - label: 短文本
+                  value: "short"
             - $formkit: text
               name: subtitle
               id: subtitle
@@ -228,7 +195,7 @@ spec:
           key: hero_urls
           label: Hero链接
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: hero_urls_enabled
               id: hero_urls_enabled
               key: hero_urls_enabled
@@ -267,7 +234,7 @@ spec:
           key: hero_signs
           label: Hero标志
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: hero_signs_enabled
               id: hero_signs_enabled
               key: hero_signs_enabled
@@ -279,15 +246,16 @@ spec:
               key: hero_signs_items
               if: "$value.hero_signs_enabled === true"
               children:
-                - $formkit: repeater
+                - $formkit: array
                   name: hero_signs_items
                   id: hero_signs_items
                   key: hero_signs_items
                   label: Hero标识列表
                   value: []
                   max: 3
-                  min: 1
-                  itemLabel: "标识"
+                  itemLabels:
+                    - type: text
+                      label: $value.text
                   children:
                     - $formkit: text
                       name: text
@@ -304,7 +272,7 @@ spec:
           key: intro
           label: 站点简介
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: intro_enabled
               id: intro_enabled
               key: intro_enabled
@@ -332,13 +300,13 @@ spec:
           key: website
           label: 站点统计
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: website_enabled
               id: website_enabled
               key: website_enabled
               label: 启用站点统计
               value: false
-            - $formkit: repeater
+            - $formkit: array
               name: type
               id: type
               key: type
@@ -346,6 +314,9 @@ spec:
               label: 数据定义
               value: []
               max: 4
+              itemLabels:
+                - type: text
+                  label: $value.type_items
               children:
                 - $formkit: select
                   name: type_items
@@ -446,7 +417,7 @@ spec:
           key: category
           label: 分类模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: category_enabled
               id: category_enabled
               key: category_enabled
@@ -482,7 +453,7 @@ spec:
           key: tags
           label: 标签模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: tags_enabled
               id: tags_enabled
               key: tags_enabled
@@ -520,7 +491,7 @@ spec:
           label: 订阅模块
           help: 依赖前置插件“文章订阅”，https://www.halo.run/store/apps/app-yldNX
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: subscribe_enabled
               id: subscribe_enabled
               key: subscribe_enabled
@@ -543,29 +514,34 @@ spec:
                   id: subscribe_subtitle
                   key: subscribe_subtitle
                   label: 副标题
-                - $formkit: checkbox
+                - $formkit: switch
                   name: slogan_enabled
                   id: slogan_enabled
                   key: slogan_enabled
                   label: 启用口号
                   value: false
-                - $formkit: repeater
+                - $formkit: array
                   if: "$value.slogan_enabled === true"
                   name: subscribe_slogan
                   id: subscribe_slogan
                   key: subscribe_slogan
                   label: 口号
-                  value: []
                   max: 2
-                  min: 1
-                  help: 图标链接：https://fontawesome.com/search?s=solid&ic=free&o=r
+                  value: []
+                  itemLabels:
+                    - type: iconify
+                      label: $value.icon
+                    - type: text
+                      label: $value.title
+                    - type: text
+                      label: $value.subtitle
                   children:
-                    - $formkit: text
+                    - $formkit: iconify
                       name: icon
                       id: icon
                       key: icon
-                      label: 图标
-                      value: ""
+                      label: 社交图标
+                      format: svg
                     - $formkit: text
                       name: title
                       id: title
@@ -588,72 +564,42 @@ spec:
           key: footer_social
           label: 社交模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: social_enabled
               id: social_enabled
               key: social_enabled
               label: 启用社交模块
               value: false
-            - $formkit: repeater
+            - $formkit: array
               name: footer_social_items
               id: footer_social_items
               key: footer_social_items
               if: "$value.social_enabled === true"
               label: 社交链接
               value: []
+              itemLabels:
+                - type: iconify
+                  label: $value.footer_icon
+                - type: text
+                  label: $value.footer_name
+                - type: text
+                  label: $value.footer_url
               children:
-                - $formkit: select
-                  name: icon
-                  id: icon
-                  key: icon
+                - $formkit: iconify
+                  name: footer_icon
+                  id: footer_icon
+                  key: footer_icon
                   label: 图标
-                  placeholder: 请选择图标
-                  options:
-                    - label: Mail
-                      value: s-i-mail
-                    - label: Facebook
-                      value: s-i-facebook
-                    - label: X
-                      value: s-i-X
-                    - label: Instagram
-                      value: s-i-instagram
-                    - label: YouTube
-                      value: s-i-youtube
-                    - label: GitHub
-                      value: s-i-github
-                    - label: Steam
-                      value: s-i-steam
-                    - label: LinkedIn
-                      value: s-i-linkedin
-                    - label: Pinterest
-                      value: s-i-pinterest
-                    - label: Reddit
-                      value: s-i-reddit
-                    - label: TikTok
-                      value: s-i-tiktok
-                    - label: QQ
-                      value: s-i-qq
-                    - label: CSDN
-                      value: s-i-csdn
-                    - label: Telegram
-                      value: s-i-telegram
-                    - label: 微博
-                      value: s-i-weibo
-                    - label: B站
-                      value: s-i-bilibili
-                    - label: 豆瓣
-                      value: s-i-douban
-                    - label: RSS
-                      value: s-i-rss
+                  format: svg
                 - $formkit: text
-                  name: name
-                  id: name
-                  key: name
+                  name: footer_name
+                  id: footer_name
+                  key: footer_name
                   label: 名称
                 - $formkit: text
-                  name: url
-                  id: url
-                  key: url
+                  name: footer_url
+                  id: footer_url
+                  key: footer_url
                   label: 链接
                   validation: "required"
         - $formkit: group
@@ -662,13 +608,13 @@ spec:
           key: footer_other
           label: 其它类别
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: other_enabled
               id: other_enabled
               key: other_enabled
               label: 开启建站与主题信息？
               value: true
-            - $formkit: checkbox
+            - $formkit: switch
               name: beian_enabled
               id: beian_enabled
               key: beian_enabled
@@ -695,7 +641,7 @@ spec:
     - group: donate
       label: 赞赏设置
       formSchema:
-        - $formkit: checkbox
+        - $formkit: switch
           name: p_enabled
           id: p_enabled
           key: p_enabled
@@ -741,24 +687,29 @@ spec:
                   id: p_subtitle
                   key: p_title
                   label: 简介
-            - $formkit: repeater
+            - $formkit: array
               name: donate_items
               id: donate_items
               key: donate_items
               label: 赞赏码列表
-              value: [ ]
+              value: []
+              itemLabels:
+                - type: image
+                  label: $value.donate_qrcode
+                - type: text
+                  label: $value.donate_type
               children:
                 - $formkit: text
-                  name: type
-                  id: type
-                  key: type
+                  name: donate_type
+                  id: donate_type
+                  key: donate_type
                   label: 类型
                 - $formkit: attachment
                   accepts:
-                    - 'image/*'
-                  name: qrcode
-                  id: qrcode
-                  key: qrcode
+                    - "image/*"
+                  name: donate_qrcode
+                  id: donate_qrcode
+                  key: donate_qrcode
                   label: 二维码图片
     #关于信息
     - group: resume
@@ -780,7 +731,7 @@ spec:
           label: 一般设置
           if: $get(r_enabled).value === true
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: resume_enabled
               id: resume_enabled
               key: resume_enabled
@@ -795,12 +746,12 @@ spec:
           children:
             - $formkit: attachment
               accepts:
-                - 'image/*'
+                - "image/*"
               name: h_logo
               id: h_logo
               key: h_logo
               label: Logo
-              value: ''
+              value: ""
             - $formkit: text
               name: h_name
               id: h_name
@@ -822,7 +773,7 @@ spec:
               id: h_selt
               key: h_selt
               label: 显示快捷按钮
-              value: false  
+              value: false
         - $formkit: group
           name: github
           id: github
@@ -830,7 +781,7 @@ spec:
           if: $get(r_enabled).value === true
           label: 图表统计
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: github_enabled
               id: github_enabled
               key: github_enabled
@@ -863,7 +814,7 @@ spec:
                   id: g_title
                   key: g_title
                   label: 类型
-            - $formkit: repeater
+            - $formkit: array
               name: github_list
               id: github_list
               key: github_list
@@ -871,6 +822,11 @@ spec:
               value: []
               max: 3
               label: 新增图表
+              itemLabels:
+                - type: text
+                  label: $value.l_title
+                - type: text
+                  label: $value.l_url
               children:
                 - $formkit: text
                   name: l_url
@@ -889,7 +845,7 @@ spec:
           if: $get(r_enabled).value === true
           label: 工作模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: work_enabled
               id: work_enabled
               key: work_enabled
@@ -906,13 +862,20 @@ spec:
                   id: w_title
                   key: w_title
                   label: 分隔标题
-            - $formkit: repeater
+            - $formkit: array
               name: work_items
               id: work_items
               key: work_items
               if: "$value.work_enabled === true"
               label: 新增列表
               value: []
+              itemLabels:
+                - type: text
+                  label: $value.w_period
+                - type: text
+                  label: $value.w_title
+                - type: text
+                  label: $value.w_company
               children:
                 - $formkit: text
                   name: w_title
@@ -942,7 +905,7 @@ spec:
           if: $get(r_enabled).value === true
           label: 项目模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: projects_enabled
               id: projects_enabled
               key: projects_enabled
@@ -959,13 +922,16 @@ spec:
                   id: p_title
                   key: p_title
                   label: 分隔标题
-            - $formkit: repeater
+            - $formkit: array
               name: projects_items
               id: projects_items
               key: projects_items
               if: "$value.projects_enabled === true"
               label: 项目列表
               value: []
+              itemLabels:
+                - type: text
+                  label: $value.p_title
               children:
                 - $formkit: text
                   name: p_title
@@ -997,7 +963,7 @@ spec:
                   key: p_enabled
                   label: 启用外部链接
                   placeholder: 请确认选择
-                  value: ''
+                  value: ""
                   options:
                     - label: 是
                       value: true
@@ -1010,7 +976,7 @@ spec:
           if: $get(r_enabled).value === true
           label: 技能模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: skills_enabled
               id: skills_enabled
               key: skills_enabled
@@ -1027,13 +993,16 @@ spec:
                   id: s_title
                   key: s_title
                   label: 分隔标题
-            - $formkit: repeater
+            - $formkit: array
               name: skills_items
               id: skills_items
               key: skills_items
               if: "$value.skills_enabled === true"
               label: 技能列表
               value: []
+              itemLabels:
+                - type: text
+                  label: $value.s_title
               children:
                 - $formkit: code
                   name: s_icon
@@ -1065,7 +1034,7 @@ spec:
           if: $get(r_enabled).value === true
           label: 联系模块
           children:
-            - $formkit: checkbox
+            - $formkit: switch
               name: contact_enabled
               id: contact_enabled
               key: contact_enabled
@@ -1098,13 +1067,18 @@ spec:
                   id: contact_subtitle
                   key: contact_subtitle
                   label: 副标题
-            - $formkit: repeater
+            - $formkit: array
               name: contact_list
               id: contact_list
               key: contact_list
               if: "$value.contact_enabled === true"
               label: 联系列表
               value: []
+              itemLabels:
+                - type: text
+                  label: $value.c_type
+                - type: text
+                  label: $value.c_value
               children:
                 - $formkit: select
                   name: c_icon
