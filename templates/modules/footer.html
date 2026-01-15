@@ -1,13 +1,13 @@
 <footer class="mx-auto my-8 max-w-7xl space-y-2 overflow-hidden">
-  <div class="flex justify-center items-center gap-x-6" th:if="${theme.config.index_footer.footer_social.social_enabled}">
+  <div class="flex justify-center items-center gap-x-4" th:if="${theme.config.index_footer.footer_social.social_enabled}">
     <th:block th:with="social = ${theme.config.index_footer.footer_social.footer_social_items}">
       <th:block th:each="social_item : ${social}">
         <a
-          class="inline-block size-5 lg:size-6 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-50"
+          class="inline-block text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-50"
           target="_blank"
-          th:classappend="${social_item.icon}"
-          th:href="${social_item.url}"
-          th:title="${social_item.name}"
+          th:utext="${social_item.footer_icon.value}"
+          th:href="${social_item.footer_url}"
+          th:title="${social_item.footer_name}"
         ></a>
       </th:block>
     </th:block>
