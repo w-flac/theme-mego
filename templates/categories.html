@@ -10,7 +10,7 @@
       <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
         <div class="flex flex-col items-center justify-center space-y-4">
           <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
-            <i class="fas fa-folder-open text-2xl text-white sm:text-3xl"></i>
+            <i class="fas fa-folder-open text-2xl text-white"></i>
           </div>
           <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
             <h1
@@ -33,11 +33,13 @@
           th:each="category : ${categories}"
         >
           <div class="flex items-center justify-between">
-            <div>
+            <div th:with="fontIcon=${#annotations.getOrDefault(category, 'font', '')},colorClass = ${#annotations.getOrDefault(category, 'color', '')}" class="flex items-center">
+              <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-4"></div>
               <i
-                class=""
-                th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(category, 'font', '')) ? #annotations.getOrDefault(category, 'font', '') : 'fas fa-folder-open'} + ' ' + ${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? #annotations.getOrDefault(category, 'color', '') : ''}"
-                th:style="${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(category, 'color', '')) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
+                th:if="${#strings.isEmpty(fontIcon)}"
+                class="fas fa-folder-open"
+                th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'text-gray-500'}"
+                th:style="${not #strings.isEmpty(colorClass) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
               ></i>
               <span class="ml-1 text-sm font-medium" th:text="${category.spec.displayName}"></span>
             </div>
@@ -104,11 +106,13 @@
             th:each="child : ${category.children}"
           >
             <div class="flex items-center justify-between">
-              <div>
+              <div th:with="fontIcon=${#annotations.getOrDefault(child, 'font', '')},colorClass = ${#annotations.getOrDefault(child, 'color', '')}" class="flex items-center">
+                <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-4"></div>
                 <i
-                  class=""
-                  th:classappend="${not #strings.isEmpty(#annotations.getOrDefault(child, 'font', '')) ? #annotations.getOrDefault(child, 'font', '') : 'fas fa-folder-open'} + ' ' + ${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(child, 'color', '')) ? #annotations.getOrDefault(child, 'color', '') : ''}"
-                  th:style="${theme.config.index_info.info_setting.c_enabled == true and not #strings.isEmpty(#annotations.getOrDefault(child, 'color', '')) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
+                  th:if="${#strings.isEmpty(fontIcon)}"
+                  class="fas fa-folder-open"
+                  th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'text-gray-500'}"
+                  th:style="${not #strings.isEmpty(colorClass) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
                 ></i>
                 <span class="ml-1 text-sm font-medium" th:text="${child.spec.displayName}"></span>
               </div>
