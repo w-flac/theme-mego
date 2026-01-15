@@ -19,9 +19,9 @@
     <div class="prose grid place-items-center gap-4 text-center" th:classappend="|grid-cols-${#lists.size(theme.config.donate.info_zz.donate_items)}|">
       <div class="w-52" th:each="donate_item : ${theme.config.donate.info_zz.donate_items}">
         <div class="rounded-lg bg-white p-2">
-          <img th:src="${donate_item.qrcode}" th:alt="${donate_item.type}" class="w-full rounded-lg object-cover" />
+          <img th:src="${donate_item.donate_qrcode}" th:alt="${donate_item.donate_type}" class="w-full rounded-lg object-cover" />
         </div>
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">[[${donate_item.type}]]</p>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">[[${donate_item.donate_type}]]</p>
       </div>
     </div>
     <!-- <div class="mt-2 text-center">
