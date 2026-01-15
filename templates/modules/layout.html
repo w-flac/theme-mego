@@ -9,7 +9,7 @@
     <script th:src="@{/assets/js/main.js?v={version}(version=${theme.spec.version})}"></script>
     <script th:inline="javascript">
       window.themeConfig = {
-        theme_setting: /*[[${theme.config.index_info.info_setting.theme_setting ?: false}]]*/ false
+        theme_setting: /*[[${theme.config.index_info.info_setting.theme_setting ?: false}]]*/ false,
       };
     </script>
     <th:block th:if="${head != null}">
@@ -20,14 +20,14 @@
     <th:block th:replace="~{modules/loading}" />
     <th:block th:replace="${content}" />
     <button
-    id="back-to-top"
-    class="pointer-events-none fixed right-8 bottom-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white opacity-0 shadow-lg inset-ring inset-ring-gray-200 backdrop-blur-md transition-opacity duration-300 dark:bg-white/10 dark:inset-ring-white/10"
-    aria-label="回到顶部"
-  >
-    <svg class="h-5 w-5 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-    </svg>
-  </button>
+      id="back-to-top"
+      class="pointer-events-none fixed right-8 bottom-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white opacity-0 inset-ring shadow-lg inset-ring-gray-200 backdrop-blur-md transition-opacity duration-300 dark:bg-white/10 dark:inset-ring-white/10"
+      aria-label="回到顶部"
+    >
+      <svg class="h-5 w-5 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+      </svg>
+    </button>
   </body>
   <script defer th:src="@{/assets/js/axios.min.js?v={version}(version=${theme.spec.version})}"></script>
   <script th:inline="javascript">
