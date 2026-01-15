@@ -46,16 +46,15 @@ spec:
           value: gradient-bg-14
         - label: 蜜桃气泡
           value: gradient-bg-15
-    - $formkit: "text"
+    - $formkit: iconify
       name: "font"
       id: "font"
       key: "font"
       label: "分类图标"
-      clearable: true
-      help: "字体链接:https://fontawesome.com/search?f=classic&s=solid&ic=free&o=r"
+      format: svg
+      value-only: true
 
 ---
-
 apiVersion: v1alpha1
 kind: AnnotationSetting
 metadata:
@@ -65,110 +64,10 @@ spec:
     group: ""
     kind: MenuItem
   formSchema:
-    - $formkit: "text"
+    - $formkit: "iconify"
       name: "MenuFont"
       id: "MenuFont"
       key: "MenuFont"
       label: "图标SVG"
-      clearable: true
-      help: "建议设置width和height为20"
-
----
-
-apiVersion: v1alpha1
-kind: AnnotationSetting
-metadata:
-  name: post-share-pan
-spec:
-  targetRef:
-    group: "content.halo.run"
-    kind: Post
-  formSchema:
-    - help: 输入为空时，前台不渲染
-    - $formkit: text
-      name: shareName1
-      key: shareName1
-      id: shareName1
-      label: 自定义网盘①
-      placeholder: 请输入网盘名称
-      clearable: true
-    - $formkit: text
-      name: shareUrl1
-      key: shareUrl1
-      id: shareUrl1
-      label: 链接
-      placeholder: 请输入网盘链接
-      if: "$get('shareName1').value"
-    - $formkit: text
-      name: shareSvg1
-      key: shareSvg1
-      id: shareSvg1
-      label: SVG图标
-      placeholder: 请输入网盘图标
-      if: "$get('shareName1').value"
-      help: "建议：最大width和height不要超过40"
-    - $formkit: text
-      name: sharePwd1
-      key: sharePwd1
-      id: sharePwd1
-      label: 提取码
-      placeholder: 请输入提取码
-      if: "$get('shareName1').value"
-    - $formkit: text
-      name: shareName2
-      key: shareName2
-      id: shareName2
-      label: 自定义网盘②
-      placeholder: 请输入网盘名称
-      clearable: true
-    - $formkit: text
-      name: shareUrl2
-      key: shareUrl2
-      id: shareUrl2
-      label: 链接
-      placeholder: 请输入网盘链接
-      if: "$get('shareName2').value"
-    - $formkit: text
-      name: shareSvg2
-      key: shareSvg2
-      id: shareSvg2
-      label: SVG图标
-      placeholder: 请输入网盘图标
-      if: "$get('shareName2').value"
-      help: "建议：最大width和height不要超过40"
-    - $formkit: text
-      name: sharePwd2
-      key: sharePwd2
-      id: sharePwd2
-      label: 提取码
-      placeholder: 请输入提取码
-      if: "$get('shareName2').value"
-    - $formkit: text
-      name: shareName3
-      key: shareName3
-      id: shareName3
-      label: 自定义网盘③
-      placeholder: 请输入网盘名称
-      clearable: true
-    - $formkit: text
-      name: shareUrl3
-      key: shareUrl3
-      id: shareUrl3
-      label: 链接
-      placeholder: 请输入网盘链接
-      if: "$get('shareName3').value"
-    - $formkit: text
-      name: shareSvg3
-      key: shareSvg3
-      id: shareSvg3
-      label: SVG图标
-      placeholder: 请输入网盘图标
-      if: "$get('shareName3').value"
-      help: "建议：最大width和height不要超过40"
-    - $formkit: text
-      name: sharePwd3
-      key: sharePwd3
-      id: sharePwd3
-      label: 提取码
-      placeholder: 请输入提取码
-      if: "$get('shareName3').value"
+      format: svg
+      value-only: true
