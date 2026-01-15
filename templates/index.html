@@ -262,8 +262,8 @@
                 th:each="subscribe_slogan : ${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
                 th:if="${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
               >
-                <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/10" th:unless="${#strings.isEmpty(subscribe_slogan.icon)}">
-                  <i class="text-gray-600 dark:text-white" th:utext="${subscribe_slogan.icon.value}"></i>
+                <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:unless="${#strings.isEmpty(subscribe_slogan.icon)}">
+                  <i class="bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></i>
                 </div>
                 <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
                 <p
