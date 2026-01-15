@@ -2,7 +2,10 @@
 <html th:replace="~{modules/layout :: html(title = ${post.spec.title} + ' - ' + ${site.title},head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
-    <div class="mx-auto mt-20 px-4 pb-8 transition-colors duration-300 sm:px-6 lg:mt-24 lg:px-8" th:classappend="${theme.config.index_info.info_setting.post_aside == true} ? 'max-w-6xl' : 'max-w-7xl'">
+    <div
+      class="mx-auto mt-20 px-4 pb-8 transition-colors duration-300 sm:px-6 lg:mt-24 lg:px-8"
+      th:classappend="${theme.config.index_info.info_setting.post_aside == true} ? 'max-w-6xl' : 'max-w-7xl'"
+    >
       <ul class="flex items-center space-x-4 pt-2 pb-6" th:if="${not #lists.isEmpty(post.categories)}">
         <li>
           <a class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" href="/" th:text="#{fragment.postHeader.home}"></a>
@@ -66,7 +69,6 @@
             </div>
           </div>
           <section class="prose max-w-full text-gray-900 dark:text-white/70" th:utext="${post.content.content}"></section>
-          <th:block th:replace="~{modules/sharePan :: sharePan}"></th:block>
           <div class="py-5 sm:py-8" th:if="${haloCommentEnabled}">
             <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
             <span id="comment"></span>
