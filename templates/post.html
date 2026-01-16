@@ -43,7 +43,7 @@
                   <i class="fas fa-clock"></i>
                   <span id="number"></span>
                 </div>
-                <div class="ml-2 space-x-2 md:[&>*]:!inline-block [&>*:nth-child(n+2)]:hidden">
+                <div class="ml-2 space-x-2 md:*:inline-block! [&>*:nth-child(n+2)]:hidden">
                   <th:block th:each="tag : ${post.tags}">
                     <a class="text-gray-500 dark:text-gray-400" th:href="@{${tag.status.permalink}}" th:text="|#${tag.spec.displayName}|" th:title="${tag.spec.displayName}"></a>
                   </th:block>

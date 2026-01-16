@@ -14,7 +14,7 @@
               class="mb-3 flex h-12 w-12 flex-col items-center justify-center rounded-xl p-4 shadow-lg sm:mb-4 sm:h-16 sm:w-16 sm:rounded-2xl"
               th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'bg-gray-500'}"
             >
-              <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-[2rem]"></div>
+              <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-8"></div>
               <i th:unless="${not #strings.isEmpty(fontIcon)}" class="fas fa-folder-open text-2xl text-white"></i>
             </div>
           </th:block>
