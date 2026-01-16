@@ -9,14 +9,14 @@
         id="bg"
         th:style="|background-image: url('${theme.config.index_hero.hero_image.image ?: #theme.assets('/images/hello_mego.webp')}')|"
       >
-        <div class="animate-bouncy fixed bottom-16 left-1/2 ml-[-20px] h-10 w-10 opacity-100 lg:bottom-0">
+        <div class="animate-bouncy fixed bottom-16 left-1/2 -ml-5 h-10 w-10 opacity-100 lg:bottom-0">
           <svg height="25" width="50">
             <polygon fill="rgba(255,255,255,.5)" points="0,0 25,10 50,0 25,25" stroke="rgba(255,255,255,.3)" stroke-width="0" />
           </svg>
         </div>
         <div class="flex h-full w-full items-center justify-center">
           <div
-            class="z-30 flex h-[60rem] w-full items-center bg-gray-200/10 p-4 text-center transition-colors duration-200 will-change-transform sm:h-fit sm:p-8 sm:backdrop-blur md:p-16 dark:bg-black/40 dark:sm:bg-black/30"
+            class="z-30 flex h-240 w-full items-center bg-gray-200/10 p-4 text-center transition-colors duration-200 will-change-transform sm:h-fit sm:p-8 sm:backdrop-blur md:p-16 dark:bg-black/40 dark:sm:bg-black/30"
             id="text"
             style="transform: translateY(var(--parallax-y, 0))"
           >
@@ -25,9 +25,9 @@
                 <div class="space-y-6 lg:space-y-10">
                   <div class="space-y-2">
                     <div
-                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-gradient-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md dark:from-blue-500/20 dark:to-purple-500/20"
+                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-linear-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md dark:from-blue-500/20 dark:to-purple-500/20"
                     >
-                      <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
+                      <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-linear-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
                       <p class="text-sm font-semibold text-gray-100" th:text="|${theme.config.index_hero.hero_title.label}| ?: |#{common.hero.label}|"></p>
                     </div>
                     <h1
@@ -38,7 +38,7 @@
                       <th:block th:if="${theme.config.index_hero.hero_title.enabled ?: true}">
                         <span
                           th:text="|${theme.config.index_hero.hero_title.subtitle}| ?: |#{common.hero.subtitle}|"
-                          class="from-soft-coral to-coral-red bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                          class="from-soft-coral to-coral-red bg-linear-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
                         ></span>
                       </th:block>
                     </h1>
@@ -52,7 +52,7 @@
                   <div class="space-y-6" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == true || theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
                     <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == true}">
                       <a
-                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
+                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
                         th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
                       >
                         <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
@@ -62,13 +62,13 @@
                           <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title1}"></span>
                         </div>
                         <div
-                          class="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                          class="absolute inset-0 bg-linear-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         ></div>
                         <div
-                          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                          class="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
                         ></div>
                         <div
-                          class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 blur transition-opacity duration-500 group-hover:opacity-75"
+                          class="absolute -inset-1 rounded-2xl bg-linear-to-r from-blue-400 to-purple-400 opacity-0 blur transition-opacity duration-500 group-hover:opacity-75"
                         ></div>
                       </a>
                       <a
@@ -87,13 +87,13 @@
                           <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title2}"></span>
                         </div>
                         <div
-                          class="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                          class="absolute inset-0 bg-linear-to-r from-white/10 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                         ></div>
                         <div
-                          class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                          class="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
                         ></div>
                         <div
-                          class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-white/20 to-white/10 opacity-0 blur transition-opacity duration-500 group-hover:opacity-50"
+                          class="absolute -inset-1 rounded-2xl bg-linear-to-r from-white/20 to-white/10 opacity-0 blur transition-opacity duration-500 group-hover:opacity-50"
                         ></div>
                       </a>
                     </div>
@@ -201,7 +201,7 @@
               <div class="relative flex h-full flex-col items-center justify-center p-4" th:classappend="${#strings.isEmpty(colorClass) ? 'gradient-bg-1' : colorClass}">
                 <div class="absolute inset-0 bg-black opacity-30"></div>
                 <a class="flex flex-col items-center" th:href="@{${category.status.permalink}}">
-                  <div th:if="${not #strings.isEmpty(iconClass)}" th:utext="${iconClass}" class="relative z-10 mb-2 size-[1.875rem] text-white"></div>
+                  <div th:if="${not #strings.isEmpty(iconClass)}" th:utext="${iconClass}" class="relative z-10 mb-2 size-7.5 text-white"></div>
                   <i th:unless="${not #strings.isEmpty(iconClass)}" class="fas fa-folder-open relative z-10 mb-2 text-3xl text-white"></i>
 
                   <h3 class="relative z-10 text-center text-sm font-bold text-white" th:text="${category.spec.displayName}"></h3>
@@ -227,7 +227,7 @@
         <div class="mb-8 rounded-2xl bg-gray-400/5 p-4 sm:px-10 sm:py-12 dark:bg-white/5">
           <div class="tag-container overflow-hidden">
             <li
-              class="mr-4 inline-block flex-shrink-0 cursor-pointer rounded-2xl bg-[var(--tw-bg-color)] px-4 py-2 font-medium"
+              class="mr-4 inline-block shrink-0 cursor-pointer rounded-2xl bg-(--tw-bg-color) px-4 py-2 font-medium"
               th:each="tags : ${tagFinder.getByNames(theme.config.index_other.tags.tags_items.tags_list)}"
               th:style="'--tw-bg-color:' + ${tags.spec.color} + 'B3'"
             >
@@ -262,12 +262,12 @@
                 th:each="subscribe_slogan : ${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
                 th:if="${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
               >
-                <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:unless="${#strings.isEmpty(subscribe_slogan.icon)}">
+                <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:if="${not #strings.isEmpty(subscribe_slogan.icon.value)}">
                   <i class="bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></i>
                 </div>
                 <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
                 <p
-                  class="mt-2 line-clamp-3 text-base/7 leading-relaxed break-words text-gray-600 dark:text-gray-400"
+                  class="mt-2 line-clamp-3 text-base/7 leading-relaxed wrap-break-word text-gray-600 dark:text-gray-400"
                   th:text="${subscribe_slogan.subtitle}"
                   style="hyphens: auto"
                 ></p>
