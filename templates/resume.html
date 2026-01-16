@@ -7,10 +7,10 @@
     <div class="max-h-screen snap-y snap-mandatory overflow-y-scroll scroll-smooth py-12">
       <div class="pointer-events-none absolute inset-0 overflow-hidden">
         <div
-          class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/30 to-purple-400/30 mix-blend-multiply blur-3xl filter dark:from-blue-400/20 dark:to-purple-400/20 dark:mix-blend-screen"
+          class="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-linear-to-br from-blue-400/30 to-purple-400/30 mix-blend-multiply blur-3xl filter dark:from-blue-400/20 dark:to-purple-400/20 dark:mix-blend-screen"
         ></div>
         <div
-          class="from-soft-coral/30 to-coral-red/30 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-br mix-blend-multiply blur-3xl filter dark:from-orange-400/20 dark:to-red-400/20 dark:mix-blend-screen"
+          class="from-soft-coral/30 to-coral-red/30 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-linear-to-br mix-blend-multiply blur-3xl filter dark:from-orange-400/20 dark:to-red-400/20 dark:mix-blend-screen"
         ></div>
       </div>
       <section class="relative my-16 h-screen w-full snap-start overflow-hidden">
@@ -20,13 +20,13 @@
               th:if="${not #strings.isEmpty(theme.config.resume.hero.h_logo)}"
               th:src="${theme.config.resume.hero.h_logo}"
               alt=""
-              class="h-32 w-32 overflow-hidden rounded-full object-cover ring-4 shadow-2xl ring-white sm:h-40 sm:w-40 lg:h-48 lg:w-48"
+              class="h-32 w-32 overflow-hidden rounded-full object-cover shadow-2xl ring-4 ring-white sm:h-40 sm:w-40 lg:h-48 lg:w-48"
             />
             <div class="max-w-4xl">
               <h1 class="mb-4 text-4xl leading-tight font-bold sm:mb-6 sm:text-6xl lg:text-7xl">
                 <span class="block text-gray-900 dark:text-white" th:text="${theme.config.resume.hero.h_name}"></span>
                 <span
-                  class="from-soft-coral to-coral-red mt-2 block bg-gradient-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                  class="from-soft-coral to-coral-red mt-2 block bg-linear-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
                   th:text="${theme.config.resume.hero.h_post}"
                 ></span>
               </h1>
@@ -81,9 +81,9 @@
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.github.github_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.github.github_title.g_title}"></h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
           <div class="space-y-8">
             <div
@@ -115,9 +115,9 @@
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.work.work_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.work.work_title.w_title}"></h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
           <div class="space-y-8">
             <div
@@ -139,9 +139,9 @@
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.projects.projects_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.projects.projects_title.p_title}"></h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
 
           <div class="grid gap-8 md:grid-cols-2">
@@ -178,9 +178,9 @@
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.skills.skills_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.skills.skills_title.s_title}"></h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div
@@ -201,11 +201,11 @@
       <section id="contact" class="flex min-h-screen snap-start items-center pb-32 md:pb-0" th:if="${theme.config.resume.contact.contact_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
             <h2 class="text-sm font-semibold tracking-widest text-slate-500 uppercase" th:text="${theme.config.resume.contact.contact_title.s_title}"></h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+            <div class="h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent"></div>
           </div>
-          <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl md:p-12">
+          <div class="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 p-6 shadow-2xl md:p-12">
             <div
               class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00IDQtNC0xLjc5LTQtNHptMCAyNGMwLTIuMjEgMS43OS00IDQtNHM0IDEuNzkgNCA0LTEuNzktNC00IDQtNC0xLjc5LTQtNHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-40"
             ></div>
@@ -219,7 +219,7 @@
                   th:each="contact : ${theme.config.resume.contact.contact_list}"
                 >
                   <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                    <i class="h-6 w-6 !bg-white" th:utext="${contact.c_icon.value}"></i>
+                    <i class="h-6 w-6 bg-white!" th:utext="${contact.c_icon.value}"></i>
                   </div>
                   <div>
                     <div class="mb-1 text-xs text-slate-400" th:text="${contact.c_type}"></div>

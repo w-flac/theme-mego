@@ -3,7 +3,7 @@
 >
   <div class="mx-auto max-w-6xl p-4 sm:px-8">
     <div class="flex items-center justify-between">
-      <a class="flex flex-shrink-0 items-center space-x-2" th:href="${site.url}">
+      <a class="flex shrink-0 items-center space-x-2" th:href="${site.url}">
         <th:block th:if="${theme.config.index_info.info_site.site_enabled == 'default' or theme.config.index_info.info_site.site_enabled == 'custom'}">
           <img
             alt="logo"
@@ -85,7 +85,7 @@
           ></div>
         </div>
         <button class="lg:hidden" id="mobile-btn">
-          <svg class="h-[22px] w-6 cursor-pointer transition-opacity duration-300 hover:opacity-80 dark:text-white/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+          <svg class="h-5.5 w-6 cursor-pointer transition-opacity duration-300 hover:opacity-80 dark:text-white/80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
             <path
               fill="currentColor"
               id="icon-bar"
