@@ -52,7 +52,21 @@ function haloBuildLogPlugin(outDir) {
 // ==============================
 export default defineConfig(({ command }) => {
   const isBuild = command === "build";
-  const copyTargets = fs.existsSync(LIB_DIR) ? [{ src: LIB_DIR + "/*", dest: "." }] : [];
+  
+  // 修复 Windows 路径问题，确保 glob 模式使用正斜杠
+  const libDirNormalized = LIB_DIR.replace(/\\/g, "/");
+  
+  // 只有当 lib 目录存在且不为空时才添加复制任务
+  let copyTargets = [];
+  if (fs.existsSync(LIB_DIR)) {
+      const files = fs.readdirSync(LIB_DIR);
+      if (files.length > 0) {
+          copyTargets = [{ 
+              src: libDirNormalized + "/*", 
+              dest: "." 
+          }];
+      }
+  }
 
   return {
     publicDir: false,
@@ -82,6 +96,11 @@ export default defineConfig(({ command }) => {
         },
       },
     },
-    plugins: [viteStaticCopy({ targets: copyTargets }), !isBuild && haloDevAutoCopyPlugin(OUT_DIR), haloBuildLogPlugin(OUT_DIR)].filter(Boolean),
+    plugins: [
+        // 仅当有复制目标时才启用插件
+        copyTargets.length > 0 ? viteStaticCopy({ targets: copyTargets }) : null, 
+        !isBuild && haloDevAutoCopyPlugin(OUT_DIR), 
+        haloBuildLogPlugin(OUT_DIR)
+    ].filter(Boolean),
   };
 });

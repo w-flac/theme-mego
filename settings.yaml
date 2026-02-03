@@ -757,23 +757,26 @@ spec:
               id: h_name
               key: h_name
               label: 姓名
+              value: "Sivan"
             - $formkit: text
               name: h_post
               id: h_post
               key: h_post
               label: 职称
+              value: "Java Backend Developer"
             - $formkit: code
               name: h_sub
               id: h_sub
               key: h_sub
               label: 简介
               height: 100px
+              value: "热衷于构建高性能、可扩展的后端系统。专注于 Java 生态，熟悉 Spring Boot、微服务架构及云原生技术。喜欢探索新技术，致力于编写优雅、可维护的代码。"
             - $formkit: checkbox
               name: h_selt
               id: h_selt
               key: h_selt
               label: 显示快捷按钮
-              value: false
+              value: true
         - $formkit: group
           name: github
           id: github
@@ -786,7 +789,7 @@ spec:
               id: github_enabled
               key: github_enabled
               label: 启用图表统计
-              value: false
+              value: true
             - $formkit: group
               name: github_title
               id: github_title
@@ -798,6 +801,7 @@ spec:
                   id: g_title
                   key: g_title
                   label: 分隔标题
+                  value: "GitHub Activity"
             - $formkit: group
               name: github_graph
               id: github_graph
@@ -850,7 +854,7 @@ spec:
               id: work_enabled
               key: work_enabled
               label: 启用工作模块
-              value: false
+              value: true
             - $formkit: group
               name: work_title
               id: work_title
@@ -862,6 +866,7 @@ spec:
                   id: w_title
                   key: w_title
                   label: 分隔标题
+                  value: "Work Experience"
             - $formkit: array
               name: work_items
               id: work_items
@@ -910,7 +915,7 @@ spec:
               id: projects_enabled
               key: projects_enabled
               label: 启用项目模块
-              value: false
+              value: true
             - $formkit: group
               name: projects_title
               id: projects_title
@@ -922,6 +927,7 @@ spec:
                   id: p_title
                   key: p_title
                   label: 分隔标题
+                  value: "Featured Projects"
             - $formkit: array
               name: projects_items
               id: projects_items
@@ -987,7 +993,7 @@ spec:
               id: skills_enabled
               key: skills_enabled
               label: 启用技能模块
-              value: false
+              value: true
             - $formkit: group
               name: skills_title
               id: skills_title
@@ -999,6 +1005,7 @@ spec:
                   id: s_title
                   key: s_title
                   label: 分隔标题
+                  value: "Technical Skills"
             - $formkit: array
               name: skills_items
               id: skills_items
@@ -1044,7 +1051,7 @@ spec:
               id: contact_enabled
               key: contact_enabled
               label: 启用联系方式
-              value: false
+              value: true
             - $formkit: group
               name: contact_title
               id: contact_title
@@ -1056,6 +1063,7 @@ spec:
                   id: s_title
                   key: s_title
                   label: 分隔标题
+                  value: "Contact Me"
             - $formkit: group
               name: contact_items
               id: contact_items
@@ -1067,11 +1075,13 @@ spec:
                   id: contact_title
                   key: contact_title
                   label: 标题
+                  value: "Let's Connect"
                 - $formkit: text
                   name: contact_subtitle
                   id: contact_subtitle
                   key: contact_subtitle
                   label: 副标题
+                  value: "Feel free to reach out for collaborations or just a friendly hello"
             - $formkit: array
               name: contact_list
               id: contact_list

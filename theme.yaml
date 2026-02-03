@@ -5,18 +5,18 @@ metadata:
   annotations:
     "store.halo.run/app-id": "app-meJsF"
 spec:
-  displayName: MEGO
+  displayName: MEGO (Java Edition)
   author:
-    name: 無.Flac
-    website: https://w-flac.org.cn
-  description: 一款现代化简约风格的原创主题，让你专注于图文创作或内容分享
+    name: Sivan
+    website: https://github.com/w-flac/theme-mego
+  description: 专为 Java 开发者定制的简历展示主题
   logo: /themes/theme-mego/assets/images/mego_logo.png
   homepage: https://www.itheme.net
   repo: https://github.com/w-flac/theme-mego
   issues: https://github.com/w-flac/theme-mego/issues
   settingName: "theme-mego-setting"
   configMapName: "theme-mego-configMap"
-  version: 2.4.1
+  version: 2.4.2
   requires: ">=2.22.4"
   license:
     - name: "GPL-3.0"

@@ -1,6 +1,30 @@
+# IDE & OS
 /.idea/
-/node_modules/
 .DS_Store
+Thumbs.db
+
+# Dependencies
+/node_modules/
+
+# Build Output (Source control usually ignores these, but Release zip MUST include them)
+# If you want to commit built assets, comment these out.
 /dist/
 /templates/assets/css/
 /templates/assets/js/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.history
+*.local

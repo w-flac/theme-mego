@@ -13,24 +13,47 @@
           class="from-soft-coral/30 to-coral-red/30 absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-linear-to-br mix-blend-multiply blur-3xl filter dark:from-orange-400/20 dark:to-red-400/20 dark:mix-blend-screen"
         ></div>
       </div>
+
+      <!-- Hero Section -->
       <section class="relative my-16 h-screen w-full snap-start overflow-hidden">
         <div class="flex h-full w-full items-center justify-center px-6 sm:px-4 lg:px-12">
           <div class="mb-14 flex max-w-6xl flex-col items-center space-y-8 text-center lg:space-y-12">
-            <img
-              th:if="${not #strings.isEmpty(theme.config.resume.hero.h_logo)}"
-              th:src="${theme.config.resume.hero.h_logo}"
-              alt=""
-              class="h-32 w-32 overflow-hidden rounded-full object-cover shadow-2xl ring-4 ring-white sm:h-40 sm:w-40 lg:h-48 lg:w-48"
-            />
+            <div class="relative">
+                <img
+                  th:if="${not #strings.isEmpty(theme.config.resume.hero.h_logo)}"
+                  th:src="${theme.config.resume.hero.h_logo}"
+                  alt=""
+                  class="h-32 w-32 overflow-hidden rounded-full object-cover shadow-2xl ring-4 ring-white sm:h-40 sm:w-40 lg:h-48 lg:w-48"
+                />
+                <!-- Java Logo Badge -->
+                <div class="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg dark:bg-gray-800 sm:h-12 sm:w-12">
+                    <i class="fab fa-java text-xl text-red-500 sm:text-2xl"></i>
+                </div>
+            </div>
+
             <div class="max-w-4xl">
+              <div class="mb-4 inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1.5 text-xs font-bold tracking-wide text-blue-500 uppercase dark:text-blue-400">
+                  <span class="mr-2 h-2 w-2 animate-pulse rounded-full bg-blue-500"></span>
+                  Open to Work
+              </div>
               <h1 class="mb-4 text-4xl leading-tight font-bold sm:mb-6 sm:text-6xl lg:text-7xl">
                 <span class="block text-gray-900 dark:text-white" th:text="${theme.config.resume.hero.h_name}"></span>
                 <span
-                  class="from-soft-coral to-coral-red mt-2 block bg-linear-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
+                  class="from-blue-500 to-purple-600 mt-2 block bg-linear-to-r bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-400"
                   th:text="${theme.config.resume.hero.h_post}"
                 ></span>
               </h1>
               <p class="mb-4 text-base leading-relaxed text-gray-600 sm:mb-10 sm:text-xl lg:text-2xl dark:text-gray-300" th:text="${theme.config.resume.hero.h_sub}"></p>
+
+              <!-- Tech Stack Icons (Static for now, can be dynamic later) -->
+              <div class="mb-8 flex justify-center gap-4 text-2xl text-gray-400 dark:text-gray-500">
+                  <i class="fab fa-java hover:text-red-500 transition-colors"></i>
+                  <i class="fas fa-leaf hover:text-green-500 transition-colors" title="Spring Boot"></i>
+                  <i class="fas fa-database hover:text-blue-500 transition-colors" title="SQL"></i>
+                  <i class="fab fa-docker hover:text-blue-400 transition-colors"></i>
+                  <i class="fab fa-linux hover:text-yellow-500 transition-colors"></i>
+              </div>
+
               <div class="flex flex-wrap justify-center gap-4" th:if="${theme.config.resume.hero.h_selt == true}">
                 <a
                   href="#contact"
@@ -78,6 +101,8 @@
           </div>
         </div>
       </section>
+
+      <!-- GitHub Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.github.github_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -112,6 +137,8 @@
           </div>
         </div>
       </section>
+
+      <!-- Work Experience Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.work.work_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -121,21 +148,28 @@
           </div>
           <div class="space-y-8">
             <div
-              class="space-y-1 rounded-2xl border border-gray-200 bg-white/20 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 sm:p-8 dark:border-gray-700 dark:bg-gray-800"
+              class="relative space-y-1 rounded-2xl border border-gray-200 bg-white/20 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 sm:p-8 dark:border-gray-700 dark:bg-gray-800"
               th:each="work : ${theme.config.resume.work.work_items}"
             >
-              <div class="flex items-center justify-between">
+              <!-- Timeline connector (visual only) -->
+              <div class="absolute left-0 top-0 h-full w-1 bg-blue-500/20 rounded-l-2xl"></div>
+
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <h3 class="text-xl font-bold text-gray-900 sm:text-2xl dark:text-white" th:text="${work.w_title}"></h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400" th:text="${work.w_period}"></p>
+                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-400/10 dark:text-blue-400 dark:ring-blue-400/30" th:text="${work.w_period}"></span>
               </div>
-              <div class="space-y-2">
-                <h4 class="text-base text-gray-600 sm:text-lg dark:text-gray-300" th:text="${work.w_company}"></h4>
-                <p class="leading-relaxed whitespace-pre-line text-gray-600 dark:text-gray-300" th:text="${work.w_description}"></p>
+              <div class="space-y-4 pt-2">
+                <h4 class="text-base font-semibold text-gray-700 sm:text-lg dark:text-gray-200" th:text="${work.w_company}"></h4>
+                <div class="prose prose-sm max-w-none text-gray-600 dark:text-gray-300 dark:prose-invert">
+                    <p class="leading-relaxed whitespace-pre-line" th:text="${work.w_description}"></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Projects Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.projects.projects_enabled == true}">
         <div class="mx-auto w-full max-w-5xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -146,35 +180,48 @@
 
           <div class="grid gap-8 md:grid-cols-2">
             <div
-              class="rounded-2xl border border-gray-200 bg-white/20 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 dark:border-gray-700 dark:bg-gray-800"
+              class="group relative flex flex-col rounded-2xl border border-gray-200 bg-white/20 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
               th:each="project : ${theme.config.resume.projects.projects_items}"
             >
               <a
                 th:href="${project.p_enabled == true and not #strings.isEmpty(project.p_url) ? project.p_url : 'javascript:void(0)'}"
                 th:target="${project.p_enabled == true and not #strings.isEmpty(project.p_url) ? '_blank' : ''}"
                 th:attr="rel=${project.p_enabled == true and not #strings.isEmpty(project.p_url) ? 'noopener noreferrer' : ''}"
+                class="flex h-full flex-col"
               >
-                <div class="mb-4 flex items-center justify-between" th:if="${not #strings.isEmpty(project.p_icon)}">
-                  <div class="h-12 w-12 rounded-xl">
-                    <th:block th:utext="${project.p_icon}"></th:block>
+                <div class="mb-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700" th:if="${not #strings.isEmpty(project.p_icon)}">
+                        <th:block th:utext="${project.p_icon}"></th:block>
+                      </div>
+                      <div th:unless="${not #strings.isEmpty(project.p_icon)}" class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700">
+                        <i class="fas fa-code text-gray-500"></i>
+                      </div>
                   </div>
                   <i
-                    class="fa-solid fa-up-right-from-square h-5 w-5 text-base text-gray-400 dark:text-gray-500"
+                    class="fa-solid fa-up-right-from-square h-5 w-5 text-base text-gray-400 transition-colors group-hover:text-blue-500 dark:text-gray-500"
                     th:if="${project.p_enabled == true and not #strings.isEmpty(project.p_url)}"
                   ></i>
                 </div>
                 <h3 class="mb-3 text-xl font-bold text-gray-900 dark:text-white" th:text="${project.p_title}"></h3>
                 <div
                   th:classappend="${theme.config.resume.projects.p_height == true ? 'md:h-40' : ''}"
-                  class="scrollbar-hidden text-gray-600 md:overflow-y-auto dark:text-gray-300"
+                  class="scrollbar-hidden mb-4 flex-grow text-gray-600 md:overflow-y-auto dark:text-gray-300"
                 >
-                  <p class="leading-relaxed whitespace-pre-line" th:text="${project.p_description}"></p>
+                  <p class="leading-relaxed whitespace-pre-line text-sm" th:text="${project.p_description}"></p>
+                </div>
+                <!-- Tech tags placeholder (can be added to settings later) -->
+                <div class="mt-auto flex flex-wrap gap-2">
+                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20">Java</span>
+                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 dark:bg-gray-400/10 dark:text-gray-400 dark:ring-gray-400/20">Backend</span>
                 </div>
               </a>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Skills Section -->
       <section class="flex min-h-screen snap-start items-center pb-24 md:pb-0" th:if="${theme.config.resume.skills.skills_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -184,20 +231,24 @@
           </div>
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div
-              class="rounded-2xl p-6 shadow-xl transition-all duration-300 ease-out hover:-translate-y-2"
+              class="group relative overflow-hidden rounded-2xl p-6 shadow-xl transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl"
               th:each="skill : ${theme.config.resume.skills.skills_items}"
-              th:classappend="${#strings.isEmpty(skill.s_color) ? 'bg-gray-400/5 dark:bg-white/10 text-gray-900 dark:text-white ' : 'text-white'}"
+              th:classappend="${#strings.isEmpty(skill.s_color) ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-100 dark:border-gray-700' : 'text-white'}"
               th:style="${not #strings.isEmpty(skill.s_color) ? 'background-color: ' + skill.s_color  : ''}"
             >
-              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm" th:if="${not #strings.isEmpty(skill.s_icon)}">
+              <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10 blur-2xl transition-all group-hover:bg-white/20"></div>
+
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-white/10 backdrop-blur-sm" th:if="${not #strings.isEmpty(skill.s_icon)}">
                 <th:block th:utext="${skill.s_icon.value}"></th:block>
               </div>
-              <h3 class="mb-3 text-lg font-bold" th:text="${skill.s_title}"></h3>
-              <p class="text-sm leading-relaxed opacity-90" th:text="${skill.s_description}"></p>
+              <h3 class="mb-2 text-lg font-bold tracking-tight" th:text="${skill.s_title}"></h3>
+              <p class="text-sm leading-relaxed opacity-80" th:text="${skill.s_description}"></p>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Contact Section -->
       <section id="contact" class="flex min-h-screen snap-start items-center pb-32 md:pb-0" th:if="${theme.config.resume.contact.contact_enabled == true}">
         <div class="mx-auto w-full max-w-6xl px-4 py-16 md:py-8">
           <div class="mb-8 flex items-center gap-4 md:mb-16">
@@ -215,14 +266,14 @@
               <div class="grid gap-6 sm:grid-cols-2">
                 <a
                   th:href="${contact.c_url}"
-                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/10 p-5 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2"
+                  class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:bg-white/10 hover:border-white/20"
                   th:each="contact : ${theme.config.resume.contact.contact_list}"
                 >
-                  <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10">
-                    <i class="h-6 w-6 bg-white!" th:utext="${contact.c_icon.value}"></i>
+                  <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-white/10 text-white">
+                    <i class="h-6 w-6" th:utext="${contact.c_icon.value}"></i>
                   </div>
                   <div>
-                    <div class="mb-1 text-xs text-slate-400" th:text="${contact.c_type}"></div>
+                    <div class="mb-1 text-xs text-slate-400 uppercase tracking-wider" th:text="${contact.c_type}"></div>
                     <div class="font-medium text-white" th:text="${contact.c_value}"></div>
                   </div>
                 </a>

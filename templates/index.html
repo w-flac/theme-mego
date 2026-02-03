@@ -1,289 +1,660 @@
 <!doctype html>
-<html th:replace="~{modules/layout :: html(title = ${site.title}, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
-  <th:block th:fragment="content">
-    <th:block th:replace="~{modules/header}" />
-    <!-- Hero Module -->
-    <section class="relative top-0 left-0 z-0 h-screen" th:if="${theme.config.index_hero.hero_enabled == true}">
-      <div
-        class="fixed h-screen min-h-screen w-full scale-100 transform bg-cover bg-center bg-no-repeat will-change-transform"
-        id="bg"
-        th:style="|background-image: url('${theme.config.index_hero.hero_image.image ?: #theme.assets('/images/hello_mego.webp')}')|"
-      >
-        <div class="animate-bouncy fixed bottom-16 left-1/2 -ml-5 h-10 w-10 opacity-100 lg:bottom-0">
-          <svg height="25" width="50">
-            <polygon fill="rgba(255,255,255,.5)" points="0,0 25,10 50,0 25,25" stroke="rgba(255,255,255,.3)" stroke-width="0" />
-          </svg>
-        </div>
-        <div class="flex h-full w-full items-center justify-center">
-          <div
-            class="z-30 flex h-240 w-full items-center bg-gray-200/10 p-4 text-center transition-colors duration-200 will-change-transform sm:h-fit sm:p-8 sm:backdrop-blur md:p-16 dark:bg-black/40 dark:sm:bg-black/30"
-            id="text"
-            style="transform: translateY(var(--parallax-y, 0))"
-          >
-            <th:block th:with="heroTitle_subtitle = ${theme.config.index_hero.hero_title.subtitle_enabled}">
-              <div class="mx-auto text-center sm:px-6 lg:px-8" th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-7xl' : 'max-w-4xl'}">
-                <div class="space-y-6 lg:space-y-10">
-                  <div class="space-y-2">
-                    <div
-                      class="animate-float title_label inline-flex w-fit items-center rounded-full border border-white/40 bg-linear-to-r from-amber-200/20 to-red-500/30 px-6 py-3 shadow-lg backdrop-blur-md dark:from-blue-500/20 dark:to-purple-500/20"
-                    >
-                      <div class="mr-2 h-2 w-2 animate-pulse rounded-full bg-linear-to-r from-white to-orange-500 dark:from-blue-400 dark:to-purple-400"></div>
-                      <p class="text-sm font-semibold text-gray-100" th:text="|${theme.config.index_hero.hero_title.label}| ?: |#{common.hero.label}|"></p>
-                    </div>
-                    <h1
-                      class="title_text leading-tight font-bold text-white drop-shadow-lg transition-colors duration-300 dark:text-white/90"
-                      th:classappend="${heroTitle_subtitle == 'long' ? 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl' : 'text-3xl sm:text-5xl xl:text-6xl'}"
-                    >
-                      <span th:text="|${theme.config.index_hero.hero_title.title}| ?: |#{common.hero.title}|"></span>
-                      <th:block th:if="${theme.config.index_hero.hero_title.enabled ?: true}">
-                        <span
-                          th:text="|${theme.config.index_hero.hero_title.subtitle}| ?: |#{common.hero.subtitle}|"
-                          class="from-soft-coral to-coral-red bg-linear-to-r bg-clip-text text-transparent dark:from-blue-300 dark:to-purple-300"
-                        ></span>
-                      </th:block>
-                    </h1>
-                    <div
-                      th:classappend="${heroTitle_subtitle == 'long' ? 'max-w-3xl' : 'max-w-2xl'}"
-                      class="title_description mx-auto px-4 text-justify text-base leading-relaxed text-gray-100 drop-shadow-md sm:px-6 sm:text-xl lg:text-center dark:text-gray-100"
-                    >
-                      <p th:text="|${theme.config.index_hero.hero_title.description}| ?: |#{common.hero.description}|"></p>
-                    </div>
-                  </div>
-                  <div class="space-y-6" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == true || theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
-                    <div class="z-40 flex flex-row justify-center gap-3 sm:gap-6 md:gap-8" th:if="${theme.config.index_hero.hero_urls.hero_urls_enabled == true}">
-                      <a
-                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-linear-to-br from-blue-600 via-blue-500 to-purple-600 px-6 py-3 text-center text-sm font-bold text-white shadow-lg duration-300 hover:-translate-y-1 hover:scale-105 hover:from-blue-500 hover:via-purple-500 hover:to-blue-600 hover:shadow-blue-500/25 sm:rounded-2xl sm:text-base sm:shadow-2xl sm:hover:-translate-y-2 md:text-lg"
-                        th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url1}"
-                      >
-                        <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
-                          <svg class="mr-1 h-4 w-4 transition-transform group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                          </svg>
-                          <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title1}"></span>
-                        </div>
-                        <div
-                          class="absolute inset-0 bg-linear-to-r from-white/20 via-transparent to-white/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                        ></div>
-                        <div
-                          class="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                        ></div>
-                        <div
-                          class="absolute -inset-1 rounded-2xl bg-linear-to-r from-blue-400 to-purple-400 opacity-0 blur transition-opacity duration-500 group-hover:opacity-75"
-                        ></div>
-                      </a>
-                      <a
-                        class="title_buttons group transition-duration relative inline-flex w-auto transform items-center justify-center overflow-hidden rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-bold text-white shadow-lg backdrop-blur-md duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-white/20 hover:shadow-white/5 sm:rounded-2xl sm:text-base sm:shadow-xl sm:hover:-translate-y-2 md:text-lg"
-                        th:href="${theme.config.index_hero.hero_urls.hero_urls_items.url2}"
-                      >
-                        <div class="relative z-10 flex items-center sm:px-4 sm:py-2">
-                          <svg class="mr-1 h-4 w-4 transition-transform duration-300 group-hover:rotate-12 sm:mr-2 sm:h-5 sm:w-5" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                            ></path>
-                          </svg>
-                          <span th:text="${theme.config.index_hero.hero_urls.hero_urls_items.title2}"></span>
-                        </div>
-                        <div
-                          class="absolute inset-0 bg-linear-to-r from-white/10 via-transparent to-white/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                        ></div>
-                        <div
-                          class="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                        ></div>
-                        <div
-                          class="absolute -inset-1 rounded-2xl bg-linear-to-r from-white/20 to-white/10 opacity-0 blur transition-opacity duration-500 group-hover:opacity-50"
-                        ></div>
-                      </a>
-                    </div>
-                    <div class="flex items-center justify-center space-x-8 text-sm text-white/70" th:if="${theme.config.index_hero.hero_signs.hero_signs_enabled == true}">
-                      <div class="title_signs flex items-center" th:each="hero_signs_item : ${theme.config.index_hero.hero_signs.hero_signs_items.hero_signs_items}">
-                        <svg class="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                          <path
-                            clip-rule="evenodd"
-                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                            fill-rule="evenodd"
-                          ></path>
-                        </svg>
-                        <span th:text="${hero_signs_item.text}"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </th:block>
-          </div>
-        </div>
-      </div>
-      <div class="pointer-events-none fixed z-10 h-screen min-h-screen w-full bg-black/80 opacity-0 will-change-[opacity]" id="shade"></div>
-    </section>
-    <!-- Index Module -->
-    <section class="relative z-10 w-full bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 md:py-12 dark:bg-gray-900">
-      <!-- Site Statistics   -->
-      <div
-        class="mx-auto max-w-6xl px-4 md:py-24"
-        th:if="${theme.config.index_intro.intro.intro_enabled == true or theme.config.index_intro.website.website_enabled == true}"
-        th:classappend="${theme.config.index_hero.hero_enabled == false} ? 'pt-18' : ''"
-      >
-        <div class="mx-auto max-w-2xl lg:max-w-none">
-          <div class="text-center" th:if="${theme.config.index_intro.intro.intro_enabled == true}">
-            <h2 class="text-4xl font-semibold text-balance text-gray-900 sm:text-5xl dark:text-white/70" th:text="${theme.config.index_intro.intro.content_items.title}"></h2>
-            <p class="mt-8 text-justify text-lg/8 text-gray-600 xl:text-center dark:text-gray-300" th:text="${theme.config.index_intro.intro.content_items.subtitle}"></p>
-          </div>
-          <div
-            class="mt-8 grid grid-cols-2 gap-0.5 overflow-hidden rounded-2xl text-center sm:mt-16 lg:grid-cols-4"
-            th:if="${theme.config.index_intro.website.website_enabled == true}"
-            th:with="stats = ${siteStatsFinder.getStats()}"
-          >
-            <div class="flex flex-col items-center justify-center bg-gray-400/5 p-8 dark:bg-white/5" th:each="stat_item : ${theme.config.index_intro.website.type}">
-              <div class="text-sm/6 font-semibold text-gray-600 dark:text-gray-300" th:switch="${stat_item.type_items}">
-                <span th:case="'visit'" th:text="#{widget.profile.visitCount.label}"></span>
-                <span th:case="'upvote'" th:text="#{widget.profile.upvote.label}"></span>
-                <span th:case="'comment'" th:text="#{widget.profile.commentCount.label}"></span>
-                <span th:case="'post'" th:text="#{widget.profile.postCount.label}"></span>
-                <span th:case="'category'" th:text="#{widget.profile.categoryCount.label}"></span>
-                <span th:case="*" th:text="|${stat_item.subtitle}| ?: |#{widget.profile.otherCount.label}|"></span>
-              </div>
-              <p class="order-first text-3xl font-semibold tracking-tight text-gray-900 dark:text-white" th:switch="${stat_item.type_items}">
-                <span th:attr="data-target=${stats.visit}, data-use-commas=true" th:case="'visit'"></span>
-                <span th:attr="data-target=${stats.upvote}, data-use-commas=true" th:case="'upvote'"></span>
-                <span th:attr="data-target=${stats.comment}, data-use-commas=true" th:case="'comment'"></span>
-                <span th:attr="data-target=${stats.post}, data-use-commas=true" th:case="'post'"></span>
-                <span th:attr="data-target=${stats.category}, data-use-commas=true" th:case="'category'"></span>
-                <span th:attr="data-target=${stat_item.num ?: '0'}, data-use-commas=true" th:case="'commas'"></span>
-                <span th:attr="data-target=${stat_item.num ?: '0'}, data-use-percentage=true" th:case="'percentage'"></span>
-                <span th:attr="data-target=${stat_item.num ?: '0'}" th:case="*"></span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--  Blog Post   -->
-      <section class="pt-12 pb-4 sm:py-24 sm:pb-0 md:px-4">
-        <div class="mx-auto max-w-6xl">
-          <div class="mb-12 text-center">
-            <h2
-              class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-              th:text="|${theme.config.index_blog.blog.blog_title}| ?: |#{widget.index.module.newPosts.title}|"
-            ></h2>
-            <p class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400" th:text="|${theme.config.index_blog.blog.blog_subtitle}| ?: |#{widget.index.module.newPosts.subtitle}|"></p>
-          </div>
-          <ul class="grid grid-cols-1 gap-4" th:classappend="${theme.config.index_blog.blog.blog_enabled == 'one' ? 'lg:grid-cols-1 mx-auto max-w-6xl' : 'lg:grid-cols-2'}">
-            <th:block th:replace="~{modules/module :: postBlog(posts = ${posts.items}, displayType = 'allCategories', shortDate = false)}"></th:block>
-          </ul>
-          <th:block th:if="${posts.hasNext()}">
-            <div class="mt-8 text-center" id="load-more-container"></div>
-          </th:block>
-        </div>
-      </section>
-    </section>
-    <!-- other Module -->
-    <section class="absolute z-10 w-full space-y-12 bg-gray-100 px-2 pt-12 transition-colors duration-200 sm:px-8 md:px-12 dark:bg-gray-900">
-      <!-- Categories -->
-      <div class="mx-auto max-w-6xl px-4" th:if="${theme.config.index_other.category.category_enabled == true}">
-        <div class="mb-12 text-center">
-          <h2
-            class="mb-4 text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl dark:text-white"
-            th:text="|${theme.config.index_other.category.category_items.category_title}| ?: |#{widget.index.module.category.title}|"
-          ></h2>
-          <p
-            th:text="|${theme.config.index_other.category.category_items.category_subtitle}| ?: |#{widget.index.module.category.subtitle}|"
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-          ></p>
-        </div>
-        <ul class="grid grid-cols-3 gap-4 pb-12 xl:flex xl:flex-wrap xl:justify-center">
-          <li
-            class="overflow-hidden rounded-2xl border border-gray-100 shadow-lg hover:border-gray-100/60 xl:h-24 xl:w-36 dark:border-white/20"
-            th:each="category : ${categoryFinder.getByNames(theme.config.index_other.category.category_items.category_list)}"
-          >
-            <th:block th:with="colorClass = ${#annotations.getOrDefault(category, 'color', '')}, iconClass = ${#annotations.getOrDefault(category, 'font', '')}">
-              <div class="relative flex h-full flex-col items-center justify-center p-4" th:classappend="${#strings.isEmpty(colorClass) ? 'gradient-bg-1' : colorClass}">
-                <div class="absolute inset-0 bg-black opacity-30"></div>
-                <a class="flex flex-col items-center" th:href="@{${category.status.permalink}}">
-                  <div th:if="${not #strings.isEmpty(iconClass)}" th:utext="${iconClass}" class="relative z-10 mb-2 size-7.5 text-white"></div>
-                  <i th:unless="${not #strings.isEmpty(iconClass)}" class="fas fa-folder-open relative z-10 mb-2 text-3xl text-white"></i>
+<html th:replace="~{modules/layout :: html(title = ${site.title}, head = ~{::head}, content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
 
-                  <h3 class="relative z-10 text-center text-sm font-bold text-white" th:text="${category.spec.displayName}"></h3>
-                  <div class="border-opacity-40 absolute top-2 right-2 h-3 w-3 rounded-full border border-transparent bg-gray-100 dark:bg-gray-900"></div>
-                </a>
-              </div>
-            </th:block>
-          </li>
-        </ul>
-      </div>
-      <!--  tags  -->
-      <div class="mx-auto max-w-6xl py-12 sm:py-24" th:if="${theme.config.index_other.tags.tags_enabled == true}">
-        <div class="mb-12 text-center">
-          <h2
-            th:text="|${theme.config.index_other.tags.tags_items.tags_title}| ?: |#{widget.index.module.tag.title}|"
-            class="mb-4 text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl dark:text-white"
-          ></h2>
-          <p
-            class="mt-2 text-lg/8 text-gray-600 dark:text-gray-400"
-            th:text="|${theme.config.index_other.tags.tags_items.tags_subtitle}| ?: |#{widget.index.module.tag.subtitle}|"
-          ></p>
-        </div>
-        <div class="mb-8 rounded-2xl bg-gray-400/5 p-4 sm:px-10 sm:py-12 dark:bg-white/5">
-          <div class="tag-container overflow-hidden">
-            <li
-              class="mr-4 inline-block shrink-0 cursor-pointer rounded-2xl bg-(--tw-bg-color) px-4 py-2 font-medium"
-              th:each="tags : ${tagFinder.getByNames(theme.config.index_other.tags.tags_items.tags_list)}"
-              th:style="'--tw-bg-color:' + ${tags.spec.color} + 'B3'"
-            >
-              <a class="text-sm font-bold text-white" th:href="@{${tags.status.permalink}}" th:text="|${tags.spec.displayName}|"></a>
-            </li>
-          </div>
-        </div>
-      </div>
-      <div class="rounded-3xl bg-gray-400/5 py-16 sm:py-24 lg:py-32 dark:bg-white/5" th:if="${theme.config.index_other.subscribe.subscribe_enabled}">
-        <div class="mx-auto max-w-6xl px-6 lg:px-8">
-          <div
-            class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-center lg:max-w-none"
-            th:classappend="${theme.config.index_other.subscribe.subscribe_items.slogan_enabled} ? ' lg:grid-cols-2' : ''"
-          >
-            <div class="mx-auto max-w-xl space-y-2 text-left lg:max-w-lg">
-              <h2
-                class="text-center text-4xl font-semibold tracking-tight text-gray-900 dark:text-white"
-                th:text="|${theme.config.index_other.subscribe.subscribe_items.subscribe_title}| ?: |#{widget.index.module.subscribe.title}|"
-              ></h2>
-              <p
-                class="line-clamp-3 text-lg text-gray-600 dark:text-gray-300"
-                th:text="|${theme.config.index_other.subscribe.subscribe_items.subscribe_subtitle}|?:|#{widget.index.module.subscribe.subtitle}|"
-              ></p>
-              <follow-card show-title="false"></follow-card>
-            </div>
-            <ul
-              class="hidden grid-cols-1 items-center gap-x-4 gap-y-10 text-left sm:grid-cols-2 lg:grid"
-              th:if="${theme.config.index_other.subscribe.subscribe_items.slogan_enabled == true}"
-            >
-              <li
-                class="flex flex-col items-start"
-                th:each="subscribe_slogan : ${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
-                th:if="${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
-              >
-                <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:if="${not #strings.isEmpty(subscribe_slogan.icon.value)}">
-                  <i class="bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></i>
+  <th:block th:fragment="head">
+    <!-- 引入 FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局深色背景 */
+        body {
+            background-color: #0f172a !important; /* Slate 900 */
+            color: #e2e8f0 !important;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 滚动容器：实现整屏吸附 */
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* 单个全屏板块 */
+        .fullscreen-section {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px; /* 抵消导航栏 */
+            padding-bottom: 60px; /* 底部留白 */
+        }
+
+        /* 玻璃拟态 */
+        .glass-effect {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* 光晕动画 */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* 隐藏默认 Header */
+        header { display: none !important; }
+
+        /* 滚动条美化 */
+        ::-webkit-scrollbar { width: 0px; background: transparent; } /* 隐藏主滚动条以增强沉浸感 */
+
+        /* 终端滚动条 */
+        .terminal-scroll::-webkit-scrollbar { width: 6px; }
+        .terminal-scroll::-webkit-scrollbar-track { background: transparent; }
+        .terminal-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+
+        /* 移动端菜单动画 */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        #mobile-menu.hidden-menu {
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.visible-menu {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 进入动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 时间轴优化 */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            border-left: 2px solid rgba(59, 130, 246, 0.3);
+            padding-bottom: 3rem;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #3b82f6;
+            border: 4px solid #0f172a;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+        .timeline-content {
+            transition: all 0.3s ease;
+        }
+        .timeline-content:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* 自定义 Toast 提示 */
+        #toast-notification {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+            pointer-events: none;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        #toast-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* 下拉菜单样式 */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .dropdown-group:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            color: #cbd5e1;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    </style>
+  </th:block>
+
+  <th:block th:fragment="content">
+
+    <!-- 背景氛围光 (固定) -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[120px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-600/10 blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- 导航栏 (Fixed) -->
+    <nav class="w-full py-6 px-6 md:px-12 flex justify-between items-center glass-effect fixed top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="flex items-center gap-3">
+            <th:block th:with="customLogo=${theme.config.index_info.custom.custom_logo}, defaultLogo=${theme.config.index_info.default.logo ?: site.logo}">
+                <img th:if="${not #strings.isEmpty(customLogo)}" th:src="${customLogo}" alt="Logo" class="w-10 h-10 rounded-lg object-cover shadow-lg shadow-blue-500/30">
+                <img th:if="${#strings.isEmpty(customLogo) and not #strings.isEmpty(defaultLogo)}" th:src="${defaultLogo}" alt="Logo" class="w-10 h-10 rounded-lg object-cover shadow-lg shadow-blue-500/30">
+                <div th:if="${#strings.isEmpty(customLogo) and #strings.isEmpty(defaultLogo)}" class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
+                    <i class="fas fa-robot"></i>
                 </div>
-                <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
-                <p
-                  class="mt-2 line-clamp-3 text-base/7 leading-relaxed wrap-break-word text-gray-600 dark:text-gray-400"
-                  th:text="${subscribe_slogan.subtitle}"
-                  style="hyphens: auto"
-                ></p>
-              </li>
-            </ul>
-          </div>
+            </th:block>
+            <span class="text-xl font-bold tracking-tight text-white hidden md:block">Sivan's AI Space</span>
+            <span class="text-lg font-bold tracking-tight text-white md:hidden">Sivan AI</span>
         </div>
-      </div>
-      <th:block th:replace="~{modules/footer}" />
-    </section>
-    <script th:inline="javascript">
-      window.i18nPlaceholder = /*[[#{widget.index.module.subscribe.placeholder}]]*/ "";
-      window.i18nButtonText = /*[[#{widget.index.module.subscribe.button}]]*/ "";
-    </script>
+
+        <!-- PC 菜单 -->
+        <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400 items-center">
+            <a href="javascript:void(0)" onclick="handleHomeClick()" class="hover:text-white transition-colors">首页</a>
+            <a href="/archives" class="hover:text-white transition-colors">文章归档</a>
+            <a href="https://blog.csdn.net/weixin_62633072" target="_blank" class="hover:text-white transition-colors flex items-center gap-1">
+                技术博客 <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+
+            <!-- AI 工具箱下拉菜单 -->
+            <div class="relative dropdown-group py-2">
+                <button class="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors focus:outline-none">
+                    AI 工具箱 <i class="fas fa-chevron-down text-xs"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="https://chat.openai.com/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-robot w-6 text-green-400"></i> ChatGPT
+                    </a>
+                    <a href="https://claude.ai/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-brain w-6 text-orange-400"></i> Claude
+                    </a>
+                    <a href="https://kimi.moonshot.cn/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-moon w-6 text-blue-400"></i> Kimi
+                    </a>
+                    <a href="https://www.doubao.com/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-comment-dots w-6 text-purple-400"></i> 豆包
+                    </a>
+                    <a href="https://yiyan.baidu.com/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-dragon w-6 text-blue-500"></i> 文心一言
+                    </a>
+                    <a href="https://tongyi.aliyun.com/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-cloud w-6 text-indigo-400"></i> 通义千问
+                    </a>
+                    <a href="https://www.midjourney.com/" target="_blank" class="dropdown-item">
+                        <i class="fas fa-paint-brush w-6 text-pink-400"></i> Midjourney
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端菜单按钮 -->
+        <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-bars text-2xl"></i>
+        </button>
+    </nav>
+
+    <!-- 移动端下拉菜单 -->
+    <div id="mobile-menu" class="fixed top-[88px] left-0 w-full glass-effect border-t border-gray-700/50 z-40 hidden-menu md:hidden">
+        <div class="flex flex-col p-6 space-y-4 text-center">
+            <a href="javascript:void(0)" onclick="handleHomeClick();toggleMobileMenu()" class="text-gray-300 hover:text-white py-2 border-b border-gray-700/30">首页</a>
+            <a href="/archives" class="text-gray-300 hover:text-white py-2 border-b border-gray-700/30">文章归档</a>
+            <a href="https://blog.csdn.net/weixin_62633072" target="_blank" class="text-gray-300 hover:text-white py-2 border-b border-gray-700/30">
+                技术博客 (CSDN) <i class="fas fa-external-link-alt text-xs ml-1"></i>
+            </a>
+
+            <!-- 移动端 AI 工具箱 (折叠式) -->
+            <div class="py-2">
+                <div class="text-blue-400 font-bold mb-3">AI 工具箱</div>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="https://chat.openai.com/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">ChatGPT</a>
+                    <a href="https://claude.ai/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">Claude</a>
+                    <a href="https://kimi.moonshot.cn/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">Kimi</a>
+                    <a href="https://www.doubao.com/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">豆包</a>
+                    <a href="https://yiyan.baidu.com/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">文心一言</a>
+                    <a href="https://tongyi.aliyun.com/" target="_blank" class="bg-white/5 p-2 rounded-lg text-sm text-gray-300">通义千问</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示框 -->
+    <div id="toast-notification">
+        <i class="fas fa-check-circle mr-2"></i> 你已经在这个页面啦！
+    </div>
+
+    <!-- 滚动容器 -->
+    <div class="snap-container" id="main-scroll">
+
+        <!-- SECTION 1: Hero (AI 终端) -->
+        <section id="hero" class="fullscreen-section">
+            <div class="container mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center gap-16">
+                <!-- 左侧文案 -->
+                <div class="lg:w-1/2 space-y-8 z-10 pt-10 lg:pt-0 reveal active">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-wide uppercase shadow-lg shadow-blue-500/10">
+                        <span class="relative flex h-2 w-2 mr-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        Sivan's AI Home
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-white">
+                        欢迎来到 <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient">Sivan的 AI空间</span>
+                    </h1>
+
+                    <p class="text-lg text-gray-400 leading-relaxed max-w-xl">
+                        这里是 <strong>Sivan</strong> 的数字领地。
+                        <br>
+                        我是一名热衷于 <strong>Java 后端开发</strong> 与 <strong>AI 技术探索</strong> 的开发者。
+                        在这里，代码与灵感碰撞，构建未来的无限可能。
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <a href="/archives" class="px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-1 flex items-center gap-2">
+                            <i class="fas fa-book-open"></i> 浏览 AI 文章
+                        </a>
+                        <button onclick="replayDemo()" class="px-8 py-3.5 rounded-xl border border-gray-600 hover:border-gray-400 hover:bg-white/5 text-gray-300 hover:text-white transition-all font-semibold flex items-center gap-2">
+                            <i class="fas fa-terminal"></i> 唤醒 AI
+                        </button>
+                    </div>
+
+                    <!-- 技术栈图标 -->
+                    <div class="pt-8 border-t border-gray-800/50">
+                        <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-4">Core Technologies</p>
+                        <div class="flex gap-6 text-2xl text-gray-500">
+                            <i class="fab fa-java hover:text-red-500 transition-colors duration-300 cursor-pointer" title="Java"></i>
+                            <i class="fas fa-leaf hover:text-green-500 transition-colors duration-300 cursor-pointer" title="Spring Boot"></i>
+                            <i class="fab fa-docker hover:text-blue-500 transition-colors duration-300 cursor-pointer" title="Docker"></i>
+                            <i class="fas fa-brain hover:text-purple-500 transition-colors duration-300 cursor-pointer" title="AI / ML"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：AI 终端模拟 -->
+                <div class="lg:w-1/2 w-full z-10 reveal active" style="transition-delay: 0.2s;">
+                    <div class="glass-effect rounded-2xl overflow-hidden shadow-2xl border border-gray-700/50 transform transition-all hover:scale-[1.01] duration-500 bg-gray-900/80">
+                        <div class="bg-gray-950 px-5 py-4 flex items-center justify-between border-b border-gray-700/50">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono flex items-center gap-2">
+                                <i class="fas fa-shield-alt"></i> sivan_ai_core.sh
+                            </div>
+                        </div>
+                        <div class="p-6 h-[400px] overflow-y-auto font-mono text-sm bg-gray-900/50 relative terminal-scroll" id="terminal-content">
+                            <div id="chat-history" class="space-y-4"></div>
+                            <div class="flex items-center mt-4 hidden" id="typing-indicator">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce mr-1"></span>
+                                <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce mr-1" style="animation-delay: 0.1s"></span>
+                                <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-950 border-t border-gray-700/50 flex items-center gap-3">
+                            <span class="text-blue-400 font-bold">></span>
+                            <span class="text-gray-500 animate-pulse text-xs md:text-sm">AI is generating response...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 向下滚动提示 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500 cursor-pointer z-20" onclick="scrollToSection('ai-evolution')">
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors">
+                    <span class="text-xs uppercase tracking-widest">Scroll Down</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: AI Evolution (AI 发展历程) - 重新设计 -->
+        <section id="ai-evolution" class="fullscreen-section">
+            <div class="container mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">AI Evolution</h2>
+                    <p class="text-gray-400 text-lg">从图灵测试到生成式未来，见证智慧的觉醒</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal" style="transition-delay: 0.2s;">
+                    <!-- Card 1 -->
+                    <div class="glass-effect p-6 rounded-2xl border-t-4 border-blue-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-5xl font-bold text-blue-500/20 absolute top-4 right-4">1956</div>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">AI 的诞生</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">达特茅斯会议召开，"人工智能"这一概念正式诞生，标志着探索机器智慧的起点。</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-effect p-6 rounded-2xl border-t-4 border-purple-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-5xl font-bold text-purple-500/20 absolute top-4 right-4">2012</div>
+                        <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">深度学习爆发</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">AlexNet 在 ImageNet 竞赛中大获全胜，深度神经网络开始统治计算机视觉领域。</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-effect p-6 rounded-2xl border-t-4 border-pink-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-5xl font-bold text-pink-500/20 absolute top-4 right-4">2017</div>
+                        <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-xl mb-4">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Transformer 问世</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Google 提出 Transformer 架构，"Attention is All You Need"，为大语言模型奠定基石。</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="glass-effect p-6 rounded-2xl border-t-4 border-green-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-5xl font-bold text-green-500/20 absolute top-4 right-4">Now</div>
+                        <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-xl mb-4">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">生成式 AI 时代</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">ChatGPT 等模型展现出惊人的通用智能，AI 开始重塑代码、艺术与生产力。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 向下滚动提示 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500 cursor-pointer z-20" onclick="scrollToSection('work-history')">
+                <div class="flex flex-col items-center gap-2 hover:text-white transition-colors">
+                    <span class="text-xs uppercase tracking-widest">Scroll Down</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Work Experience (工作经历) -->
+        <section id="work-history" class="fullscreen-section">
+            <div class="container mx-auto px-6 md:px-12 h-full flex flex-col justify-center">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">My Journey</h2>
+                    <p class="text-gray-400 text-lg">Sivan 的代码征途与技术积淀</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal" style="transition-delay: 0.2s;">
+                    <!-- 经历卡片 1 -->
+                    <div class="glass-effect p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-l-4 border-blue-500">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-blue-900/30 flex items-center justify-center text-blue-400 text-2xl">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-mono border border-blue-500/20">2024 - Present</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">后端开发工程师</h3>
+                        <p class="text-blue-400 text-sm mb-6 font-medium">某知名互联网保险公司</p>
+                        <ul class="text-gray-400 text-sm space-y-3 list-disc list-inside leading-relaxed">
+                            <li>负责核心业务系统的后端开发与维护。</li>
+                            <li>参与微服务架构优化，提升系统稳定性。</li>
+                            <li>深入理解保险业务领域模型与技术实现。</li>
+                        </ul>
+                    </div>
+
+                    <!-- 经历卡片 2 -->
+                    <div class="glass-effect p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-l-4 border-purple-500">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-purple-900/30 flex items-center justify-center text-purple-400 text-2xl">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-mono border border-purple-500/20">2023.10 - 2024.03</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">后端开发 (实习)</h3>
+                        <p class="text-purple-400 text-sm mb-6 font-medium">某创新型科技公司</p>
+                        <ul class="text-gray-400 text-sm space-y-3 list-disc list-inside leading-relaxed">
+                            <li>负责聚合搜索模块的设计与实现。</li>
+                            <li>参与工程化基础设施的搭建与优化。</li>
+                            <li>协助团队提升开发效率与代码质量。</li>
+                        </ul>
+                    </div>
+
+                    <!-- 经历卡片 3: SivanCache (可点击) -->
+                    <a href="https://github.com/xiaoxinxing66/Sivan_Cache" target="_blank" class="glass-effect p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 border-l-4 border-green-500 group cursor-pointer block">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-green-900/30 flex items-center justify-center text-green-400 text-2xl group-hover:bg-green-900/50 transition-colors">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-mono border border-green-500/20">Open Source</span>
+                                <i class="fas fa-external-link-alt text-gray-500 text-xs group-hover:text-green-400 transition-colors"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 group-hover:text-green-400 transition-colors">SivanCache</h3>
+                        <p class="text-green-400 text-sm mb-6 font-medium">轻量级分布式缓存框架</p>
+                        <ul class="text-gray-400 text-sm space-y-3 list-disc list-inside leading-relaxed group-hover:text-gray-300 transition-colors">
+                            <li>基于 Java NIO 与 Netty 实现的高性能中间件。</li>
+                            <li>深入理解 Redis 核心设计思想与网络模型。</li>
+                            <li>独立开发，GitHub 收获 100+ Stars。</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 脚本逻辑 -->
     <script>
-      initFollowCard();
+        // 1. 移动端菜单控制
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = mobileMenuBtn.querySelector('i');
+
+        function toggleMobileMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden-menu');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden-menu');
+                mobileMenu.classList.add('visible-menu');
+                mobileIcon.classList.remove('fa-bars');
+                mobileIcon.classList.add('fa-times');
+            } else {
+                mobileMenu.classList.add('hidden-menu');
+                mobileMenu.classList.remove('visible-menu');
+                mobileIcon.classList.add('fa-bars');
+                mobileIcon.classList.remove('fa-times');
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // 2. 平滑滚动控制
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 3. 首页点击逻辑 (Toast 提示)
+        function handleHomeClick() {
+            // 检查当前 URL 是否是首页 (根路径或 index.html)
+            const path = window.location.pathname;
+            if (path === '/' || path === '/index.html') {
+                // 如果在首页，滚动到顶部并显示 Toast
+                scrollToSection('hero');
+                showToast();
+            } else {
+                // 如果不在首页，跳转到首页
+                window.location.href = '/';
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast-notification');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 4. AI 终端打字机逻辑
+        const chatHistory = document.getElementById('chat-history');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const terminalContent = document.getElementById('terminal-content');
+
+        const dialogues = [
+            { role: 'user', text: '你好，这里是哪里？' },
+            { role: 'ai', text: '欢迎来到 **Sivan的 AI空间**。这里是 Sivan 的数字大脑延伸，专注于 **AI 技术探索** 与 **未来思考**。' },
+            { role: 'user', text: 'Sivan 是谁？' },
+            { role: 'ai', text: 'Sivan 是一名 **Java 后端开发者**，也是一名 AI 狂热信徒。他在这里记录灵感，在 CSDN 沉淀技术。' },
+            { role: 'user', text: '这里有什么？' },
+            { role: 'ai', text: '这里是 Sivan 的 **数字后花园**。你可以看到他对 AI 发展的深度复盘，以及各种奇思妙想的实验。至于那些 ~~枯燥的~~ 硬核代码，请移步右上角的 **技术博客**。' },
+            { role: 'user', text: '我想和你聊天。' },
+            { role: 'ai', text: '我现在还只是一个预设的脚本... 但 Sivan 正在努力让我 **真正苏醒**中~。你可以先点击左侧的** 唤醒 AI **，就能与真正的我对话了。更多功能敬请期待！🤖' }
+        ];
+
+        let isPlaying = false;
+
+        async function typeText(element, text, speed = 30) {
+            const parts = text.split(/(\*\*.*?\*\*|~~.*?~~)/g);
+            for (const part of parts) {
+                if (part.startsWith('**') && part.endsWith('**')) {
+                    const boldSpan = document.createElement('span');
+                    boldSpan.className = 'text-blue-400 font-bold';
+                    boldSpan.textContent = part.slice(2, -2);
+                    element.appendChild(boldSpan);
+                } else if (part.startsWith('~~') && part.endsWith('~~')) {
+                    const delSpan = document.createElement('del');
+                    delSpan.className = 'text-gray-500 decoration-2';
+                    delSpan.textContent = part.slice(2, -2);
+                    element.appendChild(delSpan);
+                } else {
+                    element.appendChild(document.createTextNode(part));
+                }
+                await new Promise(r => setTimeout(r, speed));
+            }
+        }
+
+        async function startAIDemo() {
+            if (isPlaying) return;
+            isPlaying = true;
+            chatHistory.innerHTML = '';
+
+            for (const line of dialogues) {
+                const msgWrapper = document.createElement('div');
+                msgWrapper.className = `flex w-full ${line.role === 'user' ? 'justify-end' : 'justify-start'}`;
+                const bubble = document.createElement('div');
+                bubble.className = `max-w-[85%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-md ${
+                    line.role === 'user'
+                    ? 'bg-blue-600 text-white rounded-tr-none'
+                    : 'bg-gray-800 text-gray-200 rounded-tl-none border border-gray-700'
+                }`;
+
+                if (line.role === 'ai') {
+                    const aiHeader = document.createElement('div');
+                    aiHeader.className = 'flex items-center gap-2 mb-1 text-xs text-blue-400 font-bold';
+                    aiHeader.innerHTML = '<i class="fas fa-robot"></i> Sivan AI';
+                    bubble.appendChild(aiHeader);
+                }
+
+                msgWrapper.appendChild(bubble);
+                chatHistory.appendChild(msgWrapper);
+                terminalContent.scrollTo({ top: terminalContent.scrollHeight, behavior: 'smooth' });
+
+                if (line.role === 'ai') {
+                    typingIndicator.classList.remove('hidden');
+                    terminalContent.scrollTo({ top: terminalContent.scrollHeight, behavior: 'smooth' });
+                    await new Promise(r => setTimeout(r, 600 + Math.random() * 500));
+                    typingIndicator.classList.add('hidden');
+                    await typeText(bubble, line.text);
+                } else {
+                    bubble.textContent = line.text;
+                    await new Promise(r => setTimeout(r, 500));
+                }
+                await new Promise(r => setTimeout(r, 1000));
+            }
+            isPlaying = false;
+        }
+
+        function replayDemo() {
+            startAIDemo();
+        }
+
+        // 4. 滚动监听动画 (针对 snap 容器)
+        function initScrollObserver() {
+            const container = document.getElementById('main-scroll');
+            const sections = document.querySelectorAll('.fullscreen-section');
+
+            // 初始检查
+            const checkVisibility = () => {
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    const revealElements = section.querySelectorAll('.reveal');
+
+                    // 如果 section 在视口中心附近
+                    if (rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4) {
+                        revealElements.forEach(el => el.classList.add('active'));
+                    }
+                });
+            };
+
+            container.addEventListener('scroll', checkVisibility);
+            checkVisibility(); // 初始执行
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(startAIDemo, 800);
+            initScrollObserver();
+        });
     </script>
   </th:block>
 </html>
