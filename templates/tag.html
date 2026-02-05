@@ -85,8 +85,8 @@
                     >
                       <i class="fas fa-hashtag text-sm text-white"></i>
                     </div>
-                    <div class="flex-1 shrink-0">
-                      <p class="font-semibold text-gray-900 dark:text-white" th:text="${tag.spec.displayName}"></p>
+                    <div class="min-w-0 flex-1">
+                      <p class="break-all font-semibold text-gray-900 dark:text-white" th:text="${tag.spec.displayName}"></p>
                       <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${tag.status?.visiblePostCount ?: 0} + ' ' + #{page.archives.title.post}"></span>
                     </div>
                     <div class="hidden opacity-0 transition-opacity group-hover:opacity-100 xl:block">
