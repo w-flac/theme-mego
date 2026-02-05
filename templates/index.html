@@ -254,7 +254,7 @@
               <follow-card show-title="false"></follow-card>
             </div>
             <ul
-              class="hidden grid-cols-1 items-center gap-x-4 gap-y-10 text-left sm:grid-cols-2 lg:grid"
+              class="hidden grid-cols-1 items-start gap-x-4 gap-y-10 text-left sm:grid-cols-2 lg:grid"
               th:if="${theme.config.index_other.subscribe.subscribe_items.slogan_enabled == true}"
             >
               <li
@@ -263,7 +263,7 @@
                 th:if="${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
               >
                 <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:if="${not #strings.isEmpty(subscribe_slogan.icon.value)}">
-                  <i class="bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></i>
+                  <div class="size-7.5 bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></div>
                 </div>
                 <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
                 <p
