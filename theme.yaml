@@ -16,7 +16,7 @@ spec:
   issues: https://github.com/w-flac/theme-mego/issues
   settingName: "theme-mego-setting"
   configMapName: "theme-mego-configMap"
-  version: 2.4.1
+  version: 2.4.2
   requires: ">=2.22.4"
   license:
     - name: "GPL-3.0"
