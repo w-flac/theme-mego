@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"vite\" \"pnpm run tailwind:watch\"",
-    "tailwind:watch": "pnpm dlx @tailwindcss/cli -i ./src/input.css -o ./templates/assets/css/style.css --watch",
-    "tailwind:build": "pnpm dlx @tailwindcss/cli -i ./src/input.css -o ./templates/assets/css/style.css --minify",
+    "tailwind:watch": "tailwindcss -i ./src/input.css -o ./templates/assets/css/style.css --watch",
+    "tailwind:build": "tailwindcss -i ./src/input.css -o ./templates/assets/css/style.css --minify",
     "build": "pnpm run tailwind:build && vite build && theme-package"
   },
   "private": true,
