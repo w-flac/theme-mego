@@ -541,6 +541,7 @@ spec:
                       id: icon
                       key: icon
                       label: 社交图标
+                      help: 为适配主题图标,请将图标大小设置为100%
                       format: svg
                     - $formkit: text
                       name: title
@@ -589,6 +590,7 @@ spec:
                   name: footer_icon
                   id: footer_icon
                   key: footer_icon
+                  help: 为适配主题图标,请将图标大小设置为100%
                   label: 图标
                   format: svg
                 - $formkit: text
@@ -1015,6 +1017,7 @@ spec:
                   id: s_icon
                   key: s_icon
                   label: 技能图标
+                  help: 为适配主题图标,请将图标大小设置为100%
                   format: svg
                 - $formkit: text
                   name: s_title
@@ -1092,6 +1095,7 @@ spec:
                   id: c_icon
                   key: c_icon
                   label: 图标
+                  help: 为适配主题图标,请将图标大小设置为100%
                   format: svg
                 - $formkit: text
                   name: c_type
