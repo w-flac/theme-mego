@@ -118,3 +118,99 @@
     </div>
   </li>
 </th:block>
+
+<th:block th:fragment="pagination(pagination)">
+  <nav class="mt-8 flex items-center justify-center gap-6">
+    <a
+      th:href="${pagination.hasPrevious() ? pagination.prevUrl : 'javascript:void(0)'}"
+      th:classappend="${!pagination.hasPrevious() ? 'opacity-50 cursor-not-allowed' : ''}"
+      class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+    >
+      <i class="fas fa-chevron-left mr-2"></i>
+      <span th:text="#{common.previous}"></span>
+    </a>
+    <div class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-3 shadow-sm dark:bg-white/10">
+      <span class="text-sm font-bold text-gray-900 dark:text-white" th:text="${pagination.page}"></span>
+      <span class="text-xs text-gray-400 dark:text-gray-500">/</span>
+      <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${pagination.totalPages}"></span>
+    </div>
+    <a
+      th:href="${pagination.hasNext() ? pagination.nextUrl : 'javascript:void(0)'}"
+      th:classappend="${!pagination.hasNext() ? 'opacity-50 cursor-not-allowed' : ''}"
+      class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
+    >
+      <span th:text="#{common.next}"></span>
+      <i class="fas fa-chevron-right ml-2"></i>
+    </a>
+  </nav>
+</th:block>
+
+<th:block th:fragment="categoryCard(cat)">
+  <li class="group space-y-3 overflow-hidden rounded-2xl bg-gray-400/5 p-4 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-2 dark:bg-white/5">
+    <div class="flex items-center justify-between">
+      <div th:with="fontIcon=${#annotations.getOrDefault(cat, 'font', '')},colorClass = ${#annotations.getOrDefault(cat, 'color', '')}" class="flex items-center">
+        <div th:if="${not #strings.isEmpty(fontIcon)}" th:utext="${fontIcon}" class="size-4"></div>
+        <i
+          th:if="${#strings.isEmpty(fontIcon)}"
+          class="fas fa-folder-open"
+          th:classappend="${not #strings.isEmpty(colorClass) ? colorClass : 'text-gray-500'}"
+          th:style="${not #strings.isEmpty(colorClass) ? 'background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;' : ''}"
+        ></i>
+        <span class="ml-1 text-sm font-medium" th:text="${cat.spec.displayName}"></span>
+      </div>
+      <div class="flex items-center space-x-0.5 text-xs text-gray-500 dark:text-gray-400">
+        <i class="fas fa-file-alt text-gray-400 dark:text-gray-500"></i>
+        <span th:text="${cat.status?.visiblePostCount ?: 0} + ' ' + #{page.archives.title.post}"></span>
+      </div>
+    </div>
+    <p class="line-clamp-1 text-sm text-gray-500" th:if="${!#strings.isEmpty(cat.spec.description)}" th:text="${cat.spec.description}"></p>
+    <p class="line-clamp-1 text-sm text-gray-500" th:unless="${!#strings.isEmpty(cat.spec.description)}" th:text="#{page.categories.other}"></p>
+    <div class="rounded-md bg-gray-50/80 p-2 dark:bg-white/5" th:with="posts = ${postFinder.listByCategory(1,1,'__${cat.metadata.name}__')}">
+      <dl class="text-gray-500 dark:text-gray-400" th:each="post : ${posts.items}" th:if="${postStat.index == 0}">
+        <dt class="flex items-center space-x-0.5 text-xs">
+          <i class="fas fa-clock"></i>
+          <span
+            class="text-xs"
+            th:if="${#locale.language == 'zh'}"
+            th:text="#{page.archives.date_zh(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MM')},${#dates.format(post.spec.publishTime,'yy')})}"
+          ></span>
+          <span
+            class="text-xs"
+            th:if="${#locale.language != 'zh'}"
+            th:text="#{page.archives.date(${#dates.format(post.spec.publishTime,'dd')},${#dates.format(post.spec.publishTime,'MMM')},${#dates.format(post.spec.publishTime,'yyyy')})}"
+          ></span>
+        </dt>
+        <dd class="text-xs">
+          <a
+            class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
+            th:href="@{${cat.status.permalink}}"
+          >
+            <span class="text-sm font-medium" th:text="${post.spec.title}"></span>
+            <div>
+              <span th:text="#{page.categories.morePosts}"></span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+        </dd>
+      </dl>
+      <div class="text-xs text-gray-500 dark:text-gray-400" th:if="${#lists.isEmpty(posts.items)}">
+        <dt class="flex items-center space-x-0.5 text-xs">
+          <i class="fas fa-clock"></i>
+          <span class="text-xs" th:text="#{page.categories.empty}"></span>
+        </dt>
+        <dd class="text-xs">
+          <a
+            class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
+            th:href="@{${cat.status.permalink}}"
+          >
+            <span class="text-sm font-medium" th:text="#{page.categories.null}"></span>
+            <div>
+              <span th:text="#{page.categories.morePosts}"></span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </a>
+        </dd>
+      </div>
+    </div>
+  </li>
+</th:block>
