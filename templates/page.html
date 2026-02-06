@@ -13,77 +13,7 @@
           </div>
         </div>
         <aside class="sticky top-24 hidden h-max w-full xl:col-span-1 xl:inline-block" th:if="${theme.config.index_info.info_setting.page_aside != true}">
-          <div class="mb-6 rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5">
-            <div class="mb-4">
-              <div class="flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                <i class="fas fa-circle-info mr-2 text-blue-600 dark:text-white"></i>
-                <span th:text="#{fragment.postWidget.overview}"></span>
-              </div>
-            </div>
-            <ul class="grid grid-cols-3 gap-2 text-center">
-              <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
-                <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${singlePage.stats?.visit ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.read}"></p>
-              </li>
-              <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
-                <span class="text-base font-bold text-gray-700 dark:text-gray-300" th:text="${singlePage.stats?.comment ?:0}"></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.comment}"></p>
-              </li>
-              <li class="rounded-lg border border-gray-200/80 bg-gray-50/80 p-2 dark:border-transparent dark:bg-white/5">
-                <span
-                  class="sidebar-upvote-count text-base font-bold text-gray-700 dark:text-gray-300"
-                  th:attr="data-upvote-sidebar-name=${singlePage.metadata.name}"
-                  th:text="${singlePage.stats?.upvote ?:0}"
-                ></span>
-                <p class="text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.upvote}"></p>
-              </li>
-            </ul>
-          </div>
-          <div class="rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5" id="tocbot">
-            <div class="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-              <i class="fas fa-list-ul mr-2 text-blue-600 dark:text-white"></i>
-              <span th:text="#{page.post.toc}"></span>
-            </div>
-            <div class="toc max-h-120 overflow-x-hidden overflow-y-auto scroll-smooth text-sm"></div>
-          </div>
-          <div class="mt-6 rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5">
-            <div
-              class="upvote-btn group w-full rounded-lg bg-white/50 p-3 text-left transition-all duration-300 hover:scale-105 hover:bg-white/80 dark:border-gray-600/50 dark:bg-white/5 dark:hover:bg-gray-800/80"
-              th:attr="data-article-name=${singlePage.metadata.name}"
-            >
-              <div class="flex items-center space-x-3">
-                <div
-                  class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 transition-colors group-hover:bg-red-50 dark:bg-gray-700 dark:group-hover:bg-red-900/30"
-                >
-                  <i class="fas fa-heart text-gray-400 transition-colors group-hover:text-red-400"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-900 dark:text-white">
-                    <span th:attr="data-upvote-post-name=${singlePage.metadata.name}" th:text="|${singlePage.stats?.upvote ?:0}| + |#{fragment.postWidget.likes.title}|"></span>
-                  </p>
-                  <p class="upvote-message text-xs text-gray-500 dark:text-gray-400" th:text="#{fragment.postWidget.likes.subtitle1}"></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <th:block th:if="${theme.config.donate.p_enabled}">
-            <div class="mt-6 rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5">
-              <button
-                id="showDonateBtn"
-                class="group w-full rounded-lg bg-white/50 p-3 text-left transition-all duration-300 hover:scale-105 hover:bg-white/80 dark:border-gray-600/50 dark:bg-white/5 dark:hover:bg-gray-800/80"
-              >
-                <div class="flex items-center space-x-3">
-                  <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 dark:bg-green-400">
-                    <i class="fas fa-qrcode text-white"></i>
-                  </div>
-                  <div class="min-w-0 flex-1">
-                    <p class="text-sm font-semibold text-gray-900 dark:text-white" th:text="${theme.config.donate.info_zz.p_aside.a_title}"></p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400" th:text="${theme.config.donate.info_zz.p_aside.a_subtitle}"></p>
-                  </div>
-                </div>
-              </button>
-            </div>
-          </th:block>
+          <th:block th:replace="~{modules/sidebar :: sidebar(article=${singlePage}, tocMaxHeight='max-h-120')}" />
         </aside>
       </div>
     </div>
