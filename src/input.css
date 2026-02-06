@@ -84,6 +84,21 @@
     }
 }
 
+@utility section-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    &::before,
+    &::after {
+        content: "";
+        @apply h-px flex-1 bg-linear-to-r from-transparent via-slate-300 to-transparent;
+    }
+}
+
+@utility page-icon {
+    @apply inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16;
+}
+
 @utility sidebar-card {
     @apply rounded-lg border border-gray-200 bg-gray-400/5 p-4 backdrop-blur-sm dark:border-white/20 dark:bg-white/5;
 }
