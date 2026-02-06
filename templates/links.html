@@ -2,25 +2,7 @@
 <html th:replace="~{modules/layout :: html(title = |#{page.links.title} - ${site.title}|, head = null,content = ~{::content})}" xmlns:th="https://www.thymeleaf.org">
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
-    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
-      <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
-        <div class="flex flex-col items-center justify-center space-y-4">
-          <div class="page-icon">
-            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/links.svg}" />
-          </div>
-          <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
-            <h1
-              class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70"
-              th:text="|${paSetting != null and paSetting.pl_enabled == true and paSetting.pl_title != null and paSetting.pl_title != ''}| ? |${paSetting.pl_title}| : |#{page.links.title}|"
-            ></h1>
-            <p
-              class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300"
-              th:text="|${paSetting != null and paSetting.pl_enabled == true and paSetting.pl_subtitle != null and paSetting.pl_subtitle != ''}| ? |${paSetting.pl_subtitle}| : |#{page.links.subtitle}|"
-            ></p>
-          </th:block>
-        </div>
-      </div>
-    </div>
+    <th:block th:replace="~{modules/module :: pageHeader(prefix='pl', pageKey='links', iconClass=null, iconSrc=@{/assets/images/links.svg}, iconAlt='links')}" />
     <section class="mx-auto max-w-6xl px-4 py-8 sm:px-0">
       <th:block th:each="group,iterStat : ${groups}">
         <div class="mb-6">
