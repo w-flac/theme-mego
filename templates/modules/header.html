@@ -113,7 +113,7 @@
                 <a
                   class="flex flex-auto items-center gap-1 overflow-hidden rounded-lg p-2 px-4 hover:bg-gray-100 dark:hover:bg-white/5"
                   sec:authorize="isAnonymous()"
-                  href="/signup"
+                  th:href="@{/signup}"
                   onclick="this.href = '/signup?redirect_uri=' + encodeURIComponent(window.location.href)"
                 >
                   <i class="fa-solid fa-user-plus ml-2"></i>
@@ -124,7 +124,7 @@
                 <a
                   class="flex flex-auto items-center gap-1 overflow-hidden rounded-lg p-2 px-4 hover:bg-gray-100 dark:hover:bg-white/5"
                   sec:authorize="isAnonymous()"
-                  href="/login"
+                  th:href="@{/login}"
                   onclick="this.href = '/login?redirect_uri=' + encodeURIComponent(window.location.href)"
                 >
                   <i class="fa-solid fa-right-from-bracket ml-2"></i>
@@ -135,7 +135,7 @@
                 <a
                   class="flex flex-auto items-center gap-1 overflow-hidden rounded-lg p-2 px-4 hover:bg-gray-100 dark:hover:bg-white/5"
                   sec:authorize="isAuthenticated()"
-                  href="/uc"
+                  th:href="@{/uc}"
                 >
                   <i class="fa-solid fa-gear ml-2 scale-x-[-1]"></i>
                   <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.profile}"></span>
@@ -145,7 +145,7 @@
                 <a
                   class="flex flex-auto items-center gap-1 overflow-hidden rounded-lg p-2 px-4 hover:bg-gray-100 dark:hover:bg-white/5"
                   sec:authorize="isAuthenticated()"
-                  href="/logout"
+                  th:href="@{/logout}"
                 >
                   <i class="fa-solid fa-right-from-bracket ml-2 scale-x-[-1]"></i>
                   <span class="block overflow-hidden text-gray-900 dark:text-white/70" th:text="#{fragment.header.user.logout}"></span>
