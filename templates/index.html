@@ -222,7 +222,7 @@
           ></p>
         </div>
         <div class="mb-8 rounded-2xl bg-gray-400/5 p-4 sm:px-10 sm:py-12 dark:bg-white/5">
-          <div class="tag-container overflow-hidden">
+          <ul class="tag-container overflow-hidden">
             <li
               class="mr-4 inline-block shrink-0 cursor-pointer rounded-2xl bg-(--tw-bg-color) px-4 py-2 font-medium"
               th:each="tags : ${tagFinder.getByNames(theme.config.index_other.tags.tags_items.tags_list)}"
@@ -230,7 +230,7 @@
             >
               <a class="text-sm font-bold text-white" th:href="@{${tags.status.permalink}}" th:text="|${tags.spec.displayName}|"></a>
             </li>
-          </div>
+          </ul>
         </div>
       </div>
       <div class="rounded-3xl bg-gray-400/5 py-16 sm:py-24 lg:py-32 dark:bg-white/5" th:if="${theme.config.index_other.subscribe.subscribe_enabled}">
@@ -260,7 +260,7 @@
                 th:if="${theme.config.index_other.subscribe.subscribe_items.subscribe_slogan}"
               >
                 <div class="rounded-md bg-white/50 p-2 ring-1 ring-gray-200 dark:bg-white/5 dark:ring-white/5" th:if="${not #strings.isEmpty(subscribe_slogan.icon.value)}">
-                  <div class="size-7.5 bg-gray-600 dark:bg-white" th:utext="${subscribe_slogan.icon.value}"></div>
+                  <div class="size-7.5 text-gray-600 dark:text-white" th:utext="${subscribe_slogan.icon.value}"></div>
                 </div>
                 <span class="mt-4 text-base font-semibold text-gray-900 dark:text-white" th:text="${subscribe_slogan.title}"></span>
                 <p
