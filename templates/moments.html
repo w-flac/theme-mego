@@ -49,29 +49,7 @@
           <th:block th:replace="~{modules/moment-list :: momentCard(${moment})}" />
         </th:block>
       </ul>
-      <nav th:if="${moments.nextUrl}" class="mt-8 flex items-center justify-center gap-6">
-        <a
-          th:href="${moments.hasPrevious() ? moments.prevUrl : 'javascript:void(0)'}"
-          th:classappend="${!moments.hasPrevious() ? 'opacity-50 cursor-not-allowed' : ''}"
-          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
-        >
-          <i class="fas fa-chevron-left mr-2"></i>
-          <span th:text="#{common.previous}"></span>
-        </a>
-        <div class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-3 shadow-sm dark:bg-white/10">
-          <span class="text-sm font-bold text-gray-900 dark:text-white" th:text="${moments.page}"></span>
-          <span class="text-xs text-gray-400 dark:text-gray-500">/</span>
-          <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${moments.totalPages}"></span>
-        </div>
-        <a
-          th:href="${moments.hasNext() ? moments.nextUrl : 'javascript:void(0)'}"
-          th:classappend="${!moments.hasNext() ? 'opacity-50 cursor-not-allowed' : ''}"
-          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
-        >
-          <span th:text="#{common.next}"></span>
-          <i class="fas fa-chevron-right ml-2"></i>
-        </a>
-      </nav>
+      <th:block th:if="${moments.nextUrl}" th:replace="~{modules/module :: pagination(pagination=${moments})}" />
     </section>
     <th:block th:replace="~{modules/shareModal}" />
     <th:block th:replace="~{modules/footer}" />

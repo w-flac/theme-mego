@@ -75,29 +75,7 @@
         <div class="mt-8 text-center" id="load-more-container"></div>
         <div class="h-20" id="scroll-trigger"></div>
       </th:block>
-      <nav th:if="${!#lists.isEmpty(param.group)}" class="mt-8 flex items-center justify-center gap-6">
-        <a
-          th:href="${photos.hasPrevious() ? photos.prevUrl : 'javascript:void(0)'}"
-          th:classappend="${!photos.hasPrevious() ? 'opacity-50 cursor-not-allowed' : ''}"
-          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
-        >
-          <i class="fas fa-chevron-left mr-2"></i>
-          <span th:text="#{common.previous}"></span>
-        </a>
-        <div class="inline-flex items-center gap-1 rounded-xl bg-white px-4 py-3 shadow-sm dark:bg-white/10">
-          <span class="text-sm font-bold text-gray-900 dark:text-white" th:text="${photos.page}"></span>
-          <span class="text-xs text-gray-400 dark:text-gray-500">/</span>
-          <span class="text-sm text-gray-500 dark:text-gray-400" th:text="${photos.totalPages}"></span>
-        </div>
-        <a
-          th:href="${photos.hasNext() ? photos.nextUrl : 'javascript:void(0)'}"
-          th:classappend="${!photos.hasNext() ? 'opacity-50 cursor-not-allowed' : ''}"
-          class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm transition-all dark:bg-white/10 dark:text-white/70"
-        >
-          <span th:text="#{common.next}"></span>
-          <i class="fas fa-chevron-right ml-2"></i>
-        </a>
-      </nav>
+      <th:block th:if="${!#lists.isEmpty(param.group)}" th:replace="~{modules/module :: pagination(pagination=${photos})}" />
     </section>
     <th:block th:replace="~{modules/footer}" />
     <script th:inline="javascript">
