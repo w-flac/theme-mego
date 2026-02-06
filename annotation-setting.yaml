@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: AnnotationSetting
 metadata:
-  generateName: annotation-setting-
+  name: mego-annotation-setting-categorySetting
 spec:
   targetRef:
     group: "content.halo.run"
@@ -51,6 +51,7 @@ spec:
       id: "font"
       key: "font"
       label: "分类图标"
+      help: 为适配主题图标,请将图标大小设置为100%
       format: svg
       value-only: true
 
@@ -58,7 +59,7 @@ spec:
 apiVersion: v1alpha1
 kind: AnnotationSetting
 metadata:
-  generateName: annotation-setting-
+  name: mego-annotation-setting-menuSetting
 spec:
   targetRef:
     group: ""
@@ -70,4 +71,5 @@ spec:
       key: "MenuFont"
       label: "图标SVG"
       format: svg
+      help: 为适配主题图标,请将图标大小设置为100%
       value-only: true
