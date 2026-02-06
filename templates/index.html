@@ -198,14 +198,11 @@
             th:each="category : ${categoryFinder.getByNames(theme.config.index_other.category.category_items.category_list)}"
           >
             <th:block th:with="colorClass = ${#annotations.getOrDefault(category, 'color', '')}, iconClass = ${#annotations.getOrDefault(category, 'font', '')}">
-              <div class="relative flex h-full flex-col items-center justify-center p-4" th:classappend="${#strings.isEmpty(colorClass) ? 'gradient-bg-1' : colorClass}">
-                <div class="absolute inset-0 bg-black opacity-30"></div>
+              <div class="category-card flex h-full flex-col items-center justify-center p-4" th:classappend="${#strings.isEmpty(colorClass) ? 'gradient-bg-1' : colorClass}">
                 <a class="flex flex-col items-center" th:href="@{${category.status.permalink}}">
                   <div th:if="${not #strings.isEmpty(iconClass)}" th:utext="${iconClass}" class="relative z-10 mb-2 size-7.5 text-white"></div>
                   <i th:unless="${not #strings.isEmpty(iconClass)}" class="fas fa-folder-open relative z-10 mb-2 text-3xl text-white"></i>
-
                   <h3 class="relative z-10 text-center text-sm font-bold text-white" th:text="${category.spec.displayName}"></h3>
-                  <div class="border-opacity-40 absolute top-2 right-2 h-3 w-3 rounded-full border border-transparent bg-gray-100 dark:bg-gray-900"></div>
                 </a>
               </div>
             </th:block>
