@@ -24,7 +24,7 @@
     <p>
       &copy;
       <span th:text=" ${#dates.format(new java.util.Date().getTime(), 'yyyy' )}"></span>
-      <a href="/" th:text="${theme.config.index.site.title ?: site.title}"></a>
+      <a th:href="@{/}" th:text="${theme.config.index.site.title ?: site.title}"></a>
       . All Rights Reserved
       <br />
     </p>
