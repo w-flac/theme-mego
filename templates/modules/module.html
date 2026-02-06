@@ -101,16 +101,16 @@
                   <span th:text="|${post.stats?.upvote ?:0}|"></span>
                 </div>
               </div>
-              <button class="cursor-pointer p-2 text-xs font-medium text-white transition-colors hover:text-blue-300 md:text-sm">
+              <div class="p-2 text-xs font-medium text-white md:text-sm">
                 <a
                   aria-label="read"
-                  class="group inline-flex items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:shadow-lg md:text-sm"
+                  class="group inline-flex cursor-pointer items-center space-x-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30 hover:text-blue-300 hover:shadow-lg md:text-sm"
                   th:href="@{${post.status.permalink}}"
                 >
                   <span th:text="#{widget.index.module.readMore}"></span>
                   <i class="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-1"></i>
                 </a>
-              </button>
+              </div>
             </div>
           </a>
         </div>
@@ -213,4 +213,27 @@
       </div>
     </div>
   </li>
+</th:block>
+
+<th:block th:fragment="pageHeader(prefix, pageKey, iconClass, iconSrc, iconAlt)">
+  <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
+    <div class="mx-auto max-w-3xl">
+      <div class="flex flex-col items-center justify-center space-y-4">
+        <div class="page-icon">
+          <i th:if="${iconClass}" th:class="${iconClass}"></i>
+          <img th:unless="${iconClass}" class="h-full w-full rounded-xl bg-cover md:rounded-2xl" th:alt="${iconAlt}" th:src="${iconSrc}" />
+        </div>
+        <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
+          <h1
+            class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70"
+            th:text="|${paSetting != null and paSetting.__${prefix}___enabled == true and paSetting.__${prefix}___title != null and paSetting.__${prefix}___title != ''}| ? |${paSetting.__${prefix}___title}| : |#{page.__${pageKey}__.title}|"
+          ></h1>
+          <p
+            class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300"
+            th:text="|${paSetting != null and paSetting.__${prefix}___enabled == true and paSetting.__${prefix}___subtitle != null and paSetting.__${prefix}___subtitle != ''}| ? |${paSetting.__${prefix}___subtitle}| : |#{page.__${pageKey}__.subtitle}|"
+          ></p>
+        </th:block>
+      </div>
+    </div>
+  </div>
 </th:block>

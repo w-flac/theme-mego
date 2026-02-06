@@ -5,25 +5,7 @@
 >
   <th:block th:fragment="content">
     <th:block th:replace="~{modules/header}" />
-    <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
-      <div class="mx-auto max-w-3xl">
-        <div class="flex flex-col items-center justify-center space-y-4">
-          <div class="page-icon">
-            <img class="h-full w-full rounded-xl bg-cover md:rounded-2xl" alt="moments" th:src="@{/assets/images/photos.svg}">
-          </div>
-          <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
-            <h1
-              class="text-2xl font-bold text-gray-900/70 sm:text-3xl dark:text-white/70"
-              th:text="|${paSetting != null and paSetting.pp_enabled == true and paSetting.pp_title != null and paSetting.pp_title != ''}| ? |${paSetting.pp_title}| : |#{page.photos.title}|"
-            ></h1>
-            <p
-              class="text-center text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-300"
-              th:text="|${paSetting != null and paSetting.pp_enabled == true and paSetting.pp_subtitle != null and paSetting.pp_subtitle != ''}| ? |${paSetting.pp_subtitle}| : |#{page.photos.subtitle}|"
-            ></p>
-          </th:block>
-        </div>
-      </div>
-    </div>
+    <th:block th:replace="~{modules/module :: pageHeader(prefix='pp', pageKey='photos', iconClass=null, iconSrc=@{/assets/images/photos.svg}, iconAlt='photos')}" />
     <section class="mx-auto max-w-6xl px-2 py-8">
       <div class="scrollbar-hidden mb-6 flex items-center gap-2 overflow-x-auto rounded-2xl md:flex-wrap">
         <button
