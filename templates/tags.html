@@ -57,7 +57,7 @@
               <dd class="text-xs">
                 <a
                   class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
-                  th:href="@{/tags/{name}(name=${tag.spec.slug})}"
+                  th:href="@{${tag.status.permalink}}"
                 >
                   <span class="text-sm font-medium" th:text="${post.spec.title}"></span>
                   <div>
@@ -75,7 +75,7 @@
               <dd class="text-xs">
                 <a
                   class="flex items-center justify-between transition duration-300 group-hover:text-black dark:group-hover:text-white"
-                  th:href="@{/tags/{name}(name=${tag.spec.slug})}"
+                  th:href="@{${tag.status.permalink}}"
                 >
                   <span class="text-sm font-medium" th:text="#{page.tags.null}"></span>
                   <div>
