@@ -9,7 +9,7 @@
     <div class="mt-16 bg-gray-400/5 px-4 py-12 sm:px-6 sm:py-16 lg:px-8 dark:bg-white/5">
       <div class="mx-auto max-w-3xl" th:with="stats = ${siteStatsFinder.getStats()}">
         <div class="flex flex-col items-center justify-center space-y-4">
-          <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-500 shadow-lg sm:h-16 sm:w-16">
+          <div class="page-icon">
             <i class="fas fa-folder-open text-2xl text-white"></i>
           </div>
           <th:block th:with="paSetting = ${theme.config.page_setting.pa_setting}">
